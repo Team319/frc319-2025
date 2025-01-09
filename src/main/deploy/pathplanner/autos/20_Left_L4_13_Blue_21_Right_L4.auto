@@ -26,6 +26,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "Blue_Side_2PCS",
   "choreoAuto": false
 }
