@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Purple_G_L4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Purple_12_Center_Loading"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Purple_H_L4"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Purple_Side_2PCS",
+  "choreoAuto": false
+}
