@@ -7,25 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Purple_G_L4"
+            "pathName": "Neutral_G_L4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Purple_12_Center_Loading"
+            "pathName": "Neutral_G_OpposingLoading"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Purple_H_L4"
+            "pathName": "OpposingLoading_H_L4"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Purple_Side_2PCS",
+  "folder": "Neutral_Side_2PCS",
   "choreoAuto": false
 }

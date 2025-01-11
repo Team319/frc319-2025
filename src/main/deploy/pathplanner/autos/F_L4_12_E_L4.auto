@@ -7,25 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red_F_L4"
+            "pathName": "Opposing_F_L4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Red_12_Center_Loading"
+            "pathName": "Opposing_E_Loading"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Red_E_L4"
+            "pathName": "OpposingLoading_E_L4"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Red_Side_2PCS",
+  "folder": "Opposing_Side_2PCS",
   "choreoAuto": false
 }
