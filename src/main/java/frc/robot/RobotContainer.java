@@ -4,60 +4,95 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
+import frc.robot.commands.DriveCommands;
+
+import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.drive.GyroIO;
+import frc.robot.subsystems.drive.ModuleIOSim;
+import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.drive.GyroIOPigeon2;
+
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import com.pathplanner.lib.auto.AutoBuilder;
+
+
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+  // Subsystems
+  public final Drive drive;
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  // Controller
+  public final CommandXboxController driverController = new CommandXboxController(0);
+  //public final CommandXboxController operatorController = new CommandXboxController(1);
+
+  // Dashboard inputs
+  private final LoggedDashboardChooser<Command> autoChooser; // AdvantageKit Dependency
+  
+
   public RobotContainer() {
-    // Configure the trigger bindings
+
+    switch(Constants.getRobot()){
+
+      case SIMBOT:
+        // Sim robot, instantiate physics sim IO implementations
+        drive =
+          new Drive(
+              new GyroIO() {},
+              new ModuleIOSim(),
+              new ModuleIOSim(),
+              new ModuleIOSim(),
+              new ModuleIOSim());
+        break;
+
+      case DEVBOT:
+      case COMPBOT:
+      default:
+        drive =
+          new Drive(
+              new GyroIOPigeon2() {},
+              new ModuleIOTalonFX(0),
+              new ModuleIOTalonFX(1),
+              new ModuleIOTalonFX(2),
+              new ModuleIOTalonFX(3));
+        break;
+    }
+
+    // Set up auto routines
+    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    
+    // Add Commands to the dashboard chooser
+    //autoChooser.addOption(
+    //    "Name on Dashboard", Commands);
+
     configureBindings();
+  
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    switch(Constants.getRobot()){
+      case SIMBOT:
+      case DEVBOT:
+      case COMPBOT:
+      default:
+      /*  ============================= Defaults ============================= */
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+      drive.setDefaultCommand(
+        DriveCommands.joystickDrive(
+            drive,
+            () -> -driverController.getLeftY(), // Note : This is X supplier because the field's X axis is down field long
+            () -> -driverController.getLeftX(), // Note this is Y supplier because the field's Y axis is across the field 
+            () -> -driverController.getRightY(), 
+            () -> -driverController.getRightX(),
+            () -> driverController.getLeftTriggerAxis()));
+        break;
+    }
+
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return autoChooser.get();
   }
 }
