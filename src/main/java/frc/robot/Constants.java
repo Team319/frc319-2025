@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.*;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
 
 /** Add your docs here. */
@@ -48,6 +49,23 @@ public class Constants {
     COMPBOT
   }
 
+  public static class DriveConstants{
+    public static final double MAX_LINEAR_SPEED = Units.feetToMeters(17.3);
+    public static final double TRACK_WIDTH_X = Units.inchesToMeters(22.0);
+    public static final double TRACK_WIDTH_Y = Units.inchesToMeters(22.0);
+    public static final double DRIVE_BASE_RADIUS =
+        Math.hypot(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0);
+    public static final double MAX_ANGULAR_SPEED = MAX_LINEAR_SPEED / DRIVE_BASE_RADIUS;
+    public static final int currentLimit = 40; // TODO consider setting this to 60
+    public static final double wheelRadiusMeters = Units.inchesToMeters(3.875); // Black nitrile : 3 7/8 with full tread = 3.875 inches
+    public static final double motorReduction = 6.122; // Check me - EKM 11/11
+    public static final double robotMassKg = 74.088; // TODO
+    public static final double robotMOI = 6.883; // TODO
+    public static final double wheelCOF = 1.2; // TODO
+    public static final double DRIVE_GEAR_RATIO = 6.122; //(50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0); // L3
+    public static final double TURN_GEAR_RATIO = 150.0 / 7.0;
+    public static final boolean isTurnMotorInverted = true;
+  }
   public static enum HeadingTargets{
     NO_TARGET,
     SPEAKER,

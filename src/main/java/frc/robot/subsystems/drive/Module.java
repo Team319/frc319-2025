@@ -46,12 +46,12 @@ public class Module {
     switch (Constants.getRobot()) {
       case COMPBOT:
       case DEVBOT:
-        driveFeedforward = new SimpleMotorFeedforward(0.1, 0.13);
+        driveFeedforward = new SimpleMotorFeedforward(0.1, 0.5, 0.1); // V*s/in(?) // 2024 : 0.1, 0.13
         driveFeedback = new PIDController(0.05, 0.0, 0.0);  // was 0.05, 0.0, 0.0    // EKM - was 0.15 while tuning paths
         turnFeedback = new PIDController(7.0, 0.0, 0.0);
         break;
       case SIMBOT:
-        driveFeedforward = new SimpleMotorFeedforward(0.0, 0.13);
+        driveFeedforward = new SimpleMotorFeedforward(0.0, 0.5, 0.1);
         driveFeedback = new PIDController(0.1, 0.0, 0.0);
         turnFeedback = new PIDController(10.0, 0.0, 0.0);
         break;
