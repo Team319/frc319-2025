@@ -21,7 +21,10 @@ public class Constants {
       new Alert("Invalid robot selected, using competition robot as default.", AlertType.ERROR)
           .set(true);
       robotType = RobotType.COMPBOT;
+    }else if(RobotBase.isSimulation()){
+      robotType = RobotType.SIMBOT;
     }
+    // else the default was COMPBOT
     return robotType;
   }
 
