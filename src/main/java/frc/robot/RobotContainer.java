@@ -29,66 +29,68 @@ public class RobotContainer {
   //public final CommandXboxController operatorController = new CommandXboxController(1);
 
   // Dashboard inputs
-  private final LoggedDashboardChooser<Command> autoChooser; // AdvantageKit Dependency
-  
-
-  public RobotContainer() {
-
-    switch(Constants.getRobot()){
-
-      case SIMBOT:
-        // Sim robot, instantiate physics sim IO implementations
-        drive =
-          new Drive(
-              new GyroIO() {},
-              new ModuleIOSim(),
-              new ModuleIOSim(),
-              new ModuleIOSim(),
-              new ModuleIOSim());
-        break;
-
-      case DEVBOT:
-      case COMPBOT:
-      default:
-        drive =
-          new Drive(
-              new GyroIOPigeon2() {},
-              new ModuleIOTalonFX(0),
-              new ModuleIOTalonFX(1),
-              new ModuleIOTalonFX(2),
-              new ModuleIOTalonFX(3));
-        break;
-    }
-
-    // Set up auto routines
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+  private LoggedDashboardChooser<Command> autoChooser; // AdvantageKit Dependency
     
-    // Add Commands to the dashboard chooser
-    //autoChooser.addOption(
-    //    "Name on Dashboard", Commands);
-
-    configureBindings();
   
-  }
-
-  private void configureBindings() {
-    switch(Constants.getRobot()){
-      case SIMBOT:
-      case DEVBOT:
-      case COMPBOT:
-      default:
-      /*  ============================= Defaults ============================= */
-
-      drive.setDefaultCommand(
-        DriveCommands.joystickDrive(
-            drive,
-            () -> -driverController.getLeftY(), // Note : This is X supplier because the field's X axis is down field long
-            () -> -driverController.getLeftX(), // Note this is Y supplier because the field's Y axis is across the field 
-            () -> -driverController.getRightY(), 
-            () -> -driverController.getRightX(),
-            () -> driverController.getLeftTriggerAxis()));
-        break;
+    public RobotContainer() {
+  
+      switch(Constants.getRobot()){
+  
+        case SIMBOT:
+          // Sim robot, instantiate physics sim IO implementations
+          drive =
+            new Drive(
+                new GyroIO() {},
+                new ModuleIOSim(),
+                new ModuleIOSim(),
+                new ModuleIOSim(),
+                new ModuleIOSim());
+          break;
+  
+        case DEVBOT:
+        case COMPBOT:
+        default:
+          drive =
+            new Drive(
+                new GyroIOPigeon2() {},
+                new ModuleIOTalonFX(0),
+                new ModuleIOTalonFX(1),
+                new ModuleIOTalonFX(2),
+                new ModuleIOTalonFX(3));
+          break;
+      }
+  
+      // Set up auto routines
+      autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+      
+      // Add Commands to the dashboard chooser
+      //autoChooser.addOption(
+      //    "Name on Dashboard", Commands);
+  
+      configureBindings();
+    
     }
+  
+    private void configureBindings() {
+      switch(Constants.getRobot()){
+        case SIMBOT:
+        case DEVBOT:
+        case COMPBOT:
+        default:
+        /*  ============================= Defaults ============================= */
+  
+        drive.setDefaultCommand(
+          DriveCommands.joystickDrive(
+              drive,
+              () -> -driverController.getLeftY(), // Note : This is X supplier because the field's X axis is down field long
+              () -> -driverController.getLeftX(), // Note this is Y supplier because the field's Y axis is across the field 
+              () -> -driverController.getRightY(), 
+              () -> -driverController.getRightX(),
+              () -> driverController.getLeftTriggerAxis()));
+          break;
+      }
+  
+
 
   }
 
