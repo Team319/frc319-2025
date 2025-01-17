@@ -81,7 +81,8 @@ public class DriveCommands {
                           DEADBAND); // get the magnitude of the joystick
 
                   Rotation2d linearDirection =
-                      new Rotation2d(xSupplier.getAsDouble(), ySupplier.getAsDouble());
+                      new Rotation2d(Math.atan2(ySupplier.getAsDouble(), xSupplier.getAsDouble()));
+                      //new Rotation2d(xSupplier.getAsDouble(), ySupplier.getAsDouble());
 
                   double omega = MathUtil.applyDeadband(headingYSupplier.getAsDouble(), HEADING_DEADBAND); 
 
