@@ -60,11 +60,6 @@ public class ModuleIOTalonFX implements ModuleIO {
   private final StatusSignal<Voltage> turnAppliedVolts;
   private final StatusSignal<Current> turnCurrent;
 
-  // Gear ratios for SDS MK4i, select ratios as necessary
-  // private final double DRIVE_GEAR_RATIO = (50.0 / 14.0) * (19.0 / 25.0) * (45.0 / 15.0); // L1
-  //private final double DRIVE_GEAR_RATIO = (50.0 / 14.0) * (17.0 / 27.0) * (45.0 / 15.0); // L2
-
-
   private final Rotation2d absoluteEncoderOffset;
 
   public ModuleIOTalonFX(int index) {
@@ -76,7 +71,7 @@ public class ModuleIOTalonFX implements ModuleIO {
 
         switch (Constants.getRobot()) {
           case COMPBOT:
-            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(66)); // MUST BE CALIBRATED
+            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(68)); // MUST BE CALIBRATED // was 66
             break;
         
           case DEVBOT:
@@ -92,7 +87,7 @@ public class ModuleIOTalonFX implements ModuleIO {
         cancoder = new CANcoder(11, "Swerve Canivore");
          switch (Constants.getRobot()) {
           case COMPBOT:
-            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(60)); // MUST BE CALIBRATED
+            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(62)); // MUST BE CALIBRATED
             break;
         
           case DEVBOT:
@@ -107,7 +102,7 @@ public class ModuleIOTalonFX implements ModuleIO {
         cancoder = new CANcoder(5, "Swerve Canivore");
          switch (Constants.getRobot()) {
           case COMPBOT:
-            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(-12)); // MUST BE CALIBRATED
+            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(-18)); // MUST BE CALIBRATED // was -12
             break;
 
           case DEVBOT:

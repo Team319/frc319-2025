@@ -61,8 +61,7 @@ public class Constants {
     public static final double MAX_ANGULAR_SPEED = MAX_LINEAR_SPEED / DRIVE_BASE_RADIUS;
     public static final int currentLimit = 40; // TODO consider setting this to 60
     public static final double wheelRadiusMeters = Units.inchesToMeters(3.875); // Black nitrile : 3 7/8 with full tread = 3.875 inches
-    public static final double motorReduction = 6.122; // Check me - EKM 11/11
-    public static final double robotMassKg = 74.088; // TODO
+    public static final double robotMassKg = 49.532; // TODO
     public static final double robotMOI = 6.883; // TODO
     public static final double wheelCOF = 1.2; // TODO
     public static final double DRIVE_GEAR_RATIO = 6.122; //(50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0); // L3

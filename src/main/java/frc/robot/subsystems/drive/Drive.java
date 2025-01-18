@@ -79,7 +79,7 @@ public class Drive extends SubsystemBase {
   //           DriveConstants.MAX_LINEAR_SPEED,
   //           DriveConstants.wheelCOF,
   //             DCMotor.getKrakenX60(1)
-  //                 .withReduction(DriveConstants.motorReduction),
+  //                 .withReduction(DriveConstants.DRIVE_GEAR_RATIO),
   //                 DriveConstants.currentLimit,
   //             1),
   //             DriveConstants.TRACK_WIDTH_X);
