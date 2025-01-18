@@ -68,19 +68,21 @@ public class Drive extends SubsystemBase {
   // Motor configuration
 
   // PathPlanner configuration
-  public static final RobotConfig ppConfig =
-      new RobotConfig(
-          DriveConstants.robotMassKg,
-          DriveConstants.robotMOI,
-          new ModuleConfig(
-            DriveConstants.wheelRadiusMeters,
-            DriveConstants.MAX_LINEAR_SPEED,
-            DriveConstants.wheelCOF,
-              DCMotor.getKrakenX60(1)
-                  .withReduction(DriveConstants.motorReduction),
-                  DriveConstants.currentLimit,
-              1),
-              DriveConstants.TRACK_WIDTH_X);
+  public RobotConfig ppConfig;
+  
+  // public RobotConfig ppConfig =
+  //     new RobotConfig(
+  //         DriveConstants.robotMassKg,
+  //         DriveConstants.robotMOI,
+  //         new ModuleConfig(
+  //           DriveConstants.wheelRadiusMeters,
+  //           DriveConstants.MAX_LINEAR_SPEED,
+  //           DriveConstants.wheelCOF,
+  //             DCMotor.getKrakenX60(1)
+  //                 .withReduction(DriveConstants.motorReduction),
+  //                 DriveConstants.currentLimit,
+  //             1),
+  //             DriveConstants.TRACK_WIDTH_X);
 
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
@@ -129,6 +131,13 @@ public class Drive extends SubsystemBase {
     modules[1] = new Module(frModuleIO, 1);
     modules[2] = new Module(blModuleIO, 2);
     modules[3] = new Module(brModuleIO, 3);
+
+    try{
+      ppConfig = RobotConfig.fromGUISettings();
+    } catch (Exception e) {
+      // Handle exception as needed
+      e.printStackTrace();
+    }
 
     // Configure AutoBuilder for PathPlanner
     AutoBuilder.configure(
