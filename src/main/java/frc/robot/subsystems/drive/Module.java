@@ -23,7 +23,7 @@ import frc.robot.Constants;
 import org.littletonrobotics.junction.Logger;
 
 public class Module {
-  private static final double WHEEL_RADIUS = Units.inchesToMeters(2.0);
+  private static final double WHEEL_RADIUS = Units.inchesToMeters(1.9375);
 
   private final ModuleIO io;
   private final ModuleIOInputsAutoLogged inputs = new ModuleIOInputsAutoLogged();
@@ -46,7 +46,7 @@ public class Module {
     switch (Constants.getRobot()) {
       case COMPBOT:
       case DEVBOT:
-        driveFeedforward = new SimpleMotorFeedforward(0.1, 0.13); // V*s/in(?) // 2024 : 0.1, 0.13
+        driveFeedforward = new SimpleMotorFeedforward(0.1, 0.115); // V*s/in(?) // 2024 : 0.1, 0.13
         driveFeedback = new PIDController(0.05, 0.0, 0.0);  // was 0.05, 0.0, 0.0    // EKM - was 0.15 while tuning paths
         turnFeedback = new PIDController(7.0, 0.0, 0.0);
         break;
