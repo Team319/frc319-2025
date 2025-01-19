@@ -31,14 +31,14 @@ public class Limelight {
   private static NetworkTableEntry m_tl_reef = m_reefTable.getEntry("tl");
   private static NetworkTableEntry m_cl_reef = m_reefTable.getEntry("cl");
 
-  private static final NetworkTable m_coralStationTable = NetworkTableInstance.getDefault().getTable("limelight-coralstation"); // Makes the Limelight data table.
-  private static NetworkTableEntry m_botPose_coralStation = m_coralStationTable.getEntry("botpose_wpiblue"); // Makes a double array to hold the robot pose.
-  private static NetworkTableEntry m_tv_coralStation = m_coralStationTable.getEntry("tv");
-  private static NetworkTableEntry m_tx_coralStation = m_coralStationTable.getEntry("tx");
-  private static NetworkTableEntry m_ty_coralStation = m_coralStationTable.getEntry("ty");
-  private static NetworkTableEntry m_ta_coralStation = m_coralStationTable.getEntry("ta");
-  private static NetworkTableEntry m_tl_coralStation = m_coralStationTable.getEntry("tl");
-  private static NetworkTableEntry m_cl_coralStation = m_coralStationTable.getEntry("cl");
+  private static final NetworkTable m_coralTable = NetworkTableInstance.getDefault().getTable("limelight-coral"); // Makes the Limelight data table.
+  private static NetworkTableEntry m_botPose_coral = m_coralTable.getEntry("botpose_wpiblue"); // Makes a double array to hold the robot pose.
+  private static NetworkTableEntry m_tv_coral = m_coralTable.getEntry("tv");
+  private static NetworkTableEntry m_tx_coral = m_coralTable.getEntry("tx");
+  private static NetworkTableEntry m_ty_coral = m_coralTable.getEntry("ty");
+  private static NetworkTableEntry m_ta_coral = m_coralTable.getEntry("ta");
+  private static NetworkTableEntry m_tl_coral = m_coralTable.getEntry("tl");
+  private static NetworkTableEntry m_cl_coral = m_coralTable.getEntry("cl");
 
  // private NetworkTableEntry m_
 
@@ -51,7 +51,7 @@ public class Limelight {
         return m_tl_reef.getDouble(0.0); //Returns latency
       case CORAL_STATION:
       default:
-        return m_tl_coralStation.getDouble(0.0); //Returns latency
+        return m_tl_coral.getDouble(0.0); //Returns latency
 
     }
   }
@@ -62,7 +62,7 @@ public class Limelight {
         return m_cl_reef.getDouble(0.0); //Returns total latency
       case CORAL_STATION:
       default:
-        return m_cl_coralStation.getDouble(0.0); //Returns total latency
+        return m_cl_coral.getDouble(0.0); //Returns total latency
     }
    }
 
@@ -72,7 +72,7 @@ public class Limelight {
         return m_ta_reef.getDouble(0.0); //Returns target area
       case CORAL_STATION:
       default:
-        return m_ta_coralStation.getDouble(0.0); //Returns target area
+        return m_ta_coral.getDouble(0.0); //Returns target area
     }
     
   }
@@ -83,7 +83,7 @@ public class Limelight {
         return m_tx_reef.getDouble(0.0); // Returns the horizontal offset from valid target
       case CORAL_STATION:
       default:
-        return m_tx_coralStation.getDouble(0.0); // Returns the horizontal offset from valid target
+        return m_tx_coral.getDouble(0.0); // Returns the horizontal offset from valid target
     }
   }
 
@@ -93,7 +93,7 @@ public class Limelight {
         return m_ty_reef.getDouble(0.0); // Returns the vertical offset from valid target
       case CORAL_STATION:
       default:
-        return m_ty_coralStation.getDouble(0.0); // Returns the vertical offset from valid target
+        return m_ty_coral.getDouble(0.0); // Returns the vertical offset from valid target
     }
   }
 
@@ -117,7 +117,7 @@ public class Limelight {
         break;
       case CORAL_STATION:
       default:
-        result = m_tv_coralStation.getDouble(0.0); // Returns 1 if a valid target is seen
+        result = m_tv_coral.getDouble(0.0); // Returns 1 if a valid target is seen
         break;
     }
 
@@ -133,8 +133,8 @@ public class Limelight {
         return  m_botPose_reef.getDoubleArray(new double[7]); //Returns field space robot pose
       case CORAL_STATION:
       default:
-        if (m_botPose_coralStation.getDoubleArray(new double[7]).length >= 7){
-          return m_botPose_coralStation.getDoubleArray(new double[7]);
+        if (m_botPose_coral.getDoubleArray(new double[7]).length >= 7){
+          return m_botPose_coral.getDoubleArray(new double[7]);
         }
     }
     // Fallback case
