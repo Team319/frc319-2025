@@ -106,7 +106,7 @@ public class Drive extends SubsystemBase {
   private SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
-  private boolean doRejectVisionUpdate = true;
+  private boolean doRejectVisionUpdate = false;
 	
   @AutoLogOutput(key = "/RealOutputs/Drive/headingSetpoint")
   private double headingSetpoint = 0.0;
@@ -267,7 +267,7 @@ public class Drive extends SubsystemBase {
           }
           if(!doRejectVisionUpdate)
           {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0,0,9999999));
             poseEstimator.addVisionMeasurement(
                 mt2.pose,
                 mt2.timestampSeconds);

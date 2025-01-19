@@ -29,11 +29,10 @@ public class RobotContainer {
   //public final CommandXboxController operatorController = new CommandXboxController(1);
 
   // Dashboard inputs
-  private LoggedDashboardChooser<Command> autoChooser; // AdvantageKit Dependency
+  private final LoggedDashboardChooser<Command> autoChooser; // AdvantageKit Dependency
     
   
     public RobotContainer() {
-  
       switch(Constants.getRobot()){
   
         case SIMBOT:
@@ -52,7 +51,7 @@ public class RobotContainer {
         default:
           drive =
             new Drive(
-                new GyroIOPigeon2() {},
+                new GyroIO() {},
                 new ModuleIOTalonFX(0),
                 new ModuleIOTalonFX(1),
                 new ModuleIOTalonFX(2),
