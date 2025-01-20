@@ -249,13 +249,15 @@ public class Drive extends SubsystemBase {
                                 new Translation3d(poseBuf[0],poseBuf[1],poseBuf[2]), 
                                 new Rotation3d(Units.degreesToRadians(poseBuf[3]), Units.degreesToRadians(poseBuf[4]),Units.degreesToRadians(poseBuf[5]))
                               );
-          Logger.recordOutput("Odometry/VisionPose", visionPose.toPose2d());
+          Logger.recordOutput("Odometry/VisionPoseReef", visionPose.toPose2d());
  
           double poseDifference = poseEstimator.getEstimatedPosition().getTranslation().getDistance(visionPose.toPose2d().getTranslation());
           Logger.recordOutput("/RealOutputs/Drive/poseDifference", poseDifference);
 
           LimelightHelpers.SetRobotOrientation("limelight-reef", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
           LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-reef");
+          Logger.recordOutput("Odometry/mt2PoseReef", mt2.pose);
+
           
           if(Math.abs(rawGyroVelocityRadPerSec) > Units.degreesToRadians(720) ) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
           {
@@ -275,6 +277,40 @@ public class Drive extends SubsystemBase {
           
         }
 
+        if(Limelight.isValidTargetSeen(LimelightConstants.Device.CORAL_STATION) /*&& DriverStation.isTeleop()*/ )
+        {
+          double [] poseBuf = Limelight.getBotPose(LimelightConstants.Device.CORAL_STATION);
+          Pose3d visionPose = new Pose3d(
+                                new Translation3d(poseBuf[0],poseBuf[1],poseBuf[2]), 
+                                new Rotation3d(Units.degreesToRadians(poseBuf[3]), Units.degreesToRadians(poseBuf[4]),Units.degreesToRadians(poseBuf[5]))
+                              );
+          Logger.recordOutput("Odometry/VisionPoseCoral", visionPose.toPose2d());
+ 
+          double poseDifference = poseEstimator.getEstimatedPosition().getTranslation().getDistance(visionPose.toPose2d().getTranslation());
+          Logger.recordOutput("/RealOutputs/Drive/poseDifference", poseDifference);
+
+          LimelightHelpers.SetRobotOrientation("limelight-coral", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+          LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-coral");
+          Logger.recordOutput("Odometry/mt2PoseCoral", mt2.pose);
+
+          
+          if(Math.abs(rawGyroVelocityRadPerSec) > Units.degreesToRadians(720) ) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+          {
+            doRejectVisionUpdate = true;
+          }
+          if(mt2.tagCount == 0)
+          {
+            doRejectVisionUpdate = true;
+          }
+          if(!doRejectVisionUpdate)
+          {
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0,0,9999999));
+            poseEstimator.addVisionMeasurement(
+                mt2.pose,
+                mt2.timestampSeconds);
+          }
+          
+        }
         break; // End of Swerve logic
     
       default:
