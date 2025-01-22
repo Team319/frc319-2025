@@ -52,7 +52,7 @@ public class RobotContainer {
         default:
           drive =
             new Drive(
-                new GyroIO() {},
+                new GyroIOPigeon2() {},
                 new ModuleIOTalonFX(0),
                 new ModuleIOTalonFX(1),
                 new ModuleIOTalonFX(2),
