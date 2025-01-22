@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.Optional;
+
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -11,18 +13,31 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.pathfinding.Pathfinding;
+
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.drive.Drive;
+
+import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
 public class Robot extends LoggedRobot {
   
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private Pigeon2 m_pigeon;
 
   @Override
   public void robotInit() {
 
+    m_pigeon = new Pigeon2(12);
     //=============================================
     // START : Required setup for AdvantageKit Logging
     //=============================================
@@ -72,13 +87,35 @@ public class Robot extends LoggedRobot {
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+     if (m_autonomousCommand != null) {
+        m_autonomousCommand.schedule();
+      
     }
+   
+      Optional<Alliance> allianceColor = DriverStation.getAlliance();
+
+    allianceColor.ifPresent(alliance -> {
+      if (alliance == Alliance.Red) {
+        m_pigeon.setYaw(0.0);
+        System.out.println("Red Alliance: Setting heading to 0 degrees.");
+      } else if (alliance == Alliance.Blue) {
+        m_pigeon.setYaw(180.0);
+        System.out.println("Blue Alliance: Setting heading to 180 degrees.");
+      }
+    });
+
+    if(!allianceColor.isPresent()){
+      System.out.println("Alliance color is not set yet.");
+    }
+
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    StatusSignal<Angle> currentYaw = m_pigeon.getYaw(); //idk if this will work
+    System.out.println("Current Yaw" + currentYaw);
+    
+  }
 
   @Override
   public void autonomousExit() {}
