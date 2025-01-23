@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.drive.Drive;
-
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
