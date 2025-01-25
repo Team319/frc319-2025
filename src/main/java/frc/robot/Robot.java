@@ -91,7 +91,7 @@ public class Robot extends LoggedRobot {
         m_autonomousCommand.schedule();
     }
    
-   /*    Optional<Alliance> allianceColor = DriverStation.getAlliance();
+       Optional<Alliance> allianceColor = DriverStation.getAlliance();
 
     allianceColor.ifPresent(alliance -> {
       if (alliance == Alliance.Red) {
@@ -106,12 +106,13 @@ public class Robot extends LoggedRobot {
     if(!allianceColor.isPresent()){
       System.out.println("Alliance color is not set yet.");
     }
-*/
+
   }
 
   @Override
   public void autonomousPeriodic() {
-    
+    StatusSignal<Angle> currentYaw = m_pigeon.getYaw(); //idk if this will work
+    System.out.println("Current Yaw" + currentYaw);
   }
 
   @Override
