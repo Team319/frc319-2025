@@ -14,6 +14,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import edu.wpi.first.units.measure.Angle;
@@ -62,6 +63,8 @@ public class Robot extends LoggedRobot {
     //=============================================
     // END : Required setup for AdvantageKit Logging
     //=============================================
+
+    FollowPathCommand.warmupCommand().schedule();
 
     m_robotContainer = new RobotContainer();
   }

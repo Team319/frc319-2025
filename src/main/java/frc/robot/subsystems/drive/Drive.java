@@ -18,11 +18,14 @@ import static edu.wpi.first.units.Units.*;
 import java.util.function.DoubleSupplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
+import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
 import edu.wpi.first.math.VecBuilder;
@@ -44,6 +47,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -343,6 +347,29 @@ public class Drive extends SubsystemBase {
     Logger.recordOutput("SwerveStates/SetpointsOptimized", optimizedSetpointStates);
   }
 
+  /**
+   * Runs the drive at the desired velocity.
+   *
+   * @param speeds Speeds in meters/sec
+   */
+  // public void runVelocity2(ChassisSpeeds speeds, DriveFeedforwards feedforwards){
+  //   // Calculate module setpoints
+  //   ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
+  //   SwerveModuleState[] setpointStates = kinematics.toSwerveModuleStates(discreteSpeeds);
+  //   SwerveDriveKinematics.desaturateWheelSpeeds(setpointStates, DriveConstants.MAX_LINEAR_SPEED);
+
+  //   // Send setpoints to modules
+  //   SwerveModuleState[] optimizedSetpointStates = new SwerveModuleState[4];
+  //   for (int i = 0; i < 4; i++) {
+  //     // The module returns the optimized state, useful for logging
+  //     optimizedSetpointStates[i] = modules[i].runSetpoint(setpointStates[i]);
+  //   }
+
+  //   // Log setpoint states
+  //   Logger.recordOutput("SwerveStates/Setpoints", setpointStates);
+  //   Logger.recordOutput("SwerveStates/SetpointsOptimized", optimizedSetpointStates);
+  // }
+
   /** Stops the drive. */
   public void stop() {
     runVelocity(new ChassisSpeeds());
@@ -621,6 +648,42 @@ public class Drive extends SubsystemBase {
   
   public void setUpdatePoseWithVision(boolean input){
     this.updatePoseUsingVision = input;
+  }
+
+  public Command followPathCommand(String pathName) {
+    try{
+        PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+
+    //     return new FollowPathCommand(
+    //             path,
+    //             this::getPose, // Robot pose supplier
+    //             () -> kinematics.toChassisSpeeds(getModuleStates()),
+    //             this::runVelocity2,
+    //             new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+    //                     new PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
+    //                     new PIDConstants(5.0, 0.0, 0.0) // Rotation PID constants
+    //             ),
+    //             ppConfig, // The robot configuration
+    //             () -> {
+    //               // Boolean supplier that controls when the path will be mirrored for the red alliance
+    //               // This will flip the path being followed to the red side of the field.
+    //               // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+    //               var alliance = DriverStation.getAlliance();
+    //               if (alliance.isPresent()) {
+    //                 return alliance.get() == DriverStation.Alliance.Red;
+    //               }
+    //               return false;
+    //             },
+    //             this // Reference to this subsystem to set requirements
+    //     );
+
+      return AutoBuilder.followPath(path);
+
+    } catch (Exception e) {
+        DriverStation.reportError("Big oops: " + e.getMessage(), e.getStackTrace());
+        return Commands.none();
+    }
   }
 
 // ========================= Empty case / No Drivetrain =========================
