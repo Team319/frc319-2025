@@ -14,8 +14,8 @@
     "Neutral_Side_2PCS",
     "Opposing_Side_2PCS"
   ],
-  "defaultMaxVel": 5.0,
-  "defaultMaxAccel": 5.0,
+  "defaultMaxVel": 2.0,
+  "defaultMaxAccel": 2.0,
   "defaultMaxAngVel": 720.0,
   "defaultMaxAngAccel": 180.0,
   "defaultNominalVoltage": 12.0,
