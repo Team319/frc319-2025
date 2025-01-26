@@ -95,10 +95,10 @@ public class Robot extends LoggedRobot {
 
     allianceColor.ifPresent(alliance -> {
       if (alliance == Alliance.Red) {
-        m_pigeon.setYaw(0.0);
+        //m_pigeon.setYaw(0.0);
         System.out.println("Red Alliance: Setting heading to 0 degrees.");
       } else if (alliance == Alliance.Blue) {
-        m_pigeon.setYaw(180.0);
+        //m_pigeon.setYaw(180.0);
         System.out.println("Blue Alliance: Setting heading to 180 degrees.");
       }
     });
