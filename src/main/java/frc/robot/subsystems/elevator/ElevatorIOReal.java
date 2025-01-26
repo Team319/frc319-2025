@@ -1,107 +1,72 @@
 package frc.robot.subsystems.elevator;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.Constants.ElevatorConstants;
 
 public class ElevatorIOReal implements ElevatorIO {
-
-    private final TalonFX elevatorLead = new TalonFX(13);
-    private final TalonFX elevatorFollow = new TalonFX(14);
-
-
-
-    private double positionTargetSetpoint;
-
-    public ElevatorIOReal() {
-        setup();
-        setFollow();
-
-    }
-
-    public void setup(){
-
-    }
-
-    public void setFollow(){
-    }
-
-    @Override
-    public void updateInputs(ElevatorIOInputs inputs){
-    inputs.kPUp = ElevatorConstants.PID.kPUp;
-    inputs.kIUp = ElevatorConstants.PID.kIUp;
-    inputs.kDUp = ElevatorConstants.PID.kDUp;
-    inputs.kFFUp = ElevatorConstants.PID.kFFUp;
+        private TalonFX elevatorLead;
+        private TalonFX elevatorFollow;
+        
+        public ElevatorIOReal(){
+            setup();
+            //setFollow();
+        }
     
-    inputs.kPDown = ElevatorConstants.PID.kPDown;
-    inputs.kIDown = ElevatorConstants.PID.kIDown;
-    inputs.kDDown = ElevatorConstants.PID.kDDown;
-    inputs.kFFDown = ElevatorConstants.PID.kFFDown;
+        public void setup(){
+            elevatorLead = new TalonFX(13);
+            elevatorFollow = new TalonFX(14);
+    
+            final double positionTargetSetpoint; //idk if this is right
+    
+    
+            TalonFXConfiguration elevatorConfigs = new TalonFXConfiguration();
+            elevatorLead.getConfigurator().apply(elevatorConfigs);
+            elevatorFollow.getConfigurator().apply(elevatorConfigs);
+    
+            elevatorConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+            elevatorConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    
+            elevatorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
+            elevatorConfigs.CurrentLimits.StatorCurrentLimit = 40;
 
-    inputs.targetPosition = this.positionTargetSetpoint;
-   // inputs.appliedVoltage = elevatorLead.getAppliedOutput();
-    inputs.outputCurrentAmps = getCurrent();
-    inputs.position = getPosition();
-    inputs.velocity = getVelocity();
-    }
-
-    @Override
-    public void stop() {
-    elevatorLead.stopMotor();
-    }
-
-    @Override
-    public void configurePID(double kP, double kI, double kD, double kFF) {
-    //  elevatorPIDController.setP(kP);
-    //  elevatorPIDController.setI(kI);
-    //  elevatorPIDController.setI(kD);
-    //  elevatorPIDController.setFF(kFF);
-    }
-  
-    @Override
-    public double getPosition() {
-     // return this.elevatorEncoder.getPosition();
-     return 0.0;
-    }
-  
-    @Override
-    public void setPosition(double targetPosition) {
-      this.positionTargetSetpoint = targetPosition;
-      manageMotion(targetPosition);
-      //elevatorPIDController.setReference(targetPosition, CANSparkMax.ControlType.kPosition);
-    }
-  
-     @Override
-    public void setPO(double PO) {
-      elevatorLead.set(PO);
-    }
-  
-    @Override
-    public double getVelocity() {
-      //return elevatorLead.getEncoder().getVelocity();
-      return 0.0;
-    }
-  
-    @Override
-    public double getCurrent() {
-      //return elevatorLead.getOutputCurrent();
-      return 0.0;
-
-    }
-  
-    private void manageMotion(double targetPosition) {
-      double currentPosition = getPosition();
-        if (currentPosition > targetPosition) {
-          configurePID(ElevatorConstants.PID.kPUp, ElevatorConstants.PID.kIUp, ElevatorConstants.PID.kDUp, ElevatorConstants.PID.kFFUp);
+            //elevatorConfigs.Slot0.kV = ElevatorConstants.kFF;
+    
+            elevatorConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+            elevatorConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ElevatorConstants.Setpoints.topLimit;
+            elevatorConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+            elevatorConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ElevatorConstants.Setpoints.bottomLimit;
+    
+            elevatorLead.getConfigurator().apply(elevatorConfigs);
+            elevatorFollow.getConfigurator().apply(elevatorConfigs);
         }
-        else {
-          configurePID( ElevatorConstants.PID.kPDown, ElevatorConstants.PID.kIDown, ElevatorConstants.PID.kDDown, ElevatorConstants.PID.kFFDown);
-        }
+    
+       /*  public void setFollow(){
+            elevatorFollow.follow(elevatorLead);
+        }*/
+    
+        @Override
+        public void updateInputs(ElevatorIOInputs inputs) {
+            inputs.kPUp = ElevatorConstants.PID.kPUp;
+            inputs.kIUp = ElevatorConstants.PID.kIUp;
+            inputs.kDUp = ElevatorConstants.PID.kDUp;
+            inputs.kFFUp = ElevatorConstants.PID.kFFUp;
+    
+            inputs.kPDown = ElevatorConstants.PID.kPDown;
+            inputs.kIDown = ElevatorConstants.PID.kIDown;
+            inputs.kDDown = ElevatorConstants.PID.kDDown;
+            inputs.kFFDown = ElevatorConstants.PID.kFFDown;
+    
+            //inputs.targetPosition = this.positionTargetSetpoint;
     }
-  
-   
-  
-  }
-  
+
+    public void stop(){
+        elevatorLead.stopMotor();
+        elevatorFollow.stopMotor();
+    }
+}

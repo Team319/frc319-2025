@@ -106,18 +106,14 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float top = (float)90.0;// FYI: it is now at real top
-      public static final float trap = top;
-      public static final float climb = top;
-      public static final float amp = (float)47.785; 
-      public static final float bottom = (float)2.0; // leaves some space for the elevator to settle without tapping bottom of travel
-      public static final float shoot = bottom;
+      public static final float topLimit = (float)0.0;
+      public static final float bottomLimit = (float)0.0;
 
     }
 
     public static class SoftLimits {
-      public static final float forwardSoftLimit = Setpoints.top;
-      public static final float reverseSoftLimit = Setpoints.bottom;
+      public static final float forwardSoftLimit = Setpoints.topLimit;
+      public static final float reverseSoftLimit = Setpoints.bottomLimit;
     }
 
   }
