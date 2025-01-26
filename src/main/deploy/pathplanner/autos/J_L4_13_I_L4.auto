@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Friendly_J_L4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Friendly_J_Loading"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Friendly_Loading_H_L4"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "Friendly_Side_2PCS",
+  "choreoAuto": false
+}
