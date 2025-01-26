@@ -269,7 +269,7 @@ public class Drive extends SubsystemBase {
           }
           if(!doRejectVisionUpdate)
           {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0,0,9999999));
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(1,1,9999999));
             poseEstimator.addVisionMeasurement(
                 mt2.pose,
                 mt2.timestampSeconds);

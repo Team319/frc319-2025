@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.686,
-  "robotLength": 0.686,
+  "robotWidth": 0.6985,
+  "robotLength": 0.699,
   "holonomicMode": true,
   "pathFolders": [
     "Friendly_Side",
@@ -14,8 +14,8 @@
     "Neutral_Side_2PCS",
     "Opposing_Side_2PCS"
   ],
-  "defaultMaxVel": 2.0,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxVel": 3.0,
+  "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 720.0,
   "defaultMaxAngAccel": 180.0,
   "defaultNominalVoltage": 12.0,

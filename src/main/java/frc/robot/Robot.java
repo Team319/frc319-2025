@@ -111,8 +111,7 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    StatusSignal<Angle> currentYaw = m_pigeon.getYaw(); //idk if this will work
-    System.out.println("Current Yaw" + currentYaw);
+
   }
 
   @Override
