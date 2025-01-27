@@ -10,9 +10,10 @@
   ],
   "autoFolders": [
     "Friendly_Side_2PCS",
-    "Test_Autos",
     "Neutral_Side_2PCS",
-    "Opposing_Side_2PCS"
+    "Friendly_Side_3PCS",
+    "Opposing_Side_2PCS",
+    "Test_Autos"
   ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
