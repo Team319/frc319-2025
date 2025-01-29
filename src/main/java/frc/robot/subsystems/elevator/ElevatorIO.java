@@ -18,6 +18,8 @@ public interface ElevatorIO {
         public double outputCurrentAmps = 0.0; // Current applied to the motor
         public double position = 0.0; // Position of the elevator
         public double velocity = 0.0; // Velocity of the elevator
+        public double elevatorMotorStatorCurrent;
+        public double elevatorMotorPosition;
     }
 
     public default void updateInputs(ElevatorIOInputs inputs) {}
@@ -31,8 +33,6 @@ public interface ElevatorIO {
     public default double getPosition() {return 0.0;}
 
     public default double getVelocity() {return 0.0;}
-
-    public default double getCurrent() {return 0.0;}
 
     public default void setVoltage(double voltage) {}
 
