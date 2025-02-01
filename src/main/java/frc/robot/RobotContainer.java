@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
+import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.autos.DynamicAutoRoutine;
 import frc.robot.subsystems.drive.Drive;
@@ -99,8 +99,8 @@ public class RobotContainer {
 
       driverController.start().onTrue(Commands.runOnce(()-> { drive.resetHeading(); }));
         
-      driverController.leftBumper().whileTrue( drive.followPathCommand("Right"));
-      driverController.rightBumper().onTrue( drive.pathFindToPose(Constants.DriveConstants.pathingConstraints, Constants.TargetLocations.ORIGIN));
+      driverController.leftBumper().whileTrue( drive.pathfindThenFollowPath(DriveConstants.pathingConstraints,"goto_G"));
+      driverController.rightBumper().onTrue( drive.pathfindThenFollowPath(DriveConstants.pathingConstraints,"goto_H"));
 
   }
 
