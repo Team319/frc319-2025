@@ -4,12 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.commands.DriveCommands;
-
+import frc.robot.commands.autos.DynamicAutoRoutine;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
@@ -23,7 +24,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 public class RobotContainer {
 
   // Subsystems
-  public final Drive drive;
+  public final Drive drive ;
 
   // Controller
   public final CommandXboxController driverController = new CommandXboxController(0);
@@ -32,7 +33,6 @@ public class RobotContainer {
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser; // AdvantageKit Dependency
     
-  
     public RobotContainer() {
       switch(Constants.getRobot()){
   
@@ -60,8 +60,14 @@ public class RobotContainer {
           break;
       }
   
+      // Add a text input from SmartDashboard
+      SmartDashboard.putString("Auto Routine", "Populate me!");
+
       // Set up auto routines
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+
+
+      autoChooser.addOption("DynamicAutoRoutine", new DynamicAutoRoutine(drive, "h1l1k1j1"));
       
       // Add Commands to the dashboard chooser
       //autoChooser.addOption(
@@ -87,15 +93,14 @@ public class RobotContainer {
               () -> -driverController.getRightY(), 
               () -> -driverController.getRightX(),
               () -> driverController.getLeftTriggerAxis()));
-          break;
+        
+        break;
       }
-  
-        driverController.start().onTrue(Commands.runOnce(
-            ()-> { 
-              drive.resetHeading();
-            }
-            )
-          ); 
+
+      driverController.start().onTrue(Commands.runOnce(()-> { drive.resetHeading(); }));
+        
+      driverController.leftBumper().whileTrue( drive.followPathCommand("Right"));
+      driverController.rightBumper().onTrue( drive.pathFindToPose(Constants.DriveConstants.pathingConstraints, Constants.TargetLocations.ORIGIN));
 
   }
 

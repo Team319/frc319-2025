@@ -6,6 +6,10 @@ package frc.robot;
 
 import frc.robot.util.Alert;
 import frc.robot.util.Alert.*;
+
+import com.pathplanner.lib.path.PathConstraints;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -67,19 +71,66 @@ public class Constants {
     public static final double DRIVE_GEAR_RATIO = 6.122; //(50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0); // L3
     public static final double TURN_GEAR_RATIO = 150.0 / 7.0;
     public static final boolean isTurnMotorInverted = true;
+
+    public static final PathConstraints pathingConstraints = new PathConstraints(
+        3.0, 4.0,
+        Units.degreesToRadians(540), Units.degreesToRadians(720));
+
   }
   public static enum HeadingTargets{
     NO_TARGET,
-    SPEAKER,
-    SOURCE
+    REEF_CENTER,
+    CORAL_STATION_LEFT,
+    CORAL_STATION_RIGHT,
+    PROCESSOR
   }
 
   public static class TargetLocations{
-    public static Translation2d ORIGIN = new Translation2d();
-    public static Translation2d RED_SPEAKER = new Translation2d(16.45,5.3);
-    public static Translation2d BLUE_SPEAKER = new Translation2d(0.0,5.3);
-    public static Translation2d RED_SOURCE = new Translation2d(0.0,-0.5);
-    public static Translation2d BLUE_SOURCE = new Translation2d(16.15,-0.5);
+    public static final double FIELD_LENGTH = Units.feetToMeters(54);
+    public static final double FIELD_WIDTH = Units.feetToMeters(27);
+    
+    // =============== COMMON TARGET POSES ===============
+    public static Pose2d ORIGIN = new Pose2d();
+    public static Pose2d CENTER_OF_FIELD = new Pose2d();
+
+    // =============== BLUE SIDE TARGET POSES ===============
+    public static Pose2d BLUE_REEF_CENTER = new Pose2d();
+    public static Pose2d BLUE_REEF_A = new Pose2d();
+    public static Pose2d BLUE_REEF_B = new Pose2d();
+    public static Pose2d BLUE_REEF_C = new Pose2d();
+    public static Pose2d BLUE_REEF_D = new Pose2d();
+    public static Pose2d BLUE_REEF_E = new Pose2d();
+    public static Pose2d BLUE_REEF_F = new Pose2d();
+    public static Pose2d BLUE_REEF_G = new Pose2d();
+    public static Pose2d BLUE_REEF_H = new Pose2d();
+    public static Pose2d BLUE_REEF_I = new Pose2d();
+    public static Pose2d BLUE_REEF_J = new Pose2d();
+    public static Pose2d BLUE_REEF_K = new Pose2d();
+    public static Pose2d BLUE_REEF_L = new Pose2d();
+
+    public static Pose2d BLUE_CORAL_STATION_LEFT = new Pose2d();
+    public static Pose2d BLUE_CORAL_STATION_RIGHT = new Pose2d();
+    public static Pose2d BLUE_SIDE_PROCESSOR = new Pose2d();
+
+    // =============== RED SIDE TARGET POSES ===============
+    public static Pose2d RED_REEF_CENTER = new Pose2d();
+    public static Pose2d RED_REEF_A = new Pose2d();
+    public static Pose2d RED_REEF_B = new Pose2d();
+    public static Pose2d RED_REEF_C = new Pose2d();
+    public static Pose2d RED_REEF_D = new Pose2d();
+    public static Pose2d RED_REEF_E = new Pose2d();
+    public static Pose2d RED_REEF_F = new Pose2d();
+    public static Pose2d RED_REEF_G = new Pose2d();
+    public static Pose2d RED_REEF_H = new Pose2d();
+    public static Pose2d RED_REEF_I = new Pose2d();
+    public static Pose2d RED_REEF_J = new Pose2d();
+    public static Pose2d RED_REEF_K = new Pose2d();
+    public static Pose2d RED_REEF_L = new Pose2d();
+
+    public static Pose2d RED_CORAL_STATION_LEFT = new Pose2d(); 
+    public static Pose2d RED_CORAL_STATION_RIGHT = new Pose2d();
+    public static Pose2d RED_SIDE_PROCESSOR = new Pose2d();
+    
   }
 
   public static class LimelightConstants{
