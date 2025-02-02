@@ -117,7 +117,7 @@ public class ModuleIOTalonFX implements ModuleIO {
         cancoder = new CANcoder(8, "Swerve Canivore");
         switch (Constants.getRobot()) {
           case COMPBOT:
-            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(55)); // MUST BE CALIBRATED
+            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(56)); // MUST BE CALIBRATED
             break;
         
           case DEVBOT:

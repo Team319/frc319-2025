@@ -91,28 +91,26 @@ public class Robot extends LoggedRobot {
         m_autonomousCommand.schedule();
     }
    
-       Optional<Alliance> allianceColor = DriverStation.getAlliance();
+    // Optional<Alliance> allianceColor = DriverStation.getAlliance();
+    // allianceColor.ifPresent(alliance -> {
+    //   if (alliance == Alliance.Red) {
+    //     //m_pigeon.setYaw(0.0);
+    //     System.out.println("Red Alliance: Setting heading to 0 degrees.");
+    //   } else if (alliance == Alliance.Blue) {
+    //     //m_pigeon.setYaw(180.0);
+    //     System.out.println("Blue Alliance: Setting heading to 180 degrees.");
+    //   }
+    // });
 
-    allianceColor.ifPresent(alliance -> {
-      if (alliance == Alliance.Red) {
-        m_pigeon.setYaw(0.0);
-        System.out.println("Red Alliance: Setting heading to 0 degrees.");
-      } else if (alliance == Alliance.Blue) {
-        m_pigeon.setYaw(180.0);
-        System.out.println("Blue Alliance: Setting heading to 180 degrees.");
-      }
-    });
-
-    if(!allianceColor.isPresent()){
-      System.out.println("Alliance color is not set yet.");
-    }
+    // if(!allianceColor.isPresent()){
+    //   System.out.println("Alliance color is not set yet.");
+    // }
 
   }
 
   @Override
   public void autonomousPeriodic() {
-    StatusSignal<Angle> currentYaw = m_pigeon.getYaw(); //idk if this will work
-    System.out.println("Current Yaw" + currentYaw);
+
   }
 
   @Override
