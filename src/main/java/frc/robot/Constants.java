@@ -73,7 +73,8 @@ public class Constants {
     public static final boolean isTurnMotorInverted = true;
 
     public static final PathConstraints pathingConstraints = new PathConstraints(
-        3.0, 4.0,
+        2.0,2.0,
+        //3.0, 4.0,
         Units.degreesToRadians(540), Units.degreesToRadians(720));
 
   }
