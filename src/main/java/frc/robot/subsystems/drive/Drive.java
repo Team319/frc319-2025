@@ -272,6 +272,7 @@ public class Drive extends SubsystemBase {
                 mt2.pose,
                 mt2.timestampSeconds);
           }
+          doRejectVisionUpdate = false;
           
         }
 
@@ -308,6 +309,7 @@ public class Drive extends SubsystemBase {
                 mt2.pose,
                 mt2.timestampSeconds);
           }
+          doRejectVisionUpdate = false;
           
         }
         break; // End of Swerve logic

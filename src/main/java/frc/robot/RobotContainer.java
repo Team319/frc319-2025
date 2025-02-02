@@ -99,8 +99,8 @@ public class RobotContainer {
 
       driverController.start().onTrue(Commands.runOnce(()-> { drive.resetHeading(); }));
         
-      driverController.leftBumper().whileTrue( drive.followPathCommand("Right"));
-      driverController.rightBumper().onTrue( drive.pathFindToPose(Constants.DriveConstants.pathingConstraints, Constants.TargetLocations.ORIGIN));
+      driverController.leftBumper().whileTrue( drive.pathfindThenFollowPath(Constants.DriveConstants.pathingConstraints,"goto_g"));
+      driverController.rightBumper().onTrue( drive.pathfindThenFollowPath(Constants.DriveConstants.pathingConstraints,"goto_h"));
 
   }
 
