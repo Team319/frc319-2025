@@ -32,11 +32,8 @@ public class Robot extends LoggedRobot {
 
   private RobotContainer m_robotContainer;
 
-
   @Override
   public void robotInit() {
-
-
     //=============================================
     // START : Required setup for AdvantageKit Logging
     //=============================================
@@ -91,6 +88,21 @@ public class Robot extends LoggedRobot {
         m_autonomousCommand.schedule();
     }
    
+       Optional<Alliance> allianceColor = DriverStation.getAlliance();
+
+    allianceColor.ifPresent(alliance -> {
+      if (alliance == Alliance.Red) {
+        //m_robotContainer.drive.setHeading(0.0);
+        System.out.println("Red Alliance: Setting heading to 0 degrees.");
+      } else if (alliance == Alliance.Blue) {
+        //m_robotContainer.drive.setHeading(180.0);
+        System.out.println("Blue Alliance: Setting heading to 180 degrees.");
+      }
+    });
+
+    if(!allianceColor.isPresent()){
+      System.out.println("Alliance color is not set yet.");
+    }
 
   }
 

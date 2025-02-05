@@ -617,6 +617,10 @@ public class Drive extends SubsystemBase {
     gyroIO.reset();
   }
 
+  public void setHeading(double heading){
+    gyroIO.setHeading(heading);
+  }
+  
   public void setUpdatePoseWithVision(boolean input){
     this.updatePoseUsingVision = input;
   }
