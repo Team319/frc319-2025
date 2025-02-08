@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Opposing_F_L4"
+            "pathName": "Friendly_I_L4_Starting"
           }
         },
         {
@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Opposing_E_Loading"
+            "pathName": "Friendly_I_Loading"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "OpposingLoading_E_L4"
+            "pathName": "Friendly_Loading_J_L4"
           }
         },
         {
@@ -43,7 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Opposing_E_L4_Loading"
+            "pathName": "Friendly_J_Loading"
           }
         },
         {
@@ -55,7 +55,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Loading_G_L4"
+            "pathName": "Friendly_Loading_K"
           }
         },
         {
@@ -67,13 +67,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Opposing_G_L4_Loading"
+            "pathName": "Friendly_K_Loading"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Friendly_Loading_L"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Friendly_L_Loading"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Opposing_Side_3PCS",
+  "folder": "Friendly_Side_4PCS",
   "choreoAuto": false
 }

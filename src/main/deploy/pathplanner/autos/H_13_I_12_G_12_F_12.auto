@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Opposing_F_L4"
+            "pathName": "Neutral_H_L4"
           }
         },
         {
@@ -19,7 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Opposing_E_Loading"
+            "pathName": "Neutral_H_Loading"
           }
         },
         {
@@ -31,7 +31,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "OpposingLoading_E_L4"
+            "pathName": "Neutral_Loading_I"
           }
         },
         {
@@ -43,7 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Opposing_E_L4_Loading"
+            "pathName": "Neutral_I_Loading"
           }
         },
         {
@@ -55,7 +55,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Loading_G_L4"
+            "pathName": "Neutral_Loading_G"
           }
         },
         {
@@ -67,13 +67,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Opposing_G_L4_Loading"
+            "pathName": "Neutral_G_Loading"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Neutral_Loading_F"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Neutral_F_Loading"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Opposing_Side_3PCS",
+  "folder": "Neutral_Side_4PCS",
   "choreoAuto": false
 }
