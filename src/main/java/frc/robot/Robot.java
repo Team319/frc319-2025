@@ -33,6 +33,8 @@ public class Robot extends LoggedRobot {
   private RobotContainer m_robotContainer;
   private Pigeon2 m_pigeon;
 
+  public boolean hasBeenEnabled = false;
+
   @Override
   public void robotInit() {
 
@@ -75,12 +77,36 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void disabledInit() {}
+  
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+      
+   if (!hasBeenEnabled) {
+    Optional<Alliance> allianceColor = DriverStation.getAlliance();
+    allianceColor.ifPresent(alliance -> {
+      if (alliance == Alliance.Red) {
+        m_pigeon.setYaw(0.0);
+        System.out.println("Red Alliance: Setting heading to 0 degrees.");
+      } else if (alliance == Alliance.Blue) {
+        m_pigeon.setYaw(180.0);
+        System.out.println("Blue Alliance: Setting heading to 180 degrees.");
+      }
+    });
+
+     if(!allianceColor.isPresent()){
+       System.out.println("Alliance color is not set yet.");
+     }
+   }
+
+  
+  }
 
   @Override
-  public void disabledExit() {}
+  public void disabledExit() {
+    hasBeenEnabled = true;
+
+  }
 
   @Override
   public void autonomousInit() {
@@ -90,21 +116,7 @@ public class Robot extends LoggedRobot {
      if (m_autonomousCommand != null) {
         m_autonomousCommand.schedule();
     }
-   
-    // Optional<Alliance> allianceColor = DriverStation.getAlliance();
-    // allianceColor.ifPresent(alliance -> {
-    //   if (alliance == Alliance.Red) {
-    //     //m_pigeon.setYaw(0.0);
-    //     System.out.println("Red Alliance: Setting heading to 0 degrees.");
-    //   } else if (alliance == Alliance.Blue) {
-    //     //m_pigeon.setYaw(180.0);
-    //     System.out.println("Blue Alliance: Setting heading to 180 degrees.");
-    //   }
-    // });
 
-    // if(!allianceColor.isPresent()){
-    //   System.out.println("Alliance color is not set yet.");
-    // }
 
   }
 
