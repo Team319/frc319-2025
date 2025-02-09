@@ -18,7 +18,6 @@ import static edu.wpi.first.units.Units.*;
 import java.util.function.DoubleSupplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
@@ -39,7 +38,6 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -499,19 +497,20 @@ public class Drive extends SubsystemBase {
 
    boolean isTargetVisible = Limelight.isValidTargetSeen(LimelightConstants.Device.REEF);
 
-    if(false/*isTargetVisible*/){
+   /*  if(false/*isTargetVisible){
       //System.out.println("Target Visible, use limelight data to automatically control heading");
       theta = Limelight.getHorizontalOffset(LimelightConstants.Device.REEF);
 
       return headingPID.calculate(theta, 0.0); // try and make the Horizontal Offset 0, meaning the target is centered
     }
     else{
+      */
       //System.out.println("Target Not Visible, using odometry and pose for best guess");
       
       //System.out.println("Robot x:" + getPose().getTranslation().getX() + "Robot y:" + getPose().getTranslation().getY()  );
       Translation2d difference = getCurrentTargetLocation().minus(getPose().getTranslation());
       theta = difference.rotateBy(Rotation2d.fromRadians(Math.PI)).getAngle().getRadians();
-    }
+    //}
     return headingPID.calculate(getRotation().getRadians(), theta);
   }
 
