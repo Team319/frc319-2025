@@ -45,11 +45,59 @@
           "data": {
             "pathName": "Opposing_E_L4_Loading"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Opposing_Loading_D"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Opposing_D_Loading"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Opposing_Loading_C"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Opposing_C_loading"
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Opposing_Side_2PCS",
+  "folder": "Opposing_Side_4PCS",
   "choreoAuto": false
 }

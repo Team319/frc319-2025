@@ -45,11 +45,35 @@
           "data": {
             "pathName": "Opposing_E_L4_Loading"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Loading_G_L4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Opposing_G_L4_Loading"
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Opposing_Side_2PCS",
+  "folder": "Opposing_Side_3PCS",
   "choreoAuto": false
 }
