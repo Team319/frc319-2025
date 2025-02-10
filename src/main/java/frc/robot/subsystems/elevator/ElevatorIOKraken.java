@@ -45,7 +45,7 @@ public class ElevatorIOKraken implements ElevatorIO {
             elevatorLead.getConfigurator().apply(elevatorConfigs);
             elevatorFollow.getConfigurator().apply(elevatorConfigs);
 
-            elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), false));
+            elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), true));//TODO: Make sure this is correct
 
             motorStatorCurrent = elevatorLead.getStatorCurrent();
             motorPosition = elevatorLead.getPosition();
