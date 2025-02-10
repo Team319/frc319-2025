@@ -1,4 +1,4 @@
-package frc.robot.subsystems.algae;
+package frc.robot.subsystems.algaePivot;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
@@ -9,10 +9,10 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Current;
-import frc.robot.Constants.algaePivotConstants;
+import frc.robot.Constants.AlgaePivotConstants;
 
 public class AlgaePivotIOKraken implements AlgaePivotIO {
-        private TalonFX AlgaePivotMotor;
+        private TalonFX algaePivotMotor;
         private StatusSignal<Current> motorStatorCurrent;
         private StatusSignal<Angle> motorPosition;
         
@@ -21,30 +21,30 @@ public class AlgaePivotIOKraken implements AlgaePivotIO {
         }
     
         public void setup(){
-            AlgaePivotMotor = new TalonFX(20);
+            algaePivotMotor = new TalonFX(20);
     
             TalonFXConfiguration algaePivotConfigs = new TalonFXConfiguration();
-            AlgaePivotMotor.getConfigurator().apply(AlgaePivotConfigs);
+            algaePivotMotor.getConfigurator().apply(algaePivotConfigs);
     
-            AlgaePivotConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-            AlgaePivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+            algaePivotConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+            algaePivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     
-            AlgaePivotConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
-            AlgaePivotConfigs.CurrentLimits.StatorCurrentLimit = 40;
+            algaePivotConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
+            algaePivotConfigs.CurrentLimits.StatorCurrentLimit = 40;
 
             configurePID(AlgaePivotConstants.PID.kPUp,AlgaePivotConstants.PID.kIUp,AlgaePivotConstants.PID.kDUp,AlgaePivotConstants.PID.kFFUp);
     
-            AlgaePivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-            AlgaePivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = AlgaePivotConstants.Setpoints.topLimit;
-            AlgaePivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-            AlgaePivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = AlgaePivotConstants.Setpoints.bottomLimit;
+            algaePivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+            algaePivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = AlgaePivotConstants.Setpoints.topLimit;
+            algaePivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+            algaePivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = AlgaePivotConstants.Setpoints.bottomLimit;
     
-            AlgaePivotMotor.getConfigurator().apply(AlgaePivotConfigs);
+            algaePivotMotor.getConfigurator().apply(algaePivotConfigs);
 
-            motorStatorCurrent = AlgaePivotMotor.getStatorCurrent();
-            motorPosition = AlgaePivotMotor.getPosition();
+            motorStatorCurrent = algaePivotMotor.getStatorCurrent();
+            motorPosition = algaePivotMotor.getPosition();
             BaseStatusSignal.setUpdateFrequencyForAll(50, motorPosition, motorStatorCurrent);
-            AlgaePivotMotor.optimizeBusUtilization();
+            algaePivotMotor.optimizeBusUtilization();
         }
     
         @Override
@@ -61,22 +61,22 @@ public class AlgaePivotIOKraken implements AlgaePivotIO {
 
             BaseStatusSignal.refreshAll(motorStatorCurrent, motorPosition);
             // Updates all of the inputs/data points being monitored about the motor
-            inputs.AlgaePivotMotorStatorCurrent = motorStatorCurrent.getValueAsDouble();
-            inputs.AlgaePivotMotorPosition = motorPosition.getValueAsDouble();
+            inputs.algaePivotMotorStatorCurrent = motorStatorCurrent.getValueAsDouble();
+            inputs.algaePivotMotorPosition = motorPosition.getValueAsDouble();
     }
 
     public void stop(){
-        AlgaePivotMotor.stopMotor();
+        algaePivotMotor.stopMotor();
     }
 
     @Override
     public void setPO(double PO) {
-      AlgaePivotMotor.set(PO);
+      algaePivotMotor.set(PO);
     }
 
     @Override
     public void setPosition(double position) {
-      AlgaePivotMotor.setPosition(position);
+      algaePivotMotor.setPosition(position);
     }
 
     @Override
@@ -86,6 +86,6 @@ public class AlgaePivotIOKraken implements AlgaePivotIO {
 
     @Override
     public double getVelocity() {
-      return AlgaePivotMotor.getVelocity().getValueAsDouble();
+      return algaePivotMotor.getVelocity().getValueAsDouble();
     }
 }

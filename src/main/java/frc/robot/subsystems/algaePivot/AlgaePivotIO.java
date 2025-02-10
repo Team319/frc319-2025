@@ -1,4 +1,4 @@
-package frc.robot.subsystems.algae;
+package frc.robot.subsystems.algaePivot;
 
 public interface AlgaePivotIO {
 
@@ -18,8 +18,8 @@ public interface AlgaePivotIO {
         public double outputCurrentAmps = 0.0; // Current applied to the motor
         public double position = 0.0; // Position of the algaePivot
         public double velocity = 0.0; // Velocity of the algaePivot
-        public double algaeMotorStatorCurrent;
-        public double algaeMotorPosition;
+        public double algaePivotMotorStatorCurrent;
+        public double algaePivotMotorPosition;
     }
 
     public default void updateInputs(AlgaePivotIOInputs inputs) {}
