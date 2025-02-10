@@ -9,7 +9,15 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.commands.DriveCommands;
-
+import frc.robot.subsystems.algaePivot.AlgaePivot;
+import frc.robot.subsystems.algaePivot.AlgaePivotIO;
+import frc.robot.subsystems.algaePivot.AlgaePivotIOKraken;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIO;
+import frc.robot.subsystems.climber.ClimberIOKraken;
+import frc.robot.subsystems.coralPivot.CoralPivot;
+import frc.robot.subsystems.coralPivot.CoralPivotIO;
+import frc.robot.subsystems.coralPivot.CoralPivotIOKraken;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
@@ -28,6 +36,9 @@ public class RobotContainer {
   // Subsystems
   public final Drive drive;
   public final Elevator elevator;
+  public final AlgaePivot algaePivot;
+  public final Climber climber;
+  public final CoralPivot coralPivot;
 
   // Controller
   public final CommandXboxController driverController = new CommandXboxController(0);
@@ -53,6 +64,18 @@ public class RobotContainer {
             elevator =
                 new Elevator(
                 new ElevatorIO() {});
+
+          algaePivot =
+                new AlgaePivot(
+                new AlgaePivotIO() {});
+          
+          climber =
+                new Climber(
+                new ClimberIO() {});
+          
+          coralPivot =
+                new CoralPivot(
+                new CoralPivotIO() {});  
           break;
   
         case DEVBOT:
@@ -69,11 +92,23 @@ public class RobotContainer {
                 // new ModuleIOTalonFX(0),
                 // new ModuleIOTalonFX(1),
                 // new ModuleIOTalonFX(2),
-                // new ModuleIOTalonFX(3));
+                // new ModuleIOTalonFX(3)); TODO: Uncomment when we have drivetrain
 
-                elevator =
+          elevator =
                 new Elevator(
                 new ElevatorIOKraken() {});
+
+          algaePivot =
+                new AlgaePivot(
+                new AlgaePivotIOKraken() {});
+          
+          climber =
+                new Climber(
+                new ClimberIOKraken() {});
+          
+          coralPivot =
+                new CoralPivot(
+                new CoralPivotIOKraken() {});    
           break;
       }
   
