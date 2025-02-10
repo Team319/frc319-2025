@@ -35,11 +35,11 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             configurePID(CoralPivotConstants.PID.kPUp,CoralPivotConstants.PID.kIUp,CoralPivotConstants.PID.kDUp,CoralPivotConstants.PID.kFFUp);
     
             coralPivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-            coralPivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ElevatorConstants.Setpoints.topLimit;
+            coralPivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = CoralPivotConstants.Setpoints.topLimit;
             coralPivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-            coralPivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ElevatorConstants.Setpoints.bottomLimit;
+            coralPivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = CoralPivotConstants.Setpoints.bottomLimit;
     
-            coralPivotMotor.getConfigurator().apply(elevatorConfigs);
+            coralPivotMotor.getConfigurator().apply(coralPivotConfigs);
 
             motorStatorCurrent = coralPivotMotor.getStatorCurrent();
             motorPosition = coralPivotMotor.getPosition();
@@ -49,7 +49,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
     
         @Override
         public void updateInputs(CoralPivotIOInputs inputs) {
-            inputs.kPUp = CoralPivotonstants.PID.kPUp;
+            inputs.kPUp = CoralPivotConstants.PID.kPUp;
             inputs.kIUp = CoralPivotConstants.PID.kIUp;
             inputs.kDUp = CoralPivotConstants.PID.kDUp;
             inputs.kFFUp = CoralPivotConstants.PID.kFFUp;

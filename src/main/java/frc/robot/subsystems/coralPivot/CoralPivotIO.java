@@ -19,7 +19,7 @@ public interface CoralPivotIO {
         public double position = 0.0; // Position of the coralPivot
         public double velocity = 0.0; // Velocity of the coralPivot
         public double coralPivotMotorStatorCurrent;
-        public double elevatorMotorPosition;
+        public double coralPivotMotorPosition;
     }
 
     public default void updateInputs(CoralPivotIOInputs inputs) {}
