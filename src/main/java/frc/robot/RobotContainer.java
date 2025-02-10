@@ -14,6 +14,9 @@ import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOKraken;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -24,6 +27,7 @@ public class RobotContainer {
 
   // Subsystems
   public final Drive drive;
+  public final Elevator elevator;
 
   // Controller
   public final CommandXboxController driverController = new CommandXboxController(0);
@@ -45,6 +49,10 @@ public class RobotContainer {
                 new ModuleIOSim(),
                 new ModuleIOSim(),
                 new ModuleIOSim());
+
+            elevator =
+                new Elevator(
+                new ElevatorIO() {});
           break;
   
         case DEVBOT:
@@ -52,11 +60,20 @@ public class RobotContainer {
         default:
           drive =
             new Drive(
-                new GyroIOPigeon2() {},
-                new ModuleIOTalonFX(0),
-                new ModuleIOTalonFX(1),
-                new ModuleIOTalonFX(2),
-                new ModuleIOTalonFX(3));
+                new GyroIO() {},
+                new ModuleIOSim(),
+                new ModuleIOSim(),
+                new ModuleIOSim(),
+                new ModuleIOSim());
+                // new GyroIOPigeon2() {},
+                // new ModuleIOTalonFX(0),
+                // new ModuleIOTalonFX(1),
+                // new ModuleIOTalonFX(2),
+                // new ModuleIOTalonFX(3));
+
+                elevator =
+                new Elevator(
+                new ElevatorIOKraken() {});
           break;
       }
   
@@ -90,13 +107,40 @@ public class RobotContainer {
           break;
       }
   
-        driverController.start().onTrue(Commands.runOnce(
+        driverController.start().whileTrue(Commands.runOnce(
             ()-> { 
               drive.resetHeading();
             }
             )
           ); 
 
+          driverController.y().whileTrue(Commands.run(
+            ()-> {
+              elevator.setPO(.5);
+            }
+            )
+          );
+
+          driverController.y().whileFalse(Commands.run(
+            ()-> {
+              elevator.setPO(0);
+            }
+            )
+          );
+
+          driverController.a().whileTrue(Commands.run(
+            ()-> {
+              elevator.setPO(-.5);
+            }
+            )
+          );
+
+          driverController.a().onFalse(Commands.run(
+            ()-> {
+              elevator.setPO(0);
+            }
+            )
+          );
   }
 
   public Command getAutonomousCommand() {

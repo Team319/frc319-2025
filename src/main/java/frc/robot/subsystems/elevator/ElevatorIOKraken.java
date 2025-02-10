@@ -19,21 +19,23 @@ public class ElevatorIOKraken implements ElevatorIO {
         
         public ElevatorIOKraken(){
             setup();
+            setFollow();
         }
     
         public void setup(){
             elevatorLead = new TalonFX(13);
-            elevatorFollow = new TalonFX(14);    
-    
+            elevatorFollow = new TalonFX(14);
+                
             TalonFXConfiguration elevatorConfigs = new TalonFXConfiguration();
-            elevatorLead.getConfigurator().apply(elevatorConfigs);
-            elevatorFollow.getConfigurator().apply(elevatorConfigs);
-    
+
             elevatorConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
             elevatorConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     
             elevatorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             elevatorConfigs.CurrentLimits.StatorCurrentLimit = 40;
+
+            elevatorLead.getConfigurator().apply(elevatorConfigs);
+            elevatorFollow.getConfigurator().apply(elevatorConfigs);
 
             configurePID(ElevatorConstants.PID.kPUp,ElevatorConstants.PID.kIUp,ElevatorConstants.PID.kDUp,ElevatorConstants.PID.kFFUp);
     
@@ -41,11 +43,6 @@ public class ElevatorIOKraken implements ElevatorIO {
             elevatorConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ElevatorConstants.Setpoints.topLimit;
             elevatorConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
             elevatorConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ElevatorConstants.Setpoints.bottomLimit;
-    
-            elevatorLead.getConfigurator().apply(elevatorConfigs);
-            elevatorFollow.getConfigurator().apply(elevatorConfigs);
-
-            elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), false));
 
             motorStatorCurrent = elevatorLead.getStatorCurrent();
             motorPosition = elevatorLead.getPosition();
@@ -53,6 +50,10 @@ public class ElevatorIOKraken implements ElevatorIO {
             elevatorLead.optimizeBusUtilization();
         }
     
+        public void setFollow(){
+          elevatorFollow.setControl(new Follower(elevatorLead.getDeviceID(), true)); //TODO: Make sure this is correct
+        }
+
         @Override
         public void updateInputs(ElevatorIOInputs inputs) {
             inputs.kPUp = ElevatorConstants.PID.kPUp;
