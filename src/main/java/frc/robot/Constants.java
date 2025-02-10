@@ -117,4 +117,33 @@ public class Constants {
     }
 
   }
+  public static class AlgaePivotConstants{
+    public static class PID {
+      public static final double kPUp = 0.2;
+      public static final double kIUp = 0;
+      public static final double kDUp = 0;
+      public static final double kFFUp = 0.0;
+      public static final int iZoneUp = 0;
+
+      public static final double kPDown = kPUp;
+      public static final double kIDown = kIUp;
+      public static final double kDDown = kDUp;
+      public static final double kFFDown = kFFUp;
+      public static final int iZoneDown = iZoneUp;
+      
+    }
+
+    public static class Setpoints {
+      public static final float topLimit = (float)0.0;
+      public static final float bottomLimit = (float)0.0;
+
+    }
+
+    public static class SoftLimits {
+      public static final float forwardSoftLimit = Setpoints.topLimit;
+      public static final float reverseSoftLimit = Setpoints.bottomLimit;
+    }
+
+  }
+
 }
