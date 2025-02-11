@@ -42,7 +42,7 @@ public class RobotContainer {
 
   // Controller
   public final CommandXboxController driverController = new CommandXboxController(0);
-  //public final CommandXboxController operatorController = new CommandXboxController(1);
+  public final CommandXboxController operatorController = new CommandXboxController(1);
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser; // AdvantageKit Dependency
@@ -129,7 +129,8 @@ public class RobotContainer {
         case DEVBOT:
         case COMPBOT:
         default:
-        /*  ============================= Defaults ============================= */
+
+        /*  ============================= Drive ============================= */
   
         drive.setDefaultCommand(
           DriveCommands.joystickDrive(
@@ -147,7 +148,9 @@ public class RobotContainer {
               drive.resetHeading();
             }
             )
-          ); 
+          );
+
+        /*  ============================= Elevator ============================= */
 
           driverController.y().whileTrue(Commands.run(
             ()-> {
@@ -176,8 +179,159 @@ public class RobotContainer {
             }
             )
           );
+
+/*  ============================= Climber ============================= */
+
+          operatorController.y().whileTrue(Commands.run(
+            ()-> {
+              climber.setPO(.5);
+            }
+            )
+          );
+
+          operatorController.y().whileFalse(Commands.run(
+            ()-> {
+              climber.setPO(0);
+            }
+            )
+          );
+
+          operatorController.a().whileTrue(Commands.run(
+            ()-> {
+              climber.setPO(-.5);
+            }
+            )
+          );
+
+          operatorController.a().onFalse(Commands.run(
+            ()-> {
+              climber.setPO(0);
+            }
+            )
+          );
+
+  /*  ============================= Algae Pivot ============================= */
+
+  operatorController.povUp().whileTrue(Commands.run(
+    ()-> {
+      algaePivot.setPO(.5);
+    }
+    )
+  );
+
+  operatorController.povUp().whileFalse(Commands.run(
+    ()-> {
+      algaePivot.setPO(0);
+    }
+    )
+  );
+
+  operatorController.povDown().whileTrue(Commands.run(
+    ()-> {
+      algaePivot.setPO(-.5);
+    }
+    )
+  );
+
+  operatorController.povDown().onFalse(Commands.run(
+    ()-> {
+      algaePivot.setPO(0);
+    }
+    )
+  );
+
+  /*  ============================= Coral Pivot ============================= */
+
+  driverController.povUp().whileTrue(Commands.run(
+    ()-> {
+      coralPivot.setPO(.5);
+    }
+    )
+  );
+
+  driverController.povUp().whileFalse(Commands.run(
+    ()-> {
+      coralPivot.setPO(0);
+    }
+    )
+  );
+
+  driverController.povDown().whileTrue(Commands.run(
+    ()-> {
+      coralPivot.setPO(-.5);
+    }
+    )
+  );
+
+  driverController.povDown().onFalse(Commands.run(
+    ()-> {
+      coralPivot.setPO(0);
+    }
+    )
+  );
+
+  /*  ============================= Coral Rollers ============================= */
+
+ driverController.x().whileTrue(Commands.run(
+    ()-> {
+      //coralRollers.setPO(.5);
+    }
+    )
+  );
+
+  driverController.x().whileFalse(Commands.run(
+    ()-> {
+      //coralRollers.setPO(0);
+    }
+    )
+  );
+
+  driverController.b().whileTrue(Commands.run(
+    ()-> {
+      //coralRollers.setPO(-.5);
+    }
+    )
+  );
+
+  driverController.b().onFalse(Commands.run(
+    ()-> {
+      //coralRollers.setPO(0);
+    }
+    )
+  );
+
+    /*  ============================= Algae Rollers ============================= */
+
+    operatorController.x().whileTrue(Commands.run(
+      ()-> {
+        //algaeRollers.setPO(.5);
+      }
+      )
+    );
+  
+    operatorController.x().whileFalse(Commands.run(
+      ()-> {
+        //algaeRollers.setPO(0);
+      }
+      )
+    );
+  
+    operatorController.b().whileTrue(Commands.run(
+      ()-> {
+        //algaeRollers.setPO(-.5);
+      }
+      )
+    );
+  
+    operatorController.b().onFalse(Commands.run(
+      ()-> {
+        //algaeRollers.setPO(0);
+      }
+      )
+    );
   }
 
+  
   public Command getAutonomousCommand() {
     return autoChooser.get();
   }
