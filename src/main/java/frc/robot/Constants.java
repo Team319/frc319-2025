@@ -106,8 +106,8 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)0.0;
-      public static final float bottomLimit = (float)0.0;
+      public static final float topLimit = (float)100.0;
+      public static final float bottomLimit = (float)-100.0;
 
     }
 
@@ -190,8 +190,8 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)0.0;
-      public static final float bottomLimit = (float)0.0;
+      public static final float topLimit = (float)100.0;
+      public static final float bottomLimit = (float)-100.0;
 
     }
 
