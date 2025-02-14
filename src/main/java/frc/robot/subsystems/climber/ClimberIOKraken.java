@@ -3,6 +3,7 @@ package frc.robot.subsystems.climber;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -23,7 +24,9 @@ public class ClimberIOKraken implements ClimberIO {
     
         public void setup(){
             climberLead = new TalonFX(18);
-            climberFollow = new TalonFX(19);    
+            climberFollow = new TalonFX(19);  
+            climberLead.setControl(new Follower(climberFollow.getDeviceID(), true)); //TODO: Make sure this is correct
+  
     
             TalonFXConfiguration climberConfigs = new TalonFXConfiguration();
             climberLead.getConfigurator().apply(climberConfigs);
@@ -78,7 +81,9 @@ public class ClimberIOKraken implements ClimberIO {
 
     @Override
     public void setPO(double PO) {
-      climberLead.set(PO);
+      DutyCycleOut m_request = new DutyCycleOut(PO);
+      climberFollow.setControl(m_request);
+
     }
 
     @Override
