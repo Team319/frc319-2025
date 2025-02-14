@@ -25,12 +25,11 @@ public class ClimberIOKraken implements ClimberIO {
         public void setup(){
             climberLead = new TalonFX(18);
             climberFollow = new TalonFX(19);  
-            climberLead.setControl(new Follower(climberFollow.getDeviceID(), true)); //TODO: Make sure this is correct
   
     
             TalonFXConfiguration climberConfigs = new TalonFXConfiguration();
             climberLead.getConfigurator().apply(climberConfigs);
-            climberFollow.getConfigurator().apply(climberConfigs);
+            //climberFollow.getConfigurator().apply(climberConfigs);
     
             climberConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
             climberConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
@@ -48,12 +47,13 @@ public class ClimberIOKraken implements ClimberIO {
             climberLead.getConfigurator().apply(climberConfigs);
             climberFollow.getConfigurator().apply(climberConfigs);
 
-            climberFollow.setControl(new Follower(climberLead.getDeviceID(), false));
-
             motorStatorCurrent = climberLead.getStatorCurrent();
             motorPosition = climberLead.getPosition();
             BaseStatusSignal.setUpdateFrequencyForAll(50, motorPosition, motorStatorCurrent);
             climberLead.optimizeBusUtilization();
+
+            climberLead.setControl(new Follower(climberFollow.getDeviceID(), true)); //TODO: Make sure this is correct
+
         }
     
         @Override
