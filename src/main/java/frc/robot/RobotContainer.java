@@ -12,6 +12,9 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.algaePivot.AlgaePivot;
 import frc.robot.subsystems.algaePivot.AlgaePivotIO;
 import frc.robot.subsystems.algaePivot.AlgaePivotIOKraken;
+import frc.robot.subsystems.algaeRoller.AlgaeRoller;
+import frc.robot.subsystems.algaeRoller.AlgaeRollerIO;
+import frc.robot.subsystems.algaeRoller.AlgaeRollerIOKraken;
 import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.climber.ClimberIO;
 import frc.robot.subsystems.climber.ClimberIOKraken;
@@ -214,28 +217,28 @@ public class RobotContainer {
 
   operatorController.povUp().whileTrue(Commands.run(
     ()-> {
-      algaePivot.setPO(.5);
+      //algaePivot.setPO(.5);
     }
     )
   );
 
   operatorController.povUp().whileFalse(Commands.run(
     ()-> {
-      algaePivot.setPO(0);
+      //algaePivot.setPO(0);
     }
     )
   );
 
   operatorController.povDown().whileTrue(Commands.run(
     ()-> {
-      algaePivot.setPO(-.5);
+      //algaePivot.setPO(-.5);
     }
     )
   );
 
   operatorController.povDown().onFalse(Commands.run(
     ()-> {
-      algaePivot.setPO(0);
+      //algaePivot.setPO(0);
     }
     )
   );
@@ -244,28 +247,28 @@ public class RobotContainer {
 
   driverController.povUp().whileTrue(Commands.run(
     ()-> {
-      coralPivot.setPO(.5);
+      //coralPivot.setPO(.5);
     }
     )
   );
 
   driverController.povUp().whileFalse(Commands.run(
     ()-> {
-      coralPivot.setPO(0);
+     // coralPivot.setPO(0);
     }
     )
   );
 
   driverController.povDown().whileTrue(Commands.run(
     ()-> {
-      coralPivot.setPO(-.5);
+     // coralPivot.setPO(-.5);
     }
     )
   );
 
   driverController.povDown().onFalse(Commands.run(
     ()-> {
-      coralPivot.setPO(0);
+      //coralPivot.setPO(0);
     }
     )
   );
