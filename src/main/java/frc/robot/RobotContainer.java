@@ -86,32 +86,26 @@ public class RobotContainer {
         default:
           drive =
             new Drive(
-                new GyroIO() {},
-                new ModuleIOSim(),
-                new ModuleIOSim(),
-                new ModuleIOSim(),
-                new ModuleIOSim());
-                // new GyroIOPigeon2() {},
-                // new ModuleIOTalonFX(0),
-                // new ModuleIOTalonFX(1),
-                // new ModuleIOTalonFX(2),
-                // new ModuleIOTalonFX(3)); TODO: Uncomment when we have drivetrain
-
+                 new GyroIOPigeon2() {},
+                 new ModuleIOTalonFX(0),
+                 new ModuleIOTalonFX(1),
+                 new ModuleIOTalonFX(2),
+                 new ModuleIOTalonFX(3)); 
           elevator =
                 new Elevator(
-                new ElevatorIOKraken() {});
+                new ElevatorIO() {});
 
           algaePivot =
                 new AlgaePivot(
-                new AlgaePivotIOKraken() {});
+                new AlgaePivotIO() {});
           
           climber =
                 new Climber(
-                new ClimberIOKraken() {});
+                new ClimberIO() {});
           
           coralPivot =
                 new CoralPivot(
-                new CoralPivotIOKraken() {});    
+                new CoralPivotIO() {});    
           break;
       }
   
