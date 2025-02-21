@@ -3,6 +3,7 @@ package frc.robot.subsystems.climber;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -23,11 +24,12 @@ public class ClimberIOKraken implements ClimberIO {
     
         public void setup(){
             climberLead = new TalonFX(18);
-            climberFollow = new TalonFX(19);    
+            climberFollow = new TalonFX(19);  
+  
     
             TalonFXConfiguration climberConfigs = new TalonFXConfiguration();
             climberLead.getConfigurator().apply(climberConfigs);
-            climberFollow.getConfigurator().apply(climberConfigs);
+            //climberFollow.getConfigurator().apply(climberConfigs);
     
             climberConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
             climberConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
@@ -45,12 +47,13 @@ public class ClimberIOKraken implements ClimberIO {
             climberLead.getConfigurator().apply(climberConfigs);
             climberFollow.getConfigurator().apply(climberConfigs);
 
-            climberFollow.setControl(new Follower(climberLead.getDeviceID(), false));
-
             motorStatorCurrent = climberLead.getStatorCurrent();
             motorPosition = climberLead.getPosition();
             BaseStatusSignal.setUpdateFrequencyForAll(50, motorPosition, motorStatorCurrent);
             climberLead.optimizeBusUtilization();
+
+            climberLead.setControl(new Follower(climberFollow.getDeviceID(), true)); //TODO: Make sure this is correct
+
         }
     
         @Override
@@ -78,7 +81,9 @@ public class ClimberIOKraken implements ClimberIO {
 
     @Override
     public void setPO(double PO) {
-      climberLead.set(PO);
+      DutyCycleOut m_request = new DutyCycleOut(PO);
+      climberFollow.setControl(m_request);
+
     }
 
     @Override
