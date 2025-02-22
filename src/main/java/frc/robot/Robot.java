@@ -38,7 +38,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() {
 
-    m_pigeon = new Pigeon2(12);
+    m_pigeon = new Pigeon2(0);
     //=============================================
     // START : Required setup for AdvantageKit Logging
     //=============================================
