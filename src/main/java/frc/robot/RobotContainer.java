@@ -157,28 +157,30 @@ public class RobotContainer {
 
           driverController.y().whileTrue(Commands.run(
             ()-> {
-              elevator.setPO(.5);
+               //elevator.setPO(.5);
+               elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit - 10);
             }
             )
           );
 
           driverController.y().whileFalse(Commands.run(
             ()-> {
-              elevator.setPO(0);
+             // elevator.setPO(0);
             }
             )
           );
 
           driverController.a().whileTrue(Commands.run(
             ()-> {
-              elevator.setPO(-.5);
+              //elevator.setPO(-.5);
+              elevator.runPosition(0);
             }
             )
           );
 
           driverController.a().onFalse(Commands.run(
             ()-> {
-              elevator.setPO(0);
+             // elevator.setPO(0);
             }
             )
           );

@@ -26,10 +26,9 @@ public class ClimberIOKraken implements ClimberIO {
             climberLead = new TalonFX(18);
             climberFollow = new TalonFX(19);  
   
-    
+            climberLead.setControl(new Follower(climberFollow.getDeviceID(), false));
+
             TalonFXConfiguration climberConfigs = new TalonFXConfiguration();
-            climberLead.getConfigurator().apply(climberConfigs);
-            //climberFollow.getConfigurator().apply(climberConfigs);
     
             climberConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
             climberConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
@@ -37,7 +36,7 @@ public class ClimberIOKraken implements ClimberIO {
             climberConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             climberConfigs.CurrentLimits.StatorCurrentLimit = 40;
 
-            configurePID(ClimberConstants.PID.kPUp,ClimberConstants.PID.kIUp,ClimberConstants.PID.kDUp,ClimberConstants.PID.kFFUp);
+            configurePID(ClimberConstants.Gains.kPUp,ClimberConstants.Gains.kIUp,ClimberConstants.Gains.kDUp,ClimberConstants.Gains.kFFUp);
     
             climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
             climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ClimberConstants.Setpoints.topLimit;
@@ -45,28 +44,29 @@ public class ClimberIOKraken implements ClimberIO {
             climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ClimberConstants.Setpoints.bottomLimit;
     
             climberLead.getConfigurator().apply(climberConfigs);
-            climberFollow.getConfigurator().apply(climberConfigs);
+            //climberFollow.getConfigurator().apply(climberConfigs);
 
             motorStatorCurrent = climberLead.getStatorCurrent();
             motorPosition = climberLead.getPosition();
-            BaseStatusSignal.setUpdateFrequencyForAll(50, motorPosition, motorStatorCurrent);
-            climberLead.optimizeBusUtilization();
 
-            climberLead.setControl(new Follower(climberFollow.getDeviceID(), true)); //TODO: Make sure this is correct
+            //Causes problems with followera
+            //BaseStatusSignal.setUpdateFrequencyForAll(50, motorPosition, motorStatorCurrent);
+            //climberLead.optimizeBusUtilization();
+
 
         }
     
         @Override
         public void updateInputs(ClimberIOInputs inputs) {
-            inputs.kPUp = ClimberConstants.PID.kPUp;
-            inputs.kIUp = ClimberConstants.PID.kIUp;
-            inputs.kDUp = ClimberConstants.PID.kDUp;
-            inputs.kFFUp = ClimberConstants.PID.kFFUp;
+            inputs.kPUp = ClimberConstants.Gains.kPUp;
+            inputs.kIUp = ClimberConstants.Gains.kIUp;
+            inputs.kDUp = ClimberConstants.Gains.kDUp;
+            inputs.kFFUp = ClimberConstants.Gains.kFFUp;
     
-            inputs.kPDown = ClimberConstants.PID.kPDown;
-            inputs.kIDown = ClimberConstants.PID.kIDown;
-            inputs.kDDown = ClimberConstants.PID.kDDown;
-            inputs.kFFDown = ClimberConstants.PID.kFFDown;
+            inputs.kPDown = ClimberConstants.Gains.kPDown;
+            inputs.kIDown = ClimberConstants.Gains.kIDown;
+            inputs.kDDown = ClimberConstants.Gains.kDDown;
+            inputs.kFFDown = ClimberConstants.Gains.kFFDown;
 
             BaseStatusSignal.refreshAll(motorStatorCurrent, motorPosition);
             // Updates all of the inputs/data points being monitored about the motor

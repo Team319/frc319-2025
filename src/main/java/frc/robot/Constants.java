@@ -12,9 +12,13 @@ import edu.wpi.first.wpilibj.RobotBase;
 
 /** Add your docs here. */
 public class Constants {
+
+  // Enable this for Tunable Values
+  public static final boolean tuningMode = true;
+
   public static final double loopPeriodSecs = 0.02;
   private static RobotType robotType = RobotType.COMPBOT;
-  public static final boolean tuningMode = false;
+  
 
   public static RobotType getRobot() {
     if ( RobotBase.isReal() && robotType == RobotType.SIMBOT) {
@@ -118,8 +122,13 @@ public class Constants {
 
   }
   public static class ElevatorConstants{
-    public static class PID {
-      public static final double kPUp = 0.2;
+    public static class Gains {
+      public static final double kS = 0.0; // Volts : Voltage needed to overcome static friction
+      public static final double kG = 0.0; // Volts : Voltage needed to overcome gravity
+      public static final double kV = 0.0; // Volts : Volts per radian per second
+      public static final double kA = 0.0; // Volts : Volts per radian per second squared
+      
+      public static final double kPUp = 2;
       public static final double kIUp = 0;
       public static final double kDUp = 0;
       public static final double kFFUp = 0.0;
@@ -174,7 +183,11 @@ public class Constants {
 
   }
   public static class ClimberConstants{
-    public static class PID {
+    public static class Gains {
+      public static final double kS = 0.0; // Volts : Voltage needed to overcome static friction
+      public static final double kV = 0.0; // Volts : Volts per radian per second
+      public static final double kA = 0.0; // Volts : Volts per radian per second squared
+
       public static final double kPUp = 0.2;
       public static final double kIUp = 0;
       public static final double kDUp = 0;
@@ -203,7 +216,11 @@ public class Constants {
   }
 
   public static class AlgaeRollerConstants{
-    public static class PID {
+    public static class Gains {
+      public static final double kS = 0.0; // Volts : Voltage needed to overcome static friction
+      public static final double kV = 0.0; // Volts : Volts per radian per second
+      public static final double kA = 0.0; // Volts : Volts per radian per second squared
+
       public static final double kPUp = 0.2;
       public static final double kIUp = 0;
       public static final double kDUp = 0;

@@ -32,7 +32,7 @@ public class AlgaeRollerIOKraken implements AlgaeRollerIO {
             algaeRollerConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             algaeRollerConfigs.CurrentLimits.StatorCurrentLimit = 40;
 
-            configurePID(AlgaeRollerConstants.PID.kPUp,AlgaeRollerConstants.PID.kIUp,AlgaeRollerConstants.PID.kDUp,AlgaeRollerConstants.PID.kFFUp);
+            configurePID(AlgaeRollerConstants.Gains.kPUp,AlgaeRollerConstants.Gains.kIUp,AlgaeRollerConstants.Gains.kDUp,AlgaeRollerConstants.Gains.kFFUp);
     
             algaeRollerConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
             algaeRollerConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = AlgaeRollerConstants.Setpoints.topLimit;
@@ -49,15 +49,15 @@ public class AlgaeRollerIOKraken implements AlgaeRollerIO {
     
         @Override
         public void updateInputs(AlgaeRollerIOInputs inputs) {
-            inputs.kPUp = AlgaeRollerConstants.PID.kPUp;
-            inputs.kIUp = AlgaeRollerConstants.PID.kIUp;
-            inputs.kDUp = AlgaeRollerConstants.PID.kDUp;
-            inputs.kFFUp = AlgaeRollerConstants.PID.kFFUp;
+            inputs.kPUp = AlgaeRollerConstants.Gains.kPUp;
+            inputs.kIUp = AlgaeRollerConstants.Gains.kIUp;
+            inputs.kDUp = AlgaeRollerConstants.Gains.kDUp;
+            inputs.kFFUp = AlgaeRollerConstants.Gains.kFFUp;
     
-            inputs.kPDown = AlgaeRollerConstants.PID.kPDown;
-            inputs.kIDown = AlgaeRollerConstants.PID.kIDown;
-            inputs.kDDown = AlgaeRollerConstants.PID.kDDown;
-            inputs.kFFDown = AlgaeRollerConstants.PID.kFFDown;
+            inputs.kPDown = AlgaeRollerConstants.Gains.kPDown;
+            inputs.kIDown = AlgaeRollerConstants.Gains.kIDown;
+            inputs.kDDown = AlgaeRollerConstants.Gains.kDDown;
+            inputs.kFFDown = AlgaeRollerConstants.Gains.kFFDown;
 
             BaseStatusSignal.refreshAll(motorStatorCurrent, motorPosition);
             // Updates all of the inputs/data points being monitored about the motor
