@@ -20,8 +20,6 @@ public class AlgaePivotIOKraken implements AlgaePivotIO {
 
         private final PositionVoltage positionVoltage = new PositionVoltage(0.0);
             Slot0Configs slot0Configs = new Slot0Configs();
-
-
         
         public AlgaePivotIOKraken(){
             setup();
@@ -51,7 +49,7 @@ public class AlgaePivotIOKraken implements AlgaePivotIO {
             motorStatorCurrent = algaePivotMotor.getStatorCurrent();
             motorPosition = algaePivotMotor.getPosition();
             BaseStatusSignal.setUpdateFrequencyForAll(50, motorPosition, motorStatorCurrent);
-            algaePivotMotor.optimizeBusUtilization();
+            //algaePivotMotor.optimizeBusUtilization();
         }
     
         @Override
@@ -75,7 +73,7 @@ public class AlgaePivotIOKraken implements AlgaePivotIO {
     @Override
     public void configurePID(double kP, double kI, double kD){
 
-      System.out.println("[Elevator] Applying PID Values: kP=" + kP + " kI=" + kI + " kD=" + kD);
+      System.out.println("[AlgeaPivot] Applying PID Values: kP=" + kP + " kI=" + kI + " kD=" + kD);
       // Feedback gains
       slot0Configs.kP = kP;
       slot0Configs.kI = kI;

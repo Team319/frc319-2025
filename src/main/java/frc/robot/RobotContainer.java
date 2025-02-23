@@ -7,9 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-
+import frc.robot.Constants.AlgaePivotConstants;
+import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.commands.DriveCommands;
-
+import frc.robot.subsystems.coralPivot.CoralPivotIOKraken;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
@@ -158,124 +159,72 @@ public class RobotContainer {
 
         /*  ============================= Elevator ============================= */
 
-          driverController.y().whileTrue(Commands.run(
+          driverController.rightBumper().onTrue(Commands.runOnce(
             ()-> {
               // elevator.setPO(.05);
-               superstructure.elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit);
+              superstructure.elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit);
+            }
+            )
+          );
+
+          driverController.y().onTrue(Commands.runOnce(
+            ()-> {
+              // elevator.setPO(.05);
+               superstructure.elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit/2);
             }
             )
           );
 
           driverController.y().whileFalse(Commands.run(
             ()-> {
-              superstructure.elevator.setPO(0);
+             // superstructure.elevator.setPO(0);
             }
             )
           );
 
-          driverController.a().whileTrue(Commands.run(
+          driverController.a().onTrue(Commands.runOnce(
             ()-> {
               //elevator.setPO(-.05);
-              superstructure.elevator.runPosition(5);
+              superstructure.elevator.runPosition(Constants.ElevatorConstants.Setpoints.bottomLimit);
             }
             )
           );
 
           driverController.a().onFalse(Commands.run(
             ()-> {
-             superstructure.elevator.setPO(0);
+             //superstructure.elevator.setPO(0);
             }
             )
           );
-
-/*  ============================= Climber ============================= */
-
-          operatorController.y().whileTrue(Commands.run(
-            ()-> {
-              //climber.setPO(.5);
-              superstructure.climber.runPosition(Constants.ElevatorConstants.Setpoints.topLimit / 2 );
-            }
-            )
-          );
-
-          operatorController.y().whileFalse(Commands.run(
-            ()-> {
-              //climber.setPO(0);
-            }
-            )
-          );
-
-          operatorController.a().whileTrue(Commands.run(
-            ()-> {
-              //climber.setPO(-.5);
-              superstructure.climber.runPosition( 0.0 /*Constants.ElevatorConstants.Setpoints.bottomLimit / 2*/);
-            }
-            )
-          );
-
-          operatorController.a().onFalse(Commands.run(
-            ()-> {
-              //climber.setPO(0);
-            }
-            )
-          );
-
-  /*  ============================= Algae Pivot ============================= */
-
-  operatorController.povUp().whileTrue(Commands.run(
-    ()-> {
-      //algaePivot.setPO(.5);
-    }
-    )
-  );
-
-  operatorController.povUp().whileFalse(Commands.run(
-    ()-> {
-      //algaePivot.setPO(0);
-    }
-    )
-  );
-
-  operatorController.povDown().whileTrue(Commands.run(
-    ()-> {
-      //algaePivot.setPO(-.5);
-    }
-    )
-  );
-
-  operatorController.povDown().onFalse(Commands.run(
-    ()-> {
-      //algaePivot.setPO(0);
-    }
-    )
-  );
 
   /*  ============================= Coral Pivot ============================= */
 
-  driverController.povUp().whileTrue(Commands.run(
+  driverController.povUp().onTrue(Commands.runOnce(
     ()-> {
-      //coralPivot.setPO(.5);
+      //superstructure.coralPivot.setPO(.1);
+      superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.topLimit);
     }
     )
   );
 
   driverController.povUp().whileFalse(Commands.run(
     ()-> {
-     // coralPivot.setPO(0);
+     //superstructure.coralPivot.setPO(0);
     }
     )
   );
 
-  driverController.povDown().whileTrue(Commands.run(
+  driverController.povDown().onTrue(Commands.runOnce(
     ()-> {
-     // coralPivot.setPO(-.5);
+     //superstructure.coralPivot.setPO(-.1);
+     superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.bottomLimit/2.0);
     }
     )
   );
 
   driverController.povDown().onFalse(Commands.run(
     ()-> {
-      //coralPivot.setPO(0);
+      //superstructure.coralPivot.setPO(0);
     }
     )
   );
@@ -284,61 +233,126 @@ public class RobotContainer {
 
  driverController.x().whileTrue(Commands.run(
     ()-> {
-      //coralRollers.setPO(.5);
+      superstructure.coralRoller.setPO(.5);
     }
     )
   );
 
   driverController.x().whileFalse(Commands.run(
     ()-> {
-      //coralRollers.setPO(0);
+      superstructure.coralRoller.setPO(0);
     }
     )
   );
 
   driverController.b().whileTrue(Commands.run(
     ()-> {
-      //coralRollers.setPO(-.5);
+      superstructure.coralRoller.setPO(-.5);
     }
     )
   );
 
   driverController.b().onFalse(Commands.run(
     ()-> {
-      //coralRollers.setPO(0);
+      superstructure.coralRoller.setPO(0);
     }
     )
   );
+
+      /*  ============================= Algae Pivot ============================= */
+
+      operatorController.povUp().onTrue(Commands.runOnce(
+        ()-> {
+          //superstructure.algaePivot.setPO(.1);
+          superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
+        }
+        )
+      );
+
+      operatorController.povUp().whileFalse(Commands.run(
+        ()-> {
+          //superstructure.algaePivot.setPO(0);
+        }
+        )
+      );
+
+      operatorController.povDown().onTrue(Commands.runOnce(
+        ()-> {
+          //superstructure.algaePivot.setPO(-.1);
+          superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
+        }
+        )
+      );
+
+      operatorController.povDown().onFalse(Commands.run(
+        ()-> {
+         // superstructure.algaePivot.setPO(0);
+        }
+        )
+      );
 
     /*  ============================= Algae Rollers ============================= */
 
     operatorController.x().whileTrue(Commands.run(
       ()-> {
-        //algaeRollers.setPO(.5);
+        superstructure.algaeRoller.setPO(.5);
       }
       )
     );
   
     operatorController.x().whileFalse(Commands.run(
       ()-> {
-        //algaeRollers.setPO(0);
+        superstructure.algaeRoller.setPO(0);
       }
       )
     );
   
     operatorController.b().whileTrue(Commands.run(
       ()-> {
-        //algaeRollers.setPO(-.5);
+        superstructure.algaeRoller.setPO(-.5);
       }
       )
     );
   
     operatorController.b().onFalse(Commands.run(
       ()-> {
-        //algaeRollers.setPO(0);
+        superstructure.algaeRoller.setPO(0);
       }
       )
     );
+
+    /*  ============================= Climber ============================= */
+
+    operatorController.y().onTrue(Commands.runOnce(
+      ()-> {
+        //superstructure.climber.setPO(.5);
+        superstructure.climber.runPosition(Constants.ClimberConstants.Setpoints.climb );
+      }
+      )
+    );
+
+    operatorController.y().whileFalse(Commands.run(
+      ()-> {
+        //superstructure.climber.setPO(0);
+      }
+      )
+    );
+
+    operatorController.a().onTrue(Commands.runOnce(
+      ()-> {
+        //superstructure.climber.setPO(-.5);
+        superstructure.climber.runPosition( Constants.ClimberConstants.Setpoints.readyToClimb);
+      }
+      )
+    );
+
+    operatorController.a().onFalse(Commands.run(
+      ()-> {
+        //superstructure.climber.setPO(0);
+      }
+      )
+    );
+
   }
 
   

@@ -33,7 +33,7 @@ public class AlgaePivot extends SubsystemBase {
     @Override
     public void periodic() {
         io.updateInputs(inputs);
-        Logger.processInputs("/RealOutputs/=AlgaePivot", inputs);
+        Logger.processInputs("/RealOutputs/AlgaePivot", inputs);
     }
 
     public void stop() {

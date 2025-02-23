@@ -110,10 +110,10 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)100.0;
+      public static final float topLimit = (float)25.0;
       public static final float readyToClimb = (float)(topLimit/2);
       public static final float home = (float)0.0;
-      public static final float bottomLimit = (float)-100.0;
+      public static final float bottomLimit = (float)-15.0;
       
 
     }
@@ -145,13 +145,16 @@ public class Constants {
       
     }
 
+    //Elevator
     public static class Setpoints {
-      public static final float topLimit = (float)75.0;
+      public static final float topLimit = (float)72.0;//75.0;
       public static final float readyToClimb = (float)(topLimit/2.0);
+      
       public static final float collect_flush = (float)10.0;
       public static final float collect_obstructed = (float)(collect_flush - 5.0);
       public static final float bottomLimit = (float)5.0;
       public static final float home = bottomLimit;
+      
       
     }
 
@@ -163,7 +166,7 @@ public class Constants {
   }
   public static class AlgaePivotConstants{
     public static class Gains {
-      public static final double kPUp = 0.2;
+      public static final double kPUp = 10.0;
       public static final double kIUp = 0;
       public static final double kDUp = 0;
       public static final double kFFUp = 0.0;
@@ -178,8 +181,8 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)100.0;
-      public static final float collect = (float)(topLimit/2.0);
+      public static final float topLimit = (float)45.0;
+      public static final float collect = (float)30.0;
       public static final float bottomLimit = (float)0.0;
       public static final float home = bottomLimit;
 
@@ -211,12 +214,15 @@ public class Constants {
       
     }
 
+    // Climber
     public static class Setpoints {
-      public static final float topLimit = (float)90.0;
-      public static final float readyToClimb = (float)(topLimit/2.0);
+      public static final float topLimit = (float)90.0; // In the robot
       
-      public static final float bottomLimit = (float)-90.0;
-      public static final float climb = (float)(bottomLimit/2.0);
+      public static final float bottomLimit = (float)-90.0;  // outside the robot
+      public static final float readyToClimb = (float)(bottomLimit/2.0);
+      
+      public static final float climb = (float)(topLimit);
+
 
     }
 

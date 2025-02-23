@@ -20,7 +20,7 @@ public class CoralRollerIOKraken implements CoralRollerIO {
         }
     
         public void setup(){
-            coralRollerMotor = new TalonFX(15);
+            coralRollerMotor = new TalonFX(16);
     
             TalonFXConfiguration coralRollerConfigs = new TalonFXConfiguration();
             coralRollerMotor.getConfigurator().apply(coralRollerConfigs);

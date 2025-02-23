@@ -35,7 +35,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             TalonFXConfiguration coralPivotConfigs = new TalonFXConfiguration();
             coralPivotMotor.getConfigurator().apply(coralPivotConfigs);
     
-            coralPivotConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+            coralPivotConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
             coralPivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     
             coralPivotConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
@@ -119,7 +119,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
 
       coralPivotMotor.setControl(
         positionVoltage
-              .withPosition(Units.radiansToRotations(positionRad)));
+              .withPosition((positionRad)));
     }
 
     @Override
@@ -127,7 +127,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
 
       coralPivotMotor.setControl(
         positionVoltage
-              .withPosition(Units.radiansToRotations(positionRad))
+              .withPosition((positionRad))
               .withFeedForward(feedforward));
     }
 }

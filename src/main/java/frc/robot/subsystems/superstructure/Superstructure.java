@@ -6,12 +6,7 @@ package frc.robot.subsystems.superstructure;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.AlgaePivotConstants;
-import frc.robot.Constants.AlgaeRollerConstants;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.CoralPivotConstants;
-import frc.robot.Constants.CoralRollerConstants;
-import frc.robot.Constants.ElevatorConstants;
+
 import frc.robot.subsystems.algaePivot.AlgaePivot;
 import frc.robot.subsystems.algaePivot.AlgaePivotIO;
 import frc.robot.subsystems.algaePivot.AlgaePivotIOKraken;
@@ -26,9 +21,10 @@ import frc.robot.subsystems.climber.ClimberIOKraken;
 
 import frc.robot.subsystems.coralPivot.CoralPivot;
 import frc.robot.subsystems.coralPivot.CoralPivotIO;
+import frc.robot.subsystems.coralPivot.CoralPivotIOKraken;
 import frc.robot.subsystems.coralRoller.CoralRoller;
 import frc.robot.subsystems.coralRoller.CoralRollerIO;
-
+import frc.robot.subsystems.coralRoller.CoralRollerIOKraken;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOKraken;
@@ -66,11 +62,11 @@ public class Superstructure extends SubsystemBase {
                 
                 coralPivot =
                         new CoralPivot(
-                        new CoralPivotIO() {});    // When this is connected set it to CoralPivotIOKraken() 
+                        new CoralPivotIOKraken() {});    // When this is connected set it to CoralPivotIOKraken() 
 
                 coralRoller = 
                         new CoralRoller(
-                        new CoralRollerIO() {}
+                        new CoralRollerIOKraken() {}
                         );
 
                 break;
@@ -181,6 +177,8 @@ public class Superstructure extends SubsystemBase {
 
     @Override
     public void periodic() {
+
+        /* 
 
         // Perform Passive checks here...
 
@@ -366,7 +364,7 @@ public class Superstructure extends SubsystemBase {
                 break;
                 
         } // end switch(currentState)
-
+*/
     } // end periodic()
 
     /* 

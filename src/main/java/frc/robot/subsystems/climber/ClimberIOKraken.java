@@ -34,7 +34,7 @@ public class ClimberIOKraken implements ClimberIO {
             climberLead = new TalonFX(18);
             climberFollow = new TalonFX(19);  
   
-            climberLead.setControl(new Follower(climberFollow.getDeviceID(), false));
+            climberFollow.setControl(new Follower(climberLead.getDeviceID(), false));
     
             climberConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
             climberConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;

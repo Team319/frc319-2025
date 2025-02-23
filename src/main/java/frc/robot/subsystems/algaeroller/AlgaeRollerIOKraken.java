@@ -35,7 +35,7 @@ public class AlgaeRollerIOKraken implements AlgaeRollerIO {
             motorStatorCurrent = algaeRollerMotor.getStatorCurrent();
             motorPosition = algaeRollerMotor.getPosition();
             BaseStatusSignal.setUpdateFrequencyForAll(50, motorPosition, motorStatorCurrent);
-            algaeRollerMotor.optimizeBusUtilization();
+            //algaeRollerMotor.optimizeBusUtilization();
         }
     
         @Override
