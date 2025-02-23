@@ -46,16 +46,16 @@ public class AlgaeRoller extends SubsystemBase {
         io.setVoltage(voltage);
       }
     
-      public void configurePID(double kP, double kI, double kD, double kFF) {
-        io.configurePID(kP, kI, kD, kFF);
-      }
-    
       public double getPosition() {
         return io.getPosition();
       }
     
       public double getVelocity() {
         return io.getVelocity();
+      }
+
+      public double getStatorCurrent(){
+        return io.getStatorCurrent();
       }
     }
     

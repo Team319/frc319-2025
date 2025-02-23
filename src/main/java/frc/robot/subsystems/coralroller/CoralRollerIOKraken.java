@@ -3,14 +3,12 @@ package frc.robot.subsystems.coralRoller;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Current;
-import frc.robot.Constants.CoralPivotConstants;
-import frc.robot.Constants.CoralRollerConstants;
+
 
 public class CoralRollerIOKraken implements CoralRollerIO {
         private TalonFX coralRollerMotor;
@@ -32,13 +30,6 @@ public class CoralRollerIOKraken implements CoralRollerIO {
     
             coralRollerConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             coralRollerConfigs.CurrentLimits.StatorCurrentLimit = 40;
-
-            configurePID(CoralRollerConstants.PID.kPUp,CoralRollerConstants.PID.kIUp,CoralRollerConstants.PID.kDUp,CoralRollerConstants.PID.kFFUp);
-    
-            coralRollerConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-            coralRollerConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = CoralRollerConstants.Setpoints.topLimit;
-            coralRollerConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-            coralRollerConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = CoralRollerConstants.Setpoints.bottomLimit;
     
             coralRollerMotor.getConfigurator().apply(coralRollerConfigs);
 
@@ -50,15 +41,6 @@ public class CoralRollerIOKraken implements CoralRollerIO {
     
         @Override
         public void updateInputs(CoralRollerIOInputs inputs) {
-            inputs.kPUp = CoralRollerConstants.PID.kPUp;
-            inputs.kIUp = CoralRollerConstants.PID.kIUp;
-            inputs.kDUp = CoralRollerConstants.PID.kDUp;
-            inputs.kFFUp = CoralRollerConstants.PID.kFFUp;
-    
-            inputs.kPDown = CoralRollerConstants.PID.kPDown;
-            inputs.kIDown = CoralRollerConstants.PID.kIDown;
-            inputs.kDDown = CoralRollerConstants.PID.kDDown;
-            inputs.kFFDown = CoralRollerConstants.PID.kFFDown;
 
             BaseStatusSignal.refreshAll(motorStatorCurrent, motorPosition);
             // Updates all of the inputs/data points being monitored about the motor
@@ -88,5 +70,10 @@ public class CoralRollerIOKraken implements CoralRollerIO {
     @Override
     public double getVelocity() {
       return coralRollerMotor.getVelocity().getValueAsDouble();
+    }
+
+    @Override
+    public double getStatorCurrent() {
+      return motorStatorCurrent.refresh().getValueAsDouble();
     }
 }

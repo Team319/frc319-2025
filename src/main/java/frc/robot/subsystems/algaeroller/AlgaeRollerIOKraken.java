@@ -3,13 +3,11 @@ package frc.robot.subsystems.algaeRoller;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Current;
-import frc.robot.Constants.AlgaeRollerConstants;
 
 public class AlgaeRollerIOKraken implements AlgaeRollerIO {
         private TalonFX algaeRollerMotor;
@@ -31,13 +29,6 @@ public class AlgaeRollerIOKraken implements AlgaeRollerIO {
     
             algaeRollerConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             algaeRollerConfigs.CurrentLimits.StatorCurrentLimit = 40;
-
-            configurePID(AlgaeRollerConstants.Gains.kPUp,AlgaeRollerConstants.Gains.kIUp,AlgaeRollerConstants.Gains.kDUp,AlgaeRollerConstants.Gains.kFFUp);
-    
-            algaeRollerConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-            algaeRollerConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = AlgaeRollerConstants.Setpoints.topLimit;
-            algaeRollerConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-            algaeRollerConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = AlgaeRollerConstants.Setpoints.bottomLimit;
     
             algaeRollerMotor.getConfigurator().apply(algaeRollerConfigs);
 
@@ -49,15 +40,6 @@ public class AlgaeRollerIOKraken implements AlgaeRollerIO {
     
         @Override
         public void updateInputs(AlgaeRollerIOInputs inputs) {
-            inputs.kPUp = AlgaeRollerConstants.Gains.kPUp;
-            inputs.kIUp = AlgaeRollerConstants.Gains.kIUp;
-            inputs.kDUp = AlgaeRollerConstants.Gains.kDUp;
-            inputs.kFFUp = AlgaeRollerConstants.Gains.kFFUp;
-    
-            inputs.kPDown = AlgaeRollerConstants.Gains.kPDown;
-            inputs.kIDown = AlgaeRollerConstants.Gains.kIDown;
-            inputs.kDDown = AlgaeRollerConstants.Gains.kDDown;
-            inputs.kFFDown = AlgaeRollerConstants.Gains.kFFDown;
 
             BaseStatusSignal.refreshAll(motorStatorCurrent, motorPosition);
             // Updates all of the inputs/data points being monitored about the motor
@@ -87,5 +69,10 @@ public class AlgaeRollerIOKraken implements AlgaeRollerIO {
     @Override
     public double getVelocity() {
       return algaeRollerMotor.getVelocity().getValueAsDouble();
+    }
+
+    @Override
+    public double getStatorCurrent() {
+      return motorStatorCurrent.refresh().getValueAsDouble();
     }
 }

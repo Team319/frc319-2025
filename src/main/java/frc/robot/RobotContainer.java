@@ -9,25 +9,13 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.commands.DriveCommands;
-import frc.robot.subsystems.algaePivot.AlgaePivot;
-import frc.robot.subsystems.algaePivot.AlgaePivotIO;
-import frc.robot.subsystems.algaePivot.AlgaePivotIOKraken;
-import frc.robot.subsystems.algaeRoller.AlgaeRoller;
-import frc.robot.subsystems.algaeRoller.AlgaeRollerIO;
-import frc.robot.subsystems.algaeRoller.AlgaeRollerIOKraken;
-import frc.robot.subsystems.climber.Climber;
-import frc.robot.subsystems.climber.ClimberIO;
-import frc.robot.subsystems.climber.ClimberIOKraken;
-import frc.robot.subsystems.coralPivot.CoralPivot;
-import frc.robot.subsystems.coralPivot.CoralPivotIO;
-import frc.robot.subsystems.coralPivot.CoralPivotIOKraken;
+
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.elevator.Elevator;
-import frc.robot.subsystems.elevator.ElevatorIO;
-import frc.robot.subsystems.elevator.ElevatorIOKraken;
+
+import frc.robot.subsystems.superstructure.Superstructure;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -38,10 +26,15 @@ public class RobotContainer {
 
   // Subsystems
   public final Drive drive;
-  public final Elevator elevator;
-  public final AlgaePivot algaePivot;
-  public final Climber climber;
+  public final Superstructure superstructure;
+  /* 
+  public final Elevator elevator;  
   public final CoralPivot coralPivot;
+  public final CoralRoller coralRoller;
+  public final AlgaePivot algaePivot;
+  public final AlgaeRoller algaeRoller;
+  public final Climber climber;
+  */
 
   // Controller
   public final CommandXboxController driverController = new CommandXboxController(0);
@@ -54,36 +47,7 @@ public class RobotContainer {
     public RobotContainer() {
       switch(Constants.getRobot()){
   
-        case SIMBOT:
-          // Sim robot, instantiate physics sim IO implementations
-          drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIOSim(),
-                new ModuleIOSim(),
-                new ModuleIOSim(),
-                new ModuleIOSim());
-
-            elevator =
-                new Elevator(
-                new ElevatorIO() {});
-
-          algaePivot =
-                new AlgaePivot(
-                new AlgaePivotIO() {});
-          
-          climber =
-                new Climber(
-                new ClimberIO() {});
-          
-          coralPivot =
-                new CoralPivot(
-                new CoralPivotIO() {});  
-          break;
-  
-        case DEVBOT:
         case COMPBOT:
-        default:
           drive =
             new Drive(
                  new GyroIOPigeon2() {},
@@ -91,22 +55,67 @@ public class RobotContainer {
                  new ModuleIOTalonFX(1),
                  new ModuleIOTalonFX(2),
                  new ModuleIOTalonFX(3)); 
+
+          superstructure = new Superstructure();
+          
+          /*
           elevator =
                 new Elevator(
-                new ElevatorIO() {});
+                new ElevatorIOKraken() {});
 
           algaePivot =
                 new AlgaePivot(
-                new AlgaePivotIO() {});
+                new AlgaePivotIOKraken() {});
+
+          algaeRoller = 
+                new AlgaeRoller(
+                new AlgaeRollerIOKraken() {} );
           
           climber =
                 new Climber(
-                new ClimberIO() {});
+                new ClimberIOKraken() {});
           
           coralPivot =
                 new CoralPivot(
-                new CoralPivotIO() {});    
+                new CoralPivotIO() {});    // When this is connected set it to CoralPivotIOKraken() 
+
+          coralRoller = 
+                new CoralRoller(
+                new CoralRollerIO() {}
+                );
+          */
+
           break;
+
+          case DEVBOT:
+
+          drive =
+          new Drive(
+               new GyroIOPigeon2() {},
+               new ModuleIOTalonFX(0),
+               new ModuleIOTalonFX(1),
+               new ModuleIOTalonFX(2),
+               new ModuleIOTalonFX(3)
+               ); 
+
+          superstructure = new Superstructure();
+
+          break;
+
+          case SIMBOT:
+          default:
+            // Sim robot, instantiate physics sim IO implementations
+            drive =
+              new Drive(
+                  new GyroIO() {},
+                  new ModuleIOSim(),
+                  new ModuleIOSim(),
+                  new ModuleIOSim(),
+                  new ModuleIOSim() );
+
+            superstructure = new Superstructure();
+                  
+            break;
       }
   
       // Set up auto routines
@@ -151,30 +160,30 @@ public class RobotContainer {
 
           driverController.y().whileTrue(Commands.run(
             ()-> {
-               //elevator.setPO(.5);
-               elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit - 10);
+              // elevator.setPO(.05);
+               superstructure.elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit);
             }
             )
           );
 
           driverController.y().whileFalse(Commands.run(
             ()-> {
-             // elevator.setPO(0);
+              superstructure.elevator.setPO(0);
             }
             )
           );
 
           driverController.a().whileTrue(Commands.run(
             ()-> {
-              //elevator.setPO(-.5);
-              elevator.runPosition(0);
+              //elevator.setPO(-.05);
+              superstructure.elevator.runPosition(5);
             }
             )
           );
 
           driverController.a().onFalse(Commands.run(
             ()-> {
-             // elevator.setPO(0);
+             superstructure.elevator.setPO(0);
             }
             )
           );
@@ -183,28 +192,30 @@ public class RobotContainer {
 
           operatorController.y().whileTrue(Commands.run(
             ()-> {
-              climber.setPO(.5);
+              //climber.setPO(.5);
+              superstructure.climber.runPosition(Constants.ElevatorConstants.Setpoints.topLimit / 2 );
             }
             )
           );
 
           operatorController.y().whileFalse(Commands.run(
             ()-> {
-              climber.setPO(0);
+              //climber.setPO(0);
             }
             )
           );
 
           operatorController.a().whileTrue(Commands.run(
             ()-> {
-              climber.setPO(-.5);
+              //climber.setPO(-.5);
+              superstructure.climber.runPosition( 0.0 /*Constants.ElevatorConstants.Setpoints.bottomLimit / 2*/);
             }
             )
           );
 
           operatorController.a().onFalse(Commands.run(
             ()-> {
-              climber.setPO(0);
+              //climber.setPO(0);
             }
             )
           );

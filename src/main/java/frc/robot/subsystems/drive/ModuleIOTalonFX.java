@@ -65,12 +65,12 @@ public class ModuleIOTalonFX implements ModuleIO {
   public ModuleIOTalonFX(int index) {
     switch (index) {
       case 0: // FR
-        driveTalon = new TalonFX(1, "rio");
-        turnTalon = new TalonFX(2, "rio");
-        cancoder = new CANcoder(3, "rio");
+        driveTalon = new TalonFX(1, "swerve");
+        turnTalon = new TalonFX(2, "swerve");
+        cancoder = new CANcoder(3, "swerve");
          switch (Constants.getRobot()) {
           case COMPBOT:
-            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(66)); 
+            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(-36)); // was 66
             break;
         
           case DEVBOT:
@@ -80,13 +80,13 @@ public class ModuleIOTalonFX implements ModuleIO {
         }
         break;
         case 1: // FL
-        driveTalon = new TalonFX(4, "rio");
-        turnTalon = new TalonFX(5, "rio");
-        cancoder = new CANcoder(6, "rio");
+        driveTalon = new TalonFX(4, "swerve");
+        turnTalon = new TalonFX(5, "swerve");
+        cancoder = new CANcoder(6, "swerve");
 
         switch (Constants.getRobot()) {
           case COMPBOT:
-            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(-57)); 
+            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(-147)); 
             break;
         
           case DEVBOT:
@@ -97,12 +97,12 @@ public class ModuleIOTalonFX implements ModuleIO {
 
         break;
       case 2: // BL
-        driveTalon = new TalonFX(7, "rio");
-        turnTalon = new TalonFX(8, "rio");
-        cancoder = new CANcoder(9, "rio");
+        driveTalon = new TalonFX(7, "swerve");
+        turnTalon = new TalonFX(8, "swerve");
+        cancoder = new CANcoder(9, "swerve");
          switch (Constants.getRobot()) {
           case COMPBOT:
-            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(-100)); //79
+            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(-10)); //79   // was -100 , needs to be 180 degrees diferent
             break;
 
           case DEVBOT:
@@ -112,12 +112,12 @@ public class ModuleIOTalonFX implements ModuleIO {
          }
         break;
       case 3: // BR
-        driveTalon = new TalonFX(10, "rio");
-        turnTalon = new TalonFX(11, "rio");
-        cancoder = new CANcoder(12, "rio");
+        driveTalon = new TalonFX(10, "swerve");
+        turnTalon = new TalonFX(11, "swerve");
+        cancoder = new CANcoder(12, "swerve");
         switch (Constants.getRobot()) {
           case COMPBOT:
-            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(-1)); 
+            absoluteEncoderOffset = new Rotation2d(Units.degreesToRadians(-91)); 
             break;
         
           case DEVBOT:

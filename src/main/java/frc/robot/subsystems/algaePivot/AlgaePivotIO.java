@@ -1,7 +1,9 @@
 package frc.robot.subsystems.algaePivot;
 
-public interface AlgaePivotIO {
+import org.littletonrobotics.junction.AutoLog;
 
+public interface AlgaePivotIO {
+    @AutoLog
     public static class AlgaePivotIOInputs {
         public double kPUp = 0.0;  // Power applied to motor
         public double kIUp = 0.0;  // margin of error in motor
@@ -26,7 +28,7 @@ public interface AlgaePivotIO {
 
     public default void stop() {}
 
-    public default void configurePID(double kP, double kI, double kD, double kFF) {}
+    public default void configurePID(double kP, double kI, double kD) {}
 
     public default void setPosition(double targetPosition) {}
 
@@ -37,6 +39,10 @@ public interface AlgaePivotIO {
     public default void setVoltage(double voltage) {}
 
     public default void setPO(double PO) {}
+
+    public default void runPosition(double positionRad) {}
+
+    public default  void runPosition(double positionRad, double feedforward) {}
 
     
 }

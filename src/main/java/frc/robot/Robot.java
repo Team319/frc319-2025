@@ -13,32 +13,23 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import com.ctre.phoenix6.hardware.Pigeon2;
-import com.pathplanner.lib.pathfinding.Pathfinding;
 
-import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.drive.Drive;
-import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.configs.Pigeon2Configuration;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.subsystems.superstructure.Superstructure.RobotState;
 
 public class Robot extends LoggedRobot {
   
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private Pigeon2 m_pigeon;
 
   public boolean hasBeenEnabled = false;
 
   @Override
   public void robotInit() {
-
-    m_pigeon = new Pigeon2(0);
     //=============================================
     // START : Required setup for AdvantageKit Logging
     //=============================================
@@ -49,7 +40,7 @@ public class Robot extends LoggedRobot {
     if (isReal()) {
         Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
         Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
-        //new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging  // TODO : where did this come from?
+        //new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging  
     } else if(isSimulation()){
         Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
     }
@@ -76,7 +67,9 @@ public class Robot extends LoggedRobot {
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    m_robotContainer.superstructure.setCurrentState(RobotState.DISABLED);
+  }
   
 
   @Override
@@ -86,10 +79,10 @@ public class Robot extends LoggedRobot {
     Optional<Alliance> allianceColor = DriverStation.getAlliance();
     allianceColor.ifPresent(alliance -> {
       if (alliance == Alliance.Red) {
-        m_pigeon.setYaw(0.0);
+        m_robotContainer.drive.setHeading(0.0);
         System.out.println("Red Alliance: Setting heading to 0 degrees.");
       } else if (alliance == Alliance.Blue) {
-        m_pigeon.setYaw(180.0);
+        m_robotContainer.drive.setHeading(180.0);
         System.out.println("Blue Alliance: Setting heading to 180 degrees.");
       }
     });

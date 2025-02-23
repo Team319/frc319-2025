@@ -75,6 +75,10 @@ public class CoralPivot extends SubsystemBase {
       public double getVelocity() {
         return io.getVelocity();
       }
+
+      public void runPosition(double position){
+        io.runPosition(position);
+      }
     }
     
 
