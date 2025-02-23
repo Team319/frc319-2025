@@ -229,7 +229,10 @@ public class Superstructure extends SubsystemBase {
                             break;
                     }
 
-                    if( isStateChangeApproved ){ currentState = requestedRobotState; }
+                    if (isStateChangeApproved) { 
+                        currentState = requestedRobotState; 
+                        lastRequestedRobotState = requestedRobotState;  // Update last requested state to avoid duplicate processing
+                    }
                 
                 }
                 break;
