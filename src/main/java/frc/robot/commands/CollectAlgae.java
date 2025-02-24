@@ -2,10 +2,8 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AlgaePivotConstants;
-import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.algaePivot.AlgaePivot;
 import frc.robot.subsystems.algaeRoller.AlgaeRoller;
-import frc.robot.subsystems.elevator.Elevator;
 
 public class CollectAlgae extends Command{
     private final AlgaePivot algaePivot;
