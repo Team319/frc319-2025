@@ -12,9 +12,13 @@ import edu.wpi.first.wpilibj.RobotBase;
 
 /** Add your docs here. */
 public class Constants {
+
+  // Enable this for Tunable Values
+  public static final boolean tuningMode = true;
+
   public static final double loopPeriodSecs = 0.02;
   private static RobotType robotType = RobotType.COMPBOT;
-  public static final boolean tuningMode = false;
+  
 
   public static RobotType getRobot() {
     if ( RobotBase.isReal() && robotType == RobotType.SIMBOT) {
@@ -54,8 +58,8 @@ public class Constants {
 
   public static class DriveConstants{
     public static final double MAX_LINEAR_SPEED = Units.feetToMeters(17.1); //y
-    public static final double TRACK_WIDTH_X = Units.inchesToMeters(22.0); //y
-    public static final double TRACK_WIDTH_Y = Units.inchesToMeters(22.0); //y
+    public static final double TRACK_WIDTH_X = Units.inchesToMeters(22.75); //y
+    public static final double TRACK_WIDTH_Y = Units.inchesToMeters(22.75); //y
     public static final double DRIVE_BASE_RADIUS =
         Math.hypot(TRACK_WIDTH_X / 2.0, TRACK_WIDTH_Y / 2.0);
     public static final double MAX_ANGULAR_SPEED = MAX_LINEAR_SPEED / DRIVE_BASE_RADIUS;
@@ -106,8 +110,11 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)100.0;
-      public static final float bottomLimit = (float)-100.0;
+      public static final float topLimit = (float)25.0;
+      public static final float readyToClimb = (float)(topLimit/2);
+      public static final float home = (float)0.0;
+      public static final float bottomLimit = (float)-15.0;
+      
 
     }
 
@@ -118,8 +125,13 @@ public class Constants {
 
   }
   public static class ElevatorConstants{
-    public static class PID {
-      public static final double kPUp = 0.2;
+    public static class Gains {
+      public static final double kS = 0.0; // Volts : Voltage needed to overcome static friction
+      public static final double kG = 0.0; // Volts : Voltage needed to overcome gravity
+      public static final double kV = 0.0; // Volts : Volts per radian per second
+      public static final double kA = 0.0; // Volts : Volts per radian per second squared
+      
+      public static final double kPUp = 2;
       public static final double kIUp = 0;
       public static final double kDUp = 0;
       public static final double kFFUp = 0.0;
@@ -133,10 +145,17 @@ public class Constants {
       
     }
 
+    //Elevator
     public static class Setpoints {
-      public static final float topLimit = (float)100.0;
-      public static final float bottomLimit = (float)-100.0;
-
+      public static final float topLimit = (float)72.0;//75.0;
+      public static final float readyToClimb = (float)(topLimit/2.0);
+      
+      public static final float collect_flush = (float)10.0;
+      public static final float collect_obstructed = (float)(collect_flush - 5.0);
+      public static final float bottomLimit = (float)5.0;
+      public static final float home = bottomLimit;
+      
+      
     }
 
     public static class SoftLimits {
@@ -146,8 +165,8 @@ public class Constants {
 
   }
   public static class AlgaePivotConstants{
-    public static class PID {
-      public static final double kPUp = 0.2;
+    public static class Gains {
+      public static final double kPUp = 10.0;
       public static final double kIUp = 0;
       public static final double kDUp = 0;
       public static final double kFFUp = 0.0;
@@ -162,8 +181,10 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)100.0;
-      public static final float bottomLimit = (float)-100.0;
+      public static final float topLimit = (float)45.0;
+      public static final float collect = (float)30.0;
+      public static final float bottomLimit = (float)0.0;
+      public static final float home = bottomLimit;
 
     }
 
@@ -174,8 +195,12 @@ public class Constants {
 
   }
   public static class ClimberConstants{
-    public static class PID {
-      public static final double kPUp = 0.2;
+    public static class Gains {
+      public static final double kS = 0.0; // Volts : Voltage needed to overcome static friction
+      public static final double kV = 0.0; // Volts : Volts per radian per second
+      public static final double kA = 0.0; // Volts : Volts per radian per second squared
+
+      public static final double kPUp = 2.0;
       public static final double kIUp = 0;
       public static final double kDUp = 0;
       public static final double kFFUp = 0.0;
@@ -189,9 +214,15 @@ public class Constants {
       
     }
 
+    // Climber
     public static class Setpoints {
-      public static final float topLimit = (float)100.0;
-      public static final float bottomLimit = (float)-100.0;
+      public static final float topLimit = (float)90.0; // In the robot
+      
+      public static final float bottomLimit = (float)-90.0;  // outside the robot
+      public static final float readyToClimb = (float)(bottomLimit/2.0);
+      
+      public static final float climb = (float)(topLimit);
+
 
     }
 
@@ -203,60 +234,22 @@ public class Constants {
   }
 
   public static class AlgaeRollerConstants{
-    public static class PID {
-      public static final double kPUp = 0.2;
-      public static final double kIUp = 0;
-      public static final double kDUp = 0;
-      public static final double kFFUp = 0.0;
-      public static final int iZoneUp = 0;
-
-      public static final double kPDown = kPUp;
-      public static final double kIDown = kIUp;
-      public static final double kDDown = kDUp;
-      public static final double kFFDown = kFFUp;
-      public static final int iZoneDown = iZoneUp;
+    public static class Speeds {
+      public static final double stop = 0.0;
+      public static final double collect = -0.5;
+      public static final double eject = 0.5;
       
     }
 
-    public static class Setpoints {
-      public static final float topLimit = (float)100.0;
-      public static final float bottomLimit = (float)-100.0;
+  }
 
+  public static class CoralRollerConstants{
+    public static class Speeds {
+      public static final double stop = 0.0;
+      public static final double collect = 0.1;
     }
 
-    public static class SoftLimits {
-      public static final float forwardSoftLimit = Setpoints.topLimit;
-      public static final float reverseSoftLimit = Setpoints.bottomLimit;
-    }
+    
+  }
 
-
-}
-
- public static class CoralRollerConstants{
-    public static class PID {
-      public static final double kPUp = 0.2;
-      public static final double kIUp = 0;
-      public static final double kDUp = 0;
-      public static final double kFFUp = 0.0;
-      public static final int iZoneUp = 0;
-
-      public static final double kPDown = kPUp;
-      public static final double kIDown = kIUp;
-      public static final double kDDown = kDUp;
-      public static final double kFFDown = kFFUp;
-      public static final int iZoneDown = iZoneUp;
-      
-    }
-
-    public static class Setpoints {
-      public static final float topLimit = (float)100.0;
-      public static final float bottomLimit = (float)-100.0;
-
-    }
-
-    public static class SoftLimits {
-      public static final float forwardSoftLimit = Setpoints.topLimit;
-      public static final float reverseSoftLimit = Setpoints.bottomLimit;
-    }
-}
 }

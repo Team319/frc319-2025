@@ -1,7 +1,9 @@
 package frc.robot.subsystems.coralRoller;
 
-public interface CoralRollerIO {
+import org.littletonrobotics.junction.AutoLog;
 
+public interface CoralRollerIO {
+    @AutoLog
     public static class CoralRollerIOInputs {
         public double kPUp = 0.0;  // Power applied to motor
         public double kIUp = 0.0;  // margin of error in motor
@@ -26,17 +28,18 @@ public interface CoralRollerIO {
 
     public default void stop() {}
 
-    public default void configurePID(double kP, double kI, double kD, double kFF) {}
-
     public default void setPosition(double targetPosition) {}
 
     public default double getPosition() {return 0.0;}
 
     public default double getVelocity() {return 0.0;}
 
+    public default double getStatorCurrent() {return 0.0;}
+
     public default void setVoltage(double voltage) {}
 
     public default void setPO(double PO) {}
+
 
     
 }

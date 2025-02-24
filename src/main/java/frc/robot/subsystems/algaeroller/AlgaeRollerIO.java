@@ -26,17 +26,18 @@ public interface AlgaeRollerIO {
 
     public default void stop() {}
 
-    public default void configurePID(double kP, double kI, double kD, double kFF) {}
-
     public default void setPosition(double targetPosition) {}
 
     public default double getPosition() {return 0.0;}
 
     public default double getVelocity() {return 0.0;}
 
+    public default double getStatorCurrent() {return 0.0;}
+
     public default void setVoltage(double voltage) {}
 
     public default void setPO(double PO) {}
+
 
     
 }

@@ -1,7 +1,9 @@
 package frc.robot.subsystems.coralPivot;
 
-public interface CoralPivotIO {
+import org.littletonrobotics.junction.AutoLog;
 
+public interface CoralPivotIO {
+    @AutoLog
     public static class CoralPivotIOInputs {
         public double kPUp = 0.0;  // Power applied to motor
         public double kIUp = 0.0;  // margin of error in motor
@@ -20,9 +22,12 @@ public interface CoralPivotIO {
         public double velocity = 0.0; // Velocity of the coralPivot
         public double coralPivotMotorStatorCurrent;
         public double coralPivotMotorPosition;
+        public double coralPivotEncoderPosition;
     }
 
     public default void updateInputs(CoralPivotIOInputs inputs) {}
+
+    public default void configurePID(double kP, double kI, double kD) {}
 
     public default void stop() {}
 
@@ -37,6 +42,10 @@ public interface CoralPivotIO {
     public default void setVoltage(double voltage) {}
 
     public default void setPO(double PO) {}
+
+    public default void runPosition(double positionRad ) {}
+
+    public default void runPosition(double positionRad, double feedforward) {}
 
     
 }

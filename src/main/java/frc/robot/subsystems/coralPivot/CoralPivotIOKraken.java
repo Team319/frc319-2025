@@ -2,20 +2,29 @@ package frc.robot.subsystems.coralPivot;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Current;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants.CoralPivotConstants;
 
 public class CoralPivotIOKraken implements CoralPivotIO {
         private TalonFX coralPivotMotor;
         private StatusSignal<Current> motorStatorCurrent;
         private StatusSignal<Angle> motorPosition;
-        
+
+        private DutyCycleEncoder  revThroughboreEncoder = new DutyCycleEncoder (0); // Does this need an offset? As it's just a zero to 1.0 
+
+        Slot0Configs slot0Configs = new Slot0Configs();
+        private final PositionVoltage positionVoltage = new PositionVoltage(0.0);
+
         public CoralPivotIOKraken(){
             setup();
         }
@@ -26,7 +35,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             TalonFXConfiguration coralPivotConfigs = new TalonFXConfiguration();
             coralPivotMotor.getConfigurator().apply(coralPivotConfigs);
     
-            coralPivotConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+            coralPivotConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
             coralPivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     
             coralPivotConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
@@ -63,6 +72,21 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             // Updates all of the inputs/data points being monitored about the motor
             inputs.coralPivotMotorStatorCurrent = motorStatorCurrent.getValueAsDouble();
             inputs.coralPivotMotorPosition = motorPosition.getValueAsDouble();
+            inputs.coralPivotEncoderPosition = revThroughboreEncoder.get();
+    }
+
+    @Override
+    public void configurePID(double kP, double kI, double kD){
+
+      System.out.println("Applying PID Values: kP=" + kP + " kI=" + kI + " kD=" + kD);
+      
+      // Feedback gains
+      slot0Configs.kP = kP;
+      slot0Configs.kI = kI;
+      slot0Configs.kD = kD;
+
+      // Update the motors with the new Gains
+      coralPivotMotor.getConfigurator().apply(slot0Configs, 0.050);
     }
 
     public void stop(){
@@ -81,11 +105,29 @@ public class CoralPivotIOKraken implements CoralPivotIO {
 
     @Override
     public double getPosition() {
-      return motorPosition.getValueAsDouble();
+      //return motorPosition.getValueAsDouble();
+      return revThroughboreEncoder.get();
     }
 
     @Override
     public double getVelocity() {
       return coralPivotMotor.getVelocity().getValueAsDouble();
+    }
+
+        @Override
+    public void runPosition(double positionRad) {
+
+      coralPivotMotor.setControl(
+        positionVoltage
+              .withPosition((positionRad)));
+    }
+
+    @Override
+    public void runPosition(double positionRad, double feedforward) {
+
+      coralPivotMotor.setControl(
+        positionVoltage
+              .withPosition((positionRad))
+              .withFeedForward(feedforward));
     }
 }

@@ -1,7 +1,9 @@
 package frc.robot.subsystems.elevator;
 
-public interface ElevatorIO {
+import org.littletonrobotics.junction.AutoLog;
 
+public interface ElevatorIO {
+    @AutoLog
     public static class ElevatorIOInputs {
         public double kPUp = 0.0;  // Power applied to motor
         public double kIUp = 0.0;  // margin of error in motor
@@ -13,9 +15,9 @@ public interface ElevatorIO {
         public double kDDown = 0.0;  // Makes the graph line smooth from point A to point B
         public double kFFDown = 0.0; // Feedforward value
 
-        public double targetPosition = 0.0; // Target position of the elevator
-        public double appliedVoltage = 0.0; // Voltage applied to the motor
-        public double outputCurrentAmps = 0.0; // Current applied to the motor
+        //public double targetPosition = 0.0; // Target position of the elevator
+        //public double appliedVoltage = 0.0; // Voltage applied to the motor
+        //public double outputCurrentAmps = 0.0; // Current applied to the motor
         public double position = 0.0; // Position of the elevator
         public double velocity = 0.0; // Velocity of the elevator
         public double elevatorMotorStatorCurrent;
@@ -26,7 +28,7 @@ public interface ElevatorIO {
 
     public default void stop() {}
 
-    public default void configurePID(double kP, double kI, double kD, double kFF) {}
+    public default void configurePID(double kP, double kI, double kD) {}
 
     public default void setPosition(double targetPosition) {}
 
@@ -37,6 +39,10 @@ public interface ElevatorIO {
     public default void setVoltage(double voltage) {}
 
     public default void setPO(double PO) {}
+
+    public default void runPosition(double positionRad) {}
+
+    public default void runPosition(double positionRad, double feedforward) {}
 
     
 }
