@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.superstructure.Superstructure.RobotState;
 
 public class Robot extends LoggedRobot {
   
@@ -67,9 +66,7 @@ public class Robot extends LoggedRobot {
   }
 
   @Override
-  public void disabledInit() {
-    m_robotContainer.superstructure.setCurrentState(RobotState.DISABLED);
-  }
+  public void disabledInit() { }
   
 
   @Override
