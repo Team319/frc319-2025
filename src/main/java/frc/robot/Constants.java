@@ -65,7 +65,7 @@ public class Constants {
     public static final double MAX_ANGULAR_SPEED = MAX_LINEAR_SPEED / DRIVE_BASE_RADIUS;
     public static final int currentLimit = 40; // TODO consider setting this to 60
     public static final double wheelRadiusMeters = Units.inchesToMeters(3.875); // Black nitrile : 3 7/8 with full tread = 3.875 inches
-    public static final double robotMassKg = 49.532; // TODO
+    public static final double robotMassKg = 50; // TODO check if this is correct
     public static final double robotMOI = 6.883; // TODO
     public static final double wheelCOF = 1.2; // TODO
     public static final double DRIVE_GEAR_RATIO = 6.122; //(50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0); // L3
@@ -110,10 +110,10 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)25.0;
+      public static final float topLimit = (float)100.0;
       public static final float readyToClimb = (float)(topLimit/2);
       public static final float home = (float)0.0;
-      public static final float bottomLimit = (float)-15.0;
+      public static final float bottomLimit = (float)-100.0;
       
 
     }
@@ -145,16 +145,13 @@ public class Constants {
       
     }
 
-    //Elevator
     public static class Setpoints {
-      public static final float topLimit = (float)72.0;//75.0;
+      public static final float topLimit = (float)75.0;
       public static final float readyToClimb = (float)(topLimit/2.0);
-      
       public static final float collect_flush = (float)10.0;
       public static final float collect_obstructed = (float)(collect_flush - 5.0);
       public static final float bottomLimit = (float)5.0;
       public static final float home = bottomLimit;
-      
       
     }
 
@@ -166,7 +163,7 @@ public class Constants {
   }
   public static class AlgaePivotConstants{
     public static class Gains {
-      public static final double kPUp = 10.0;
+      public static final double kPUp = 0.2;
       public static final double kIUp = 0;
       public static final double kDUp = 0;
       public static final double kFFUp = 0.0;
@@ -181,8 +178,8 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)45.0;
-      public static final float collect = (float)30.0;
+      public static final float topLimit = (float)100.0;
+      public static final float collect = (float)(topLimit/2.0);
       public static final float bottomLimit = (float)0.0;
       public static final float home = bottomLimit;
 
@@ -214,15 +211,12 @@ public class Constants {
       
     }
 
-    // Climber
     public static class Setpoints {
-      public static final float topLimit = (float)90.0; // In the robot
+      public static final float topLimit = (float)90.0;
+      public static final float readyToClimb = (float)(45.0);
       
-      public static final float bottomLimit = (float)-90.0;  // outside the robot
-      public static final float readyToClimb = (float)(bottomLimit/2.0);
-      
-      public static final float climb = (float)(topLimit);
-
+      public static final float bottomLimit = (float)-90.0;
+      public static final float climb = (float)(-45.0);
 
     }
 

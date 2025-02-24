@@ -326,7 +326,7 @@ public class RobotContainer {
     operatorController.y().onTrue(Commands.runOnce(
       ()-> {
         //superstructure.climber.setPO(.5);
-        superstructure.climber.runPosition(Constants.ClimberConstants.Setpoints.climb );
+        superstructure.climber.runPosition(Constants.ClimberConstants.Setpoints.climb);
       }
       )
     );

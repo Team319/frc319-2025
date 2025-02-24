@@ -7,42 +7,42 @@ package frc.robot.subsystems.leds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Leds extends SubsystemBase {
+public class Leds extends SubsystemBase {}
 
-  private final LedsIO io;
+  // //private final LedsIO io;
 
-  /** Creates a new leds. */
-  public Leds(LedsIO io) {
-    this.io = io;
+  // /** Creates a new leds. */
+  // //public Leds(LedsIO io) {
+  //   //this.io = io;
     
-    switch (Constants.getRobot()) {
-        case COMPBOT:
-        case DEVBOT:
-            break;
-        case SIMBOT:
-            break;
-        default:
-            break;
-     }
-    } 
-    @Override
-    public void periodic() {
-      // This method will be called once per scheduler run
-      //setColor(0xFF, 0xFF, 0xFF);
-      //allianceIdleColor();
-    }
+  //   switch (Constants.getRobot()) {
+  //       case COMPBOT:
+  //       case DEVBOT:
+  //           break;
+  //       case SIMBOT:
+  //           break;
+  //       default:
+  //           break;
+  //    }
+  //   } 
+  //   @Override
+  //   public void periodic() {
+  //     // This method will be called once per scheduler run
+  //     //setColor(0xFF, 0xFF, 0xFF);
+  //     //allianceIdleColor();
+  //   }
   
-    public void stop() {
-      io.stop();
-    }
+  //   public void stop() {
+  //     io.stop();
+  //   }
   
-    public void setColor(int rValue, int gValue, int bValue) {
-      io.setColor(rValue, gValue, bValue);
-    }
+  //   public void setColor(int rValue, int gValue, int bValue) {
+  //     io.setColor(rValue, gValue, bValue);
+  //   }
   
-    public void allianceIdleColor() {
-      io.allianceIdleColor();
-    }
+  //   public void allianceIdleColor() {
+  //     io.allianceIdleColor();
+  //   }
   
-  }
+  // }
   
