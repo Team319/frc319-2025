@@ -193,7 +193,7 @@ public class RobotContainer {
           operatorController.y().whileTrue(Commands.run(
             ()-> {
               //climber.setPO(.5);
-              superstructure.climber.runPosition(Constants.ElevatorConstants.Setpoints.topLimit / 2 );
+              superstructure.climber.runPosition(Constants.ClimberConstants.Setpoints.topLimit);
             }
             )
           );
@@ -208,7 +208,7 @@ public class RobotContainer {
           operatorController.a().whileTrue(Commands.run(
             ()-> {
               //climber.setPO(-.5);
-              superstructure.climber.runPosition( 0.0 /*Constants.ElevatorConstants.Setpoints.bottomLimit / 2*/);
+              superstructure.climber.runPosition(Constants.ClimberConstants.Setpoints.bottomLimit);
             }
             )
           );
