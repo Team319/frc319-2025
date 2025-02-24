@@ -36,7 +36,7 @@ public class ScoreL4 extends Command{
         if (coralPivot.getPosition() > CoralPivotConstants.Setpoints.scoreL4-pivotThreshold && coralPivot.getPosition() < CoralPivotConstants.Setpoints.scoreL4+pivotThreshold){
             elevator.runPosition(ElevatorConstants.Setpoints.scoreL4);
         }
-        if (elevator.getPosition() > ElevatorConstants.Setpoints.collect_flush-pivotThreshold && elevator.getPosition() < ElevatorConstants.Setpoints.collect_flush+pivotThreshold){
+        if (elevator.getPosition() > ElevatorConstants.Setpoints.scoreL4-pivotThreshold && elevator.getPosition() < ElevatorConstants.Setpoints.scoreL4+pivotThreshold){
             coralRoller.setPO(-0.2);
         }
         passedCycles++;

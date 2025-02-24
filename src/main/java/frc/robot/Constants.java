@@ -115,6 +115,10 @@ public class Constants {
       public static final float home = (float)0.0;
       public static final float collect = (float)0.0; //TODO: Find this value
       public static final float scoreL4 = (float)0.0; //TODO: Find this value
+      public static final float scoreL3 = (float)0.0; //TODO: Find this value
+      public static final float scoreL2 = (float)0.0; //TODO: Find this value
+
+
       public static final float bottomLimit = (float)-100.0;
     
     }
