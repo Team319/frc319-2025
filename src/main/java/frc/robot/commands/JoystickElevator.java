@@ -5,18 +5,19 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.elevator.Elevator;
 
-public class JoystickClimb extends Command{
+public class JoystickElevator extends Command{
     private static final double DEADBAND = 0.5;
-    private final Climber climber;
-    DoubleSupplier rightSupplier;
-    double climberPO = 0.0;
+    private final Elevator elevator;
+    DoubleSupplier leftSupplier;
+    double elevatorPO = 0.0;
 
 
-    public JoystickClimb(Climber climber, DoubleSupplier rightSupplier){
-       this.climber = climber;
-       this.rightSupplier = rightSupplier;
-       addRequirements(climber);
+    public JoystickElevator(Elevator elevator, DoubleSupplier leftSupplier){
+       this.elevator = elevator;
+       this.leftSupplier = leftSupplier;
+       addRequirements(elevator);
     }
 
      @Override
@@ -26,9 +27,9 @@ public class JoystickClimb extends Command{
   @Override
   public void execute() {
 
-    climberPO = MathUtil.applyDeadband(rightSupplier.getAsDouble(), DEADBAND);
+    elevatorPO = MathUtil.applyDeadband(leftSupplier.getAsDouble(), DEADBAND);
 
-    this.climber.setPO(climberPO);
+    this.elevator.setPO(elevatorPO);
 
   }
 

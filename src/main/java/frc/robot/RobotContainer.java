@@ -9,7 +9,14 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.CoralPivotConstants;
+import frc.robot.commands.ClimbingPrep;
+import frc.robot.commands.CollectAlgae;
+import frc.robot.commands.CollectCoral;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.GoHome;
+import frc.robot.commands.ScoreCoral;
+import frc.robot.commands.ScoreL4;
+import frc.robot.commands.ScoreProcessor;
 import frc.robot.subsystems.algaePivot.AlgaePivot;
 import frc.robot.subsystems.algaePivot.AlgaePivotIO;
 import frc.robot.subsystems.algaePivot.AlgaePivotIOKraken;
@@ -396,7 +403,7 @@ public class RobotContainer {
       )
     );
 
-    operatorController.a().onTrue(Commands.runOnce(
+    operatorController.leftStick().onTrue(Commands.runOnce(
       ()-> {
         //climber.setPO(-.5);
         climber.runPosition( Constants.ClimberConstants.Setpoints.readyToClimb);
@@ -412,23 +419,108 @@ public class RobotContainer {
     );
 
 
-    /*  ============================= REAL BUTTONS ============================= /*
+    /*  ============================= REAL BUTTONS ============================= */
+
+    /*  ============================= DRIVER SCORING ============================= */
+
+    /*  ============================= Score Coral ============================= */
+    //driverController.rightTrigger().whileTrue(new ScoreCoral(coralRoller));
+
+    /*  ============================= Score Algae ============================= */
+   // driverController.rightBumper().whileTrue(new ScoreProcessor(algaePivot, algaeRoller));
+
+    /*  ============================= OPERATOR CLIMB ============================= */
 
     /*  ============================= Climbing ============================= */
       /*climber.setDefaultCommand(
         (new JoystickClimb(climber, () -> -operatorController.getRightY()) ));
         
     /*  ============================= Climbing Prep ============================= */
-    /*operatorController.start().whileTrue(Commands.runOnce(
+    //operatorController.start().whileTrue(new ClimbingPrep(this.coralPivot, this.elevator, this.algaePivot));
+
+    /*  ============================= OPERATOR COLLECT ============================= */
+
+    /*  ============================= Collect Coral ============================= */
+    //operatorController.leftTrigger().whileTrue(new CollectCoral(this.coralPivot, this.coralRoller, this.elevator));
+
+    /*  ============================= Collect Algae ============================= */
+    //operatorController.leftBumper().whileTrue(new CollectAlgae(this.algaePivot, this.algaeRoller));
+
+    /*  ============================= Go Home ============================= */
+    //operatorController.rightStick().whileTrue(new GoHome(this.coralPivot, this.elevator, this.algaePivot));
+
+    /*  ============================= OPERATOR SCORING ============================= */
+
+    /*  ============================= Score L4 ============================= */
+    //operatorController.povDown().whileTrue(new ScoreL4(this.coralPivot, this.elevator));
+
+    /*  ============================= Score L3 ============================= */
+    //operatorController.povRight().whileTrue(new ScoreL3(this.coralPivot, this.elevator));
+
+    /*  ============================= Score L2 ============================= */
+    //operatorController.povUp().whileTrue(new ScoreL4(this.coralPivot, this.elevator));
+
+    /*  ============================= OPERATOR MANUALS ============================= */
+
+    /*  ============================= Elevator ============================= */
+      /*elevator.setDefaultCommand(
+        (new JoystickElevator(elevator, () -> -operatorController.getLeftY()) ));
+
+    /*  ============================= Algae Pivot ============================= */
+   /* operatorController.b().onTrue(Commands.run(
       ()-> {
-        climber.runPosition(Constants.ClimberConstants.Setpoints.climb);
+        //algaePivot.setPO(0.5);
       }
       )
-    );*/
-  }
+    );
+    
+    operatorController.b().onFalse(Commands.run(
+      ()-> {
+        //algaePivot.setPO(0);
+      }
+      )
+    );
 
-  
+    operatorController.x().onTrue(Commands.run(
+      ()-> {
+        //algaePivot.setPO(-0.5);
+      }
+      )
+    );
+
+    operatorController.x().onFalse(Commands.run(
+      ()-> {
+        //algaePivot.setPO(0);
+      }
+      )
+    );
+    
+  /*  ============================= Coral Pivot ============================= */
+
+    /*operatorController.y().onTrue(Commands.run(
+      ()-> {
+        //coralPivot.setPO(0.5);
+      }
+      )
+    );
+
+    operatorController.y().onFalse(Commands.run(
+      ()-> {
+        //coralPivot.setPO(0);
+      }
+      )
+    );
+
+    operatorController.a().onFalse(Commands.run(
+      ()-> {
+        //coralPivot.setPO(0);
+      }
+      )
+    );
+*/
+
+    }
   public Command getAutonomousCommand() {
     return autoChooser.get();
   }
-}
+  }

@@ -10,35 +10,28 @@ import frc.robot.subsystems.elevator.Elevator;
 public class ScoreL3 extends Command{
     private final CoralPivot coralPivot; 
     private final Elevator elevator;
-    private final CoralRoller coralRoller;
-    double pivotThreshold;
     double elevatorThreshold;
     int passedCycles;
 
-    public ScoreL3(CoralPivot coralPivot, Elevator elevator, CoralRoller coralRoller){
+    public ScoreL3(CoralPivot coralPivot, Elevator elevator){
         this.coralPivot = coralPivot;
         this.elevator = elevator;
-        this.coralRoller = coralRoller;
-        pivotThreshold = 5;
         elevatorThreshold = 5;
         passedCycles = 0;
-        addRequirements(coralPivot, elevator, coralRoller);
+        addRequirements(coralPivot, elevator);
     }
 
     @Override
     public void initialize() {
         passedCycles = 0;
-        coralPivot.runPosition(CoralPivotConstants.Setpoints.scoreL3);
+        elevator.runPosition(ElevatorConstants.Setpoints.scoreL3);;
     }
 
     @Override
     public void execute () {
-        if (coralPivot.getPosition() > CoralPivotConstants.Setpoints.scoreL3-pivotThreshold && coralPivot.getPosition() < CoralPivotConstants.Setpoints.scoreL3+pivotThreshold){
-            elevator.runPosition(ElevatorConstants.Setpoints.scoreL3);
-        }
-        if (elevator.getPosition() > ElevatorConstants.Setpoints.scoreL3-pivotThreshold && elevator.getPosition() < ElevatorConstants.Setpoints.scoreL3+pivotThreshold){
-            coralRoller.setPO(-0.2);
-        }
+        if (elevator.getPosition() > ElevatorConstants.Setpoints.scoreL3-elevatorThreshold && elevator.getPosition() < ElevatorConstants.Setpoints.scoreL3+elevatorThreshold);
+        coralPivot.runPosition(CoralPivotConstants.Setpoints.scoreL3);
+        
         passedCycles++;
     }
 
@@ -46,12 +39,11 @@ public class ScoreL3 extends Command{
     public void end(boolean interrupted) {
         coralPivot.stop();
         elevator.stop();
-        coralRoller.stop();
     }
 
     @Override
     public boolean isFinished() {
-        return passedCycles >= 10; //TODO: Tune
+        return passedCycles >= 5; //TODO: Tune
     }
 }
 
