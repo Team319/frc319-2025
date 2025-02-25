@@ -212,6 +212,9 @@ public class RobotContainer {
             )
           );
 
+
+        /*  ============================= TEST BUTTONS ============================= */
+
         /*  ============================= Elevator ============================= */
 
           driverController.rightBumper().onTrue(Commands.runOnce(
@@ -408,6 +411,20 @@ public class RobotContainer {
       )
     );
 
+
+    /*  ============================= REAL BUTTONS ============================= /*
+
+    /*  ============================= Climbing ============================= */
+      /*climber.setDefaultCommand(
+        (new JoystickClimb(climber, () -> -operatorController.getRightY()) ));
+        
+    /*  ============================= Climbing Prep ============================= */
+    /*operatorController.start().whileTrue(Commands.runOnce(
+      ()-> {
+        climber.runPosition(Constants.ClimberConstants.Setpoints.climb);
+      }
+      )
+    );*/
   }
 
   

@@ -222,7 +222,7 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)90.0;
+      public static final float topLimit = (float)90.0; //set to actual found limits
       public static final float readyToClimb = (float)(45.0);
       
       public static final float bottomLimit = (float)-90.0;
