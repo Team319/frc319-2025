@@ -113,9 +113,14 @@ public class Constants {
       public static final float topLimit = (float)100.0;
       public static final float readyToClimb = (float)(topLimit/2);
       public static final float home = (float)0.0;
-      public static final float bottomLimit = (float)-100.0;
-      
+      public static final float collect = (float)0.0; //TODO: Find this value
+      public static final float scoreL4 = (float)0.0; //TODO: Find this value
+      public static final float scoreL3 = (float)0.0; //TODO: Find this value
+      public static final float scoreL2 = (float)0.0; //TODO: Find this value
 
+
+      public static final float bottomLimit = (float)-100.0;
+    
     }
 
     public static class SoftLimits {
@@ -124,6 +129,7 @@ public class Constants {
     }
 
   }
+
   public static class ElevatorConstants{
     public static class Gains {
       public static final double kS = 0.0; // Volts : Voltage needed to overcome static friction
@@ -148,9 +154,13 @@ public class Constants {
     public static class Setpoints {
       public static final float topLimit = (float)75.0;
       public static final float readyToClimb = (float)(topLimit/2.0);
-      public static final float collect_flush = (float)10.0;
+      public static final float collect_flush = (float)10.0; //TODO: Check if this is correct
       public static final float collect_obstructed = (float)(collect_flush - 5.0);
       public static final float bottomLimit = (float)5.0;
+      public static final float scoreL1 = (float)0.0; //TODO: Find this value
+      public static final float scoreL2 = (float)0.0; //TODO: Find this value
+      public static final float scoreL3 = (float)0.0; //TODO: Find this value
+      public static final float scoreL4 = (float)0.0; //TODO: Find this value
       public static final float home = bottomLimit;
       
     }
@@ -212,7 +222,7 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)90.0;
+      public static final float topLimit = (float)90.0; //set to actual found limits
       public static final float readyToClimb = (float)(45.0);
       
       public static final float bottomLimit = (float)-90.0;
