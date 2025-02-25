@@ -28,7 +28,6 @@ import frc.robot.subsystems.coralRoller.CoralRollerIOKraken;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIO;
 import frc.robot.subsystems.elevator.ElevatorIOKraken;
-import frc.robot.util.EqualsUtil;
 
 /** Add your docs here. */
 public class Superstructure extends SubsystemBase {
@@ -227,7 +226,10 @@ public class Superstructure extends SubsystemBase {
                             break;
                     }
 
-                    if( isStateChangeApproved ){ currentState = requestedRobotState; }
+                    if (isStateChangeApproved) { 
+                        currentState = requestedRobotState; 
+                        lastRequestedRobotState = requestedRobotState;  // Update last requested state to avoid duplicate processing
+                    }
                 
                 }
                 break;

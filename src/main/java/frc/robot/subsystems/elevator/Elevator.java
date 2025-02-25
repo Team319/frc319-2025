@@ -1,16 +1,9 @@
 package frc.robot.subsystems.elevator;
 
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-import org.littletonrobotics.junction.AutoLogOutput;
+
 import org.littletonrobotics.junction.Logger;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.DriveConstants;
-import frc.robot.util.EqualsUtil;
 import frc.robot.util.LoggedTunableNumber;
 
 public class Elevator extends SubsystemBase {
