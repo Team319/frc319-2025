@@ -10,12 +10,27 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.commands.DriveCommands;
+import frc.robot.subsystems.algaePivot.AlgaePivot;
+import frc.robot.subsystems.algaePivot.AlgaePivotIO;
+import frc.robot.subsystems.algaePivot.AlgaePivotIOKraken;
+import frc.robot.subsystems.algaeRoller.AlgaeRoller;
+import frc.robot.subsystems.algaeRoller.AlgaeRollerIO;
+import frc.robot.subsystems.algaeRoller.AlgaeRollerIOKraken;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIO;
+import frc.robot.subsystems.climber.ClimberIOKraken;
+import frc.robot.subsystems.coralPivot.CoralPivot;
+import frc.robot.subsystems.coralPivot.CoralPivotIO;
 import frc.robot.subsystems.coralPivot.CoralPivotIOKraken;
+import frc.robot.subsystems.coralRoller.CoralRoller;
+import frc.robot.subsystems.coralRoller.CoralRollerIO;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIO;
+import frc.robot.subsystems.elevator.ElevatorIOKraken;
 import frc.robot.subsystems.superstructure.Superstructure;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 
@@ -28,14 +43,14 @@ public class RobotContainer {
   // Subsystems
   public final Drive drive;
   public final Superstructure superstructure;
-  /* 
+  
   public final Elevator elevator;  
   public final CoralPivot coralPivot;
   public final CoralRoller coralRoller;
   public final AlgaePivot algaePivot;
   public final AlgaeRoller algaeRoller;
   public final Climber climber;
-  */
+  
 
   // Controller
   public final CommandXboxController driverController = new CommandXboxController(0);
@@ -59,7 +74,7 @@ public class RobotContainer {
 
           superstructure = new Superstructure();
           
-          /*
+          
           elevator =
                 new Elevator(
                 new ElevatorIOKraken() {});
@@ -84,22 +99,47 @@ public class RobotContainer {
                 new CoralRoller(
                 new CoralRollerIO() {}
                 );
-          */
+          
 
           break;
 
-          case DEVBOT:
+        case DEVBOT:
 
           drive =
           new Drive(
-               new GyroIOPigeon2() {},
+               new GyroIO() {},
                new ModuleIOTalonFX(0),
                new ModuleIOTalonFX(1),
                new ModuleIOTalonFX(2),
                new ModuleIOTalonFX(3)
                ); 
 
-          superstructure = new Superstructure();
+               elevator =
+               new Elevator(
+               new ElevatorIO() {});
+
+         algaePivot =
+               new AlgaePivot(
+               new AlgaePivotIO() {});
+
+         algaeRoller = 
+               new AlgaeRoller(
+               new AlgaeRollerIO() {} );
+         
+         climber =
+               new Climber(
+               new ClimberIO() {});
+         
+         coralPivot =
+               new CoralPivot(
+               new CoralPivotIO() {});    // When this is connected set it to CoralPivotIO() 
+
+         coralRoller = 
+               new CoralRoller(
+               new CoralRollerIO() {}
+               );
+
+               superstructure = new Superstructure();
 
           break;
 
@@ -114,8 +154,33 @@ public class RobotContainer {
                   new ModuleIOSim(),
                   new ModuleIOSim() );
 
-            superstructure = new Superstructure();
-                  
+                  elevator =
+                  new Elevator(
+                  new ElevatorIO() {});
+  
+            algaePivot =
+                  new AlgaePivot(
+                  new AlgaePivotIO() {});
+  
+            algaeRoller = 
+                  new AlgaeRoller(
+                  new AlgaeRollerIO() {} );
+            
+            climber =
+                  new Climber(
+                  new ClimberIO() {});
+            
+            coralPivot =
+                  new CoralPivot(
+                  new CoralPivotIO() {});    // When this is connected set it to CoralPivotIOKraken() 
+  
+            coralRoller = 
+                  new CoralRoller(
+                  new CoralRollerIO() {}
+                  );
+
+                  superstructure = new Superstructure();
+
             break;
       }
   
@@ -170,7 +235,7 @@ public class RobotContainer {
           driverController.y().onTrue(Commands.runOnce(
             ()-> {
               // elevator.setPO(.05);
-               superstructure.elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit/2);
+               elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit/2);
             }
             )
           );
