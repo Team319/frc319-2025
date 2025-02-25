@@ -19,7 +19,6 @@ public class CoralPivotIOKraken implements CoralPivotIO {
         private StatusSignal<Current> motorStatorCurrent;
         private StatusSignal<Angle> motorPosition;
 
-        private DutyCycleEncoder  revThroughboreEncoder = new DutyCycleEncoder (0); // Does this need an offset? As it's just a zero to 1.0 
 
         Slot0Configs slot0Configs = new Slot0Configs();
         private final PositionVoltage positionVoltage = new PositionVoltage(0.0);
@@ -71,7 +70,6 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             // Updates all of the inputs/data points being monitored about the motor
             inputs.coralPivotMotorStatorCurrent = motorStatorCurrent.getValueAsDouble();
             inputs.coralPivotMotorPosition = motorPosition.getValueAsDouble();
-            inputs.coralPivotEncoderPosition = revThroughboreEncoder.get();
     }
 
     @Override
@@ -104,8 +102,8 @@ public class CoralPivotIOKraken implements CoralPivotIO {
 
     @Override
     public double getPosition() {
-      //return motorPosition.getValueAsDouble();
-      return revThroughboreEncoder.get();
+      return motorPosition.getValueAsDouble();
+
     }
 
     @Override
