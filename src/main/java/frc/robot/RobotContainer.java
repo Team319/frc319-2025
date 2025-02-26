@@ -10,10 +10,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.commands.CollectCoral;
+import frc.robot.commands.CollectCoralObstructed;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.GoHome;
 import frc.robot.commands.SafelyMoveToScoringPosition;
 import frc.robot.commands.ScoreCoral;
+import frc.robot.subsystems.coralPivot.CoralPivotIOInputsAutoLogged;
 import frc.robot.subsystems.coralPivot.CoralPivotIOKraken;
+import frc.robot.subsystems.coralRoller.CoralRollerIOInputsAutoLogged;
+import frc.robot.subsystems.coralPivot.CoralPivotIO.CoralPivotIOInputs;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
@@ -169,6 +174,8 @@ public class RobotContainer {
           driverController.x().onTrue(new SafelyMoveToScoringPosition(superstructure, 3));
 
           driverController.b().onTrue(new SafelyMoveToScoringPosition(superstructure, 2));
+          System.out.println(superstructure.coralRoller.getStatorCurrent());
+
 
           driverController.a().onTrue(new SafelyMoveToScoringPosition(superstructure, 1)); // WARNING: This is just a start. Elevator may drop when the command finishes. Be cautious.
                                                                                                   // if it does drop, you may need to add code to the superstructure periodic to simply keep 
@@ -176,7 +183,13 @@ public class RobotContainer {
                                                                                                   // and these commands should update that 'targetPosition' variable then 
           driverController.rightTrigger().whileTrue(new ScoreCoral(superstructure));
 
-          operatorController.start().onTrue(new CollectCoral(superstructure));
+          operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
+
+          operatorController.start().onTrue(new GoHome(superstructure));
+
+
+          operatorController.rightTrigger().onTrue(new CollectCoralObstructed(superstructure));
+
 
 
         /*  ============================= Elevator ============================= */

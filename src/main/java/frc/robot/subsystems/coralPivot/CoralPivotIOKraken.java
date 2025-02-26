@@ -105,8 +105,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
 
     @Override
     public double getPosition() {
-      //return motorPosition.getValueAsDouble();
-      return revThroughboreEncoder.get();
+      return motorPosition.getValueAsDouble();
     }
 
     @Override

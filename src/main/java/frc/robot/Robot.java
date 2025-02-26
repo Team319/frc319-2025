@@ -64,6 +64,8 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    System.out.println(m_robotContainer.superstructure.coralRoller.getStatorCurrent());
+
   }
 
   @Override
@@ -79,11 +81,11 @@ public class Robot extends LoggedRobot {
     Optional<Alliance> allianceColor = DriverStation.getAlliance();
     allianceColor.ifPresent(alliance -> {
       if (alliance == Alliance.Red) {
-        m_robotContainer.drive.setHeading(0.0);
-        System.out.println("Red Alliance: Setting heading to 0 degrees.");
+        //m_robotContainer.drive.setHeading(0.0);
+        //System.out.println("Red Alliance: Setting heading to 0 degrees.");
       } else if (alliance == Alliance.Blue) {
-        m_robotContainer.drive.setHeading(180.0);
-        System.out.println("Blue Alliance: Setting heading to 180 degrees.");
+        //m_robotContainer.drive.setHeading(180.0);
+        //System.out.println("Blue Alliance: Setting heading to 180 degrees.");
       }
     });
 

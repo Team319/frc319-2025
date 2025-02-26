@@ -12,15 +12,15 @@ import frc.robot.subsystems.superstructure.Superstructure;
 import frc.robot.util.EqualsUtil;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class CollectCoral extends Command {
+public class CollectCoralObstructed extends Command {
 
   Superstructure m_superstructure;
 
-  double detectCurrent = 10.0; // Tune this current limit number with Advantagescope looking at RealOutputs/CoralRoller/MotorStatorCurrent
+  double detectCurrent = 3.0; // Tune this current limit number with Advantagescope looking at RealOutputs/CoralRoller/MotorStatorCurrent
   double currentTolerance = 0.1;
 
   /** Creates a new CollectCoral. */
-  public CollectCoral(Superstructure superstructure) {
+  public CollectCoralObstructed(Superstructure superstructure) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(superstructure);
 
@@ -31,8 +31,8 @@ public class CollectCoral extends Command {
   @Override
   public void initialize() {
     m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.collect);
-    m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.collect);
-    m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_flush);
+    m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.collect_obstructed);
+    m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_obstructed);
 
   }
 

@@ -43,7 +43,7 @@ public class SafelyMoveToScoringPosition extends Command {
 
     //Check if the coral pivot is too far forward, and if so, move it back
     if(m_superstructure.coralPivot.getPosition() > CoralPivotConstants.Setpoints.home) {  // Tune this to some safe position...
-      m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
+      m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home-2);
     }
 
     // calculate the desired setpoints from the level
