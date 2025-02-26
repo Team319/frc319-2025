@@ -4,7 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.CoralRollerConstants;
 import frc.robot.Constants.ElevatorConstants;
@@ -15,15 +17,18 @@ import frc.robot.util.EqualsUtil;
 public class CollectCoral extends Command {
 
   Superstructure m_superstructure;
+  private final Timer timer = new Timer();
+  private static final double DEBOUNCE_TIME = 0.5; // Adjust debounce time as needed
 
-  double detectCurrent = 10.0; // Tune this current limit number with Advantagescope looking at RealOutputs/CoralRoller/MotorStatorCurrent
+
+
+  double detectCurrent = 8; // Tune this current limit number with Advantagescope looking at RealOutputs/CoralRoller/MotorStatorCurrent
   double currentTolerance = 0.1;
 
   /** Creates a new CollectCoral. */
   public CollectCoral(Superstructure superstructure) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(superstructure);
-
     m_superstructure = superstructure;
   }
 
@@ -33,6 +38,9 @@ public class CollectCoral extends Command {
     m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.collect);
     m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.collect);
     m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_flush);
+    timer.reset();
+    timer.start();
+
 
   }
 
@@ -46,16 +54,26 @@ public class CollectCoral extends Command {
     
     //stop the rollers!
     m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.stop);
-
     // Hold whatever position I'm at now...
     m_superstructure.coralPivot.runPosition(m_superstructure.coralPivot.getPosition());
     m_superstructure.elevator.runPosition(m_superstructure.elevator.getPosition());
+    timer.stop();
+
+  
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return EqualsUtil.epsilonEquals(m_superstructure.coralRoller.getStatorCurrent(), detectCurrent,  currentTolerance); // Tune this detect current and tolerance with Advantagescope looking at RealOutputs/CoralRoller/MotorStatorCurrent 
+    if (m_superstructure.coralRoller.getStatorCurrent() < 10) {
+      if (timer.hasElapsed(DEBOUNCE_TIME)) {
+          return true;
+      }
+  } else {
+      timer.reset();
   }
+  return false;
 }
+}
+

@@ -17,14 +17,14 @@ public class GoHome extends Command {
 
   Superstructure m_superstructure;
   double pivotThreshold;
-  int passedCycles;
-
+  boolean isElevatorAtPosition = false;
+  boolean isCoralPivotAtPosition = false;
 
   /** Creates a new CollectCoral. */
   public GoHome(Superstructure superstructure) {
     // Use addRequirements() here to declare subsystem dependencies.
     pivotThreshold = 5;
-    passedCycles = 0;
+    
 
     addRequirements(superstructure);
 
@@ -36,7 +36,6 @@ public class GoHome extends Command {
   public void initialize() {
       m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
       m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
-      passedCycles = 0;
 
   }
 
@@ -47,8 +46,6 @@ public class GoHome extends Command {
       if (m_superstructure.coralPivot.getPosition() > CoralPivotConstants.Setpoints.home-pivotThreshold && m_superstructure.coralPivot.getPosition() < CoralPivotConstants.Setpoints.home+pivotThreshold){
         m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.home);
       }
-      passedCycles++;
-
     }
   }  // do nothing new... just let the coral roller run
 
@@ -67,6 +64,6 @@ public class GoHome extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return passedCycles >=5; //TODO: Tune
+    return isElevatorAtPosition && isCoralPivotAtPosition; 
   }
 }

@@ -11,9 +11,9 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 1.0
+            "name": "ScoreL4"
           }
         },
         {
@@ -23,9 +23,9 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 1.0
+            "name": "Collect"
           }
         },
         {
@@ -35,15 +35,21 @@
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 1.0
+            "name": "ScoreL4"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "H_L4_Loading_12"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collect"
           }
         }
       ]

@@ -29,6 +29,7 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 
 public class RobotContainer {
@@ -126,7 +127,16 @@ public class RobotContainer {
                   
             break;
       }
-  
+      //Set up Named Commands in Pathplanner
+
+      NamedCommands.registerCommand(
+        "Collect",
+        new CollectCoral(superstructure));
+
+      NamedCommands.registerCommand(
+        "ScoreL4",
+        new SafelyMoveToScoringPosition(superstructure, 4));
+
       // Set up auto routines
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
       
@@ -169,32 +179,38 @@ public class RobotContainer {
 
           // Initial Scoring commands. Requires tuned setpoints !!! - EKM 2/26
 
-          driverController.y().onTrue(new SafelyMoveToScoringPosition(superstructure, 4));
+          operatorController.povUp().onTrue(new SafelyMoveToScoringPosition(superstructure, 4));
 
-          driverController.x().onTrue(new SafelyMoveToScoringPosition(superstructure, 3));
+          operatorController.povRight().onTrue(new SafelyMoveToScoringPosition(superstructure, 3));
 
-          driverController.b().onTrue(new SafelyMoveToScoringPosition(superstructure, 2));
-          System.out.println(superstructure.coralRoller.getStatorCurrent());
+          operatorController.povDown().onTrue(new SafelyMoveToScoringPosition(superstructure, 2));
 
 
-          driverController.a().onTrue(new SafelyMoveToScoringPosition(superstructure, 1)); // WARNING: This is just a start. Elevator may drop when the command finishes. Be cautious.
+          operatorController.povLeft().onTrue(new SafelyMoveToScoringPosition(superstructure, 1)); // WARNING: This is just a start. Elevator may drop when the command finishes. Be cautious.
                                                                                                   // if it does drop, you may need to add code to the superstructure periodic to simply keep 
                                                                                                   //calling to hold some set desired 'targetPosition' in the subsystem. 
                                                                                                   // and these commands should update that 'targetPosition' variable then 
           driverController.rightTrigger().whileTrue(new ScoreCoral(superstructure));
 
-          operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
+          //operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
+          operatorController.leftTrigger().onTrue(Commands.run(
+            ()-> {
+             superstructure.coralRoller.setPO(-0.025);
+            }
+            )
+          );
+
+          operatorController.back().onTrue(new CollectCoralObstructed(superstructure)); //move to toggle eventually
+
 
           operatorController.start().onTrue(new GoHome(superstructure));
 
-
-          operatorController.rightTrigger().onTrue(new CollectCoralObstructed(superstructure));
-
+          operatorController.rightStick().onTrue(new GoHome(superstructure));
 
 
         /*  ============================= Elevator ============================= */
 
-          driverController.rightBumper().onTrue(Commands.runOnce(
+          operatorController.rightBumper().onTrue(Commands.runOnce(
             ()-> {
               // elevator.setPO(.05);
               superstructure.elevator.runPosition(superstructure.elevator.getPosition() + 2);  // Nudge the elevator up
@@ -202,41 +218,13 @@ public class RobotContainer {
             )
           );
 
-          driverController.leftBumper().onTrue(Commands.runOnce(
+          operatorController.rightTrigger().onTrue(Commands.runOnce(
             ()-> {
               // elevator.setPO(.05);
               superstructure.elevator.runPosition(superstructure.elevator.getPosition() - 2);  // Nudge the elevator down
             }
             )
           );
-
-          /*  From Sunday before Salem
-          driverController.y().onTrue(Commands.runOnce(
-            ()-> {
-              // elevator.setPO(.05);
-               superstructure.elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit/2);
-            }
-            )
-          );
-
-          driverController.y().whileFalse(Commands.run(
-            ()-> {
-             // superstructure.elevator.setPO(0);
-            }
-            )
-          );
-
-          driverController.a().onTrue(Commands.runOnce(
-            ()-> {
-              //elevator.setPO(-.05);
-              superstructure.elevator.runPosition(Constants.ElevatorConstants.Setpoints.bottomLimit);
-            }
-            )
-          );
-          
-          */
-
-
 
   /*  ============================= Coral Pivot ============================= */
 

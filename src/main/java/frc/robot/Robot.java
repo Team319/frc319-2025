@@ -90,7 +90,7 @@ public class Robot extends LoggedRobot {
     });
 
      if(!allianceColor.isPresent()){
-       System.out.println("Alliance color is not set yet.");
+       //System.out.println("Alliance color is not set yet.");
      }
    }
 

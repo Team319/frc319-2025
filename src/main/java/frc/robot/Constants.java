@@ -167,7 +167,7 @@ public class Constants {
       
       public static final float collect_flush = (float)10.0;
       public static final float collect_obstructed = (float)(8);
-      public static final float bottomLimit = (float)5.0;
+      public static final float bottomLimit = (float)2.0;
       public static final float home = bottomLimit;
       
       
