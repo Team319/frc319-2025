@@ -34,7 +34,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             coralPivotMotor.getConfigurator().apply(coralPivotConfigs);
     
             coralPivotConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-            coralPivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+            coralPivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
     
             coralPivotConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             coralPivotConfigs.CurrentLimits.StatorCurrentLimit = 40;

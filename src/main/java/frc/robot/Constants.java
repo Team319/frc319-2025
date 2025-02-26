@@ -113,7 +113,8 @@ public class Constants {
       public static final float topLimit = (float)100.0;
       public static final float readyToClimb = (float)(topLimit/2);
       public static final float home = (float)0.0;
-      public static final float collect = (float)0.0; //TODO: Find this value
+      public static final float collect = (float)-14.0; //TODO: Find this value
+      public static final float collect_obstructed = (float)(-16);
       public static final float scoreL4 = (float)0.0; //TODO: Find this value
       public static final float scoreL3 = (float)0.0; //TODO: Find this value
       public static final float scoreL2 = (float)0.0; //TODO: Find this value
@@ -154,8 +155,8 @@ public class Constants {
     public static class Setpoints {
       public static final float topLimit = (float)75.0;
       public static final float readyToClimb = (float)(topLimit/2.0);
-      public static final float collect_flush = (float)10.0; //TODO: Check if this is correct
-      public static final float collect_obstructed = (float)(collect_flush - 5.0);
+      public static final float collect = (float)11.0; //TODO: Check if this is correct
+      public static final float collect_obstructed = (float)(9);
       public static final float bottomLimit = (float)5.0;
       public static final float scoreL1 = (float)0.0; //TODO: Find this value
       public static final float scoreL2 = (float)0.0; //TODO: Find this value

@@ -9,7 +9,10 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.CoralPivotConstants;
+import frc.robot.commands.CollectCoral;
+import frc.robot.commands.CollectCoralObstructed;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.JoystickClimb;
 import frc.robot.commands.JoystickElevator;
 import frc.robot.subsystems.algaePivot.AlgaePivot;
 import frc.robot.subsystems.algaePivot.AlgaePivotIO;
@@ -439,7 +442,7 @@ public class RobotContainer {
     /*  ============================= OPERATOR CLIMB ============================= */
 
     /*  ============================= Climbing ============================= */
-      /*climber.setDefaultCommand(
+      climber.setDefaultCommand(
         (new JoystickClimb(climber, () -> -operatorController.getRightY()) ));
         
     /*  ============================= Climbing Prep ============================= */
@@ -448,7 +451,10 @@ public class RobotContainer {
     /*  ============================= OPERATOR COLLECT ============================= */
 
     /*  ============================= Collect Coral ============================= */
-    //operatorController.leftTrigger().whileTrue(new CollectCoral(this.coralPivot, this.coralRoller, this.elevator));
+    operatorController.leftTrigger().onTrue(new CollectCoral(this.coralPivot, this.coralRoller, this.elevator));
+
+    /*  ============================= Collect Coral Obstructed ============================= */
+    operatorController.rightTrigger().onTrue(new CollectCoralObstructed(this.coralPivot, this.coralRoller, this.elevator));
 
     /*  ============================= Collect Algae ============================= */
     //operatorController.leftBumper().whileTrue(new CollectAlgae(this.algaePivot, this.algaeRoller));
@@ -501,28 +507,28 @@ public class RobotContainer {
     /*  ============================= Algae Pivot ============================= */
     operatorController.b().onTrue(Commands.run(
       ()-> {
-        //algaePivot.setPO(0.5);
+        algaePivot.setPO(0.5);
       }
       )
     );
     
     operatorController.b().onFalse(Commands.run(
       ()-> {
-        //algaePivot.setPO(0);
+        algaePivot.setPO(0);
       }
       )
     );
 
     operatorController.x().onTrue(Commands.run(
       ()-> {
-        //algaePivot.setPO(-0.5);
+        algaePivot.setPO(-0.5);
       }
       )
     );
 
     operatorController.x().onFalse(Commands.run(
       ()-> {
-        //algaePivot.setPO(0);
+        algaePivot.setPO(0);
       }
       )
     );

@@ -37,7 +37,7 @@ public class ElevatorIOKraken implements ElevatorIO {
       //elevatorLead.setControl(new Follower(elevatorFollow.getDeviceID(), true));
 
       elevatorConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-      elevatorConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast; //NeutralModeValue.Brake;
+      elevatorConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake; //NeutralModeValue.Brake;
       configurePID(ElevatorConstants.Gains.kPUp,ElevatorConstants.Gains.kIUp,ElevatorConstants.Gains.kDUp);
 
       elevatorConfigs.CurrentLimits.StatorCurrentLimitEnable = true;

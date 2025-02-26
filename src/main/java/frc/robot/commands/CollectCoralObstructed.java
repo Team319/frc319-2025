@@ -7,7 +7,7 @@ import frc.robot.subsystems.coralPivot.CoralPivot;
 import frc.robot.subsystems.coralRoller.CoralRoller;
 import frc.robot.subsystems.elevator.Elevator;
 
-public class CollectCoral extends Command{
+public class CollectCoralObstructed extends Command{
     private final CoralPivot coralPivot;
     private final CoralRoller coralRoller;
     private final Elevator elevator;
@@ -15,7 +15,7 @@ public class CollectCoral extends Command{
     double elevatorThreshold;
     int passedCycles;
 
-    public CollectCoral(CoralPivot coralPivot, CoralRoller coralRoller, Elevator elevator){
+    public CollectCoralObstructed(CoralPivot coralPivot, CoralRoller coralRoller, Elevator elevator){
         this.coralPivot = coralPivot;
         this.coralRoller = coralRoller;
         this.elevator = elevator;
@@ -28,12 +28,12 @@ public class CollectCoral extends Command{
     @Override
     public void initialize() {
         passedCycles = 0;
-        elevator.runPosition(ElevatorConstants.Setpoints.collect);
+        elevator.runPosition(ElevatorConstants.Setpoints.collect_obstructed);
     }
     @Override
     public void execute() {
-        if (elevator.getPosition() > ElevatorConstants.Setpoints.collect-pivotThreshold && elevator.getPosition() < ElevatorConstants.Setpoints.collect+pivotThreshold){
-            coralPivot.runPosition(CoralPivotConstants.Setpoints.collect);
+        if (elevator.getPosition() > ElevatorConstants.Setpoints.collect_obstructed-pivotThreshold && elevator.getPosition() < ElevatorConstants.Setpoints.collect_obstructed+pivotThreshold){
+            coralPivot.runPosition(CoralPivotConstants.Setpoints.collect_obstructed);
         }
         passedCycles++;
     }
