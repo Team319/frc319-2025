@@ -8,16 +8,21 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AlgaePivotConstants;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.commands.CollectCoral;
 import frc.robot.commands.CollectCoralObstructed;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.GoHome;
+import frc.robot.commands.ReadytoClimb;
 import frc.robot.commands.SafelyMoveToScoringPosition;
 import frc.robot.commands.ScoreCoral;
 import frc.robot.subsystems.coralPivot.CoralPivotIOInputsAutoLogged;
 import frc.robot.subsystems.coralPivot.CoralPivotIOKraken;
 import frc.robot.subsystems.coralRoller.CoralRollerIOInputsAutoLogged;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIO;
+import frc.robot.subsystems.climber.ClimberIOKraken;
 import frc.robot.subsystems.coralPivot.CoralPivotIO.CoralPivotIOInputs;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -67,6 +72,7 @@ public class RobotContainer {
                  new ModuleIOTalonFX(3)); 
 
           superstructure = new Superstructure();
+
           
           /*
           elevator =
@@ -110,6 +116,8 @@ public class RobotContainer {
 
           superstructure = new Superstructure();
 
+
+
           break;
 
           case SIMBOT:
@@ -124,6 +132,8 @@ public class RobotContainer {
                   new ModuleIOSim() );
 
             superstructure = new Superstructure();
+            
+
                   
             break;
       }
@@ -190,20 +200,29 @@ public class RobotContainer {
                                                                                                   // if it does drop, you may need to add code to the superstructure periodic to simply keep 
                                                                                                   //calling to hold some set desired 'targetPosition' in the subsystem. 
                                                                                                   // and these commands should update that 'targetPosition' variable then 
-          driverController.rightTrigger().whileTrue(new ScoreCoral(superstructure));
+          driverController.rightBumper().whileTrue(new ScoreCoral(superstructure));
+          
 
           //operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
-          operatorController.leftTrigger().onTrue(Commands.run(
+          operatorController.back().onTrue(Commands.runOnce(
             ()-> {
-             superstructure.coralRoller.setPO(-0.025);
+            superstructure.coralRoller.setPO(0.2);
             }
             )
           );
 
-          operatorController.back().onTrue(new CollectCoralObstructed(superstructure)); //move to toggle eventually
+          operatorController.back().onFalse(Commands.runOnce(
+            ()-> {
+            superstructure.coralRoller.setPO(0);
+            }
+            )
+          );
 
+          operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
 
-          operatorController.start().onTrue(new GoHome(superstructure));
+          operatorController.leftTrigger().onFalse(new GoHome(superstructure));
+
+          operatorController.start().onTrue(new ReadytoClimb(superstructure));
 
           operatorController.rightStick().onTrue(new GoHome(superstructure));
 
@@ -218,13 +237,7 @@ public class RobotContainer {
             )
           );
 
-          operatorController.rightTrigger().onTrue(Commands.runOnce(
-            ()-> {
-              // elevator.setPO(.05);
-              superstructure.elevator.runPosition(superstructure.elevator.getPosition() - 2);  // Nudge the elevator down
-            }
-            )
-          );
+
 
   /*  ============================= Coral Pivot ============================= */
 
@@ -290,22 +303,23 @@ public class RobotContainer {
 
       /*  ============================= Algae Pivot ============================= */
 
-      operatorController.povUp().onTrue(Commands.runOnce(
+      operatorController.x().onTrue(Commands.runOnce(
         ()-> {
           //superstructure.algaePivot.setPO(.1);
+
           superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
         }
         )
       );
 
-      operatorController.povUp().whileFalse(Commands.run(
+      operatorController.x().whileFalse(Commands.run(
         ()-> {
           //superstructure.algaePivot.setPO(0);
         }
         )
       );
 
-      operatorController.povDown().onTrue(Commands.runOnce(
+      operatorController.b().onTrue(Commands.runOnce(
         ()-> {
           //superstructure.algaePivot.setPO(-.1);
           superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
@@ -313,42 +327,42 @@ public class RobotContainer {
         )
       );
 
-      operatorController.povDown().onFalse(Commands.run(
+      operatorController.b().whileFalse(Commands.run(
         ()-> {
-         // superstructure.algaePivot.setPO(0);
+          //superstructure.algaePivot.setPO(0);
         }
         )
       );
 
     /*  ============================= Algae Rollers ============================= */
 
-    operatorController.x().whileTrue(Commands.run(
-      ()-> {
-        superstructure.algaeRoller.setPO(.5);
-      }
-      )
-    );
+    // operatorController.x().whileTrue(Commands.run(
+    //   ()-> {
+    //     superstructure.algaeRoller.setPO(.5);
+    //   }
+    //   )
+    // );
   
-    operatorController.x().whileFalse(Commands.run(
-      ()-> {
-        superstructure.algaeRoller.setPO(0);
-      }
-      )
-    );
+    // operatorController.x().whileFalse(Commands.run(
+    //   ()-> {
+    //     superstructure.algaeRoller.setPO(0);
+    //   }
+    //   )
+    // );
   
-    operatorController.b().whileTrue(Commands.run(
-      ()-> {
-        superstructure.algaeRoller.setPO(-.5);
-      }
-      )
-    );
+    // operatorController.b().whileTrue(Commands.run(
+    //   ()-> {
+    //     superstructure.algaeRoller.setPO(-.5);
+    //   }
+    //   )
+    // );
   
-    operatorController.b().onFalse(Commands.run(
-      ()-> {
-        superstructure.algaeRoller.setPO(0);
-      }
-      )
-    );
+    // operatorController.b().onFalse(Commands.run(
+    //   ()-> {
+    //     superstructure.algaeRoller.setPO(0);
+    //   }
+    //   )
+    // );
 
     /*  ============================= Climber ============================= */
 

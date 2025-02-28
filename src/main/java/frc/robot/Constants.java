@@ -57,7 +57,7 @@ public class Constants {
   }
 
   public static class DriveConstants{
-    public static final double MAX_LINEAR_SPEED = Units.feetToMeters(17.1); //y
+    public static final double MAX_LINEAR_SPEED = Units.feetToMeters(16.9); //y
     public static final double TRACK_WIDTH_X = Units.inchesToMeters(22.75); //y
     public static final double TRACK_WIDTH_Y = Units.inchesToMeters(22.75); //y
     public static final double DRIVE_BASE_RADIUS =
@@ -70,7 +70,7 @@ public class Constants {
     public static final double wheelCOF = 1.2; // TODO
     public static final double DRIVE_GEAR_RATIO = 6.122; //(50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0); // L3
     public static final double TURN_GEAR_RATIO = 150.0 / 7.0;
-    public static final boolean isTurnMotorInverted = true;
+    public static final boolean isTurnMotorInverted = true; 
   }
   public static enum HeadingTargets{
     NO_TARGET,
@@ -97,7 +97,7 @@ public class Constants {
     public static class PID {
       public static final double kPUp = 0.2;
       public static final double kIUp = 0;
-      public static final double kDUp = 0;
+      public static final double kDUp = 0.0;
       public static final double kFFUp = 0.0;
       public static final int iZoneUp = 0;
 
@@ -113,7 +113,7 @@ public class Constants {
     public static class Setpoints {
       public static final float topLimit = (float)25.0;
 
-      public static final float level4 = (float)(12); // tune me
+      public static final float level4 = (float)(10); // tune me
       public static final float level3 = (float)(16); // tune me
       public static final float level2 = (float)(17); // tune me
       public static final float level1 = (float)(topLimit/2.0); // tune me
@@ -121,7 +121,7 @@ public class Constants {
       public static final float collect_obstructed = (float)(-16);
 
 
-      public static final float readyToClimb = (float)(topLimit/2);
+      public static final float readyToClimb = (float)(20);
       public static final float home = (float)0.0;
       public static final float bottomLimit = (float)-15.0;
       
@@ -158,16 +158,16 @@ public class Constants {
     //Elevator
     public static class Setpoints {
       public static final float topLimit = (float)74.0;//Really 73
-      public static final float readyToClimb = (float)(topLimit/2.0);
+      public static final float readyToClimb = (float)(27);
 
-      public static final float level4 = (float)(72); // tune me
+      public static final float level4 = (float)(73.0); // tune me
       public static final float level3 = (float)(41); // tune me
-      public static final float level2 = (float)(18); // tune me
+      public static final float level2 = (float)(22); // tune me
       public static final float level1 = (float)(topLimit/2.0); // tune me
       
       public static final float collect_flush = (float)10.0;
       public static final float collect_obstructed = (float)(8);
-      public static final float bottomLimit = (float)2.0;
+      public static final float bottomLimit = (float)0.0;
       public static final float home = bottomLimit;
       
       
@@ -181,7 +181,7 @@ public class Constants {
   }
   public static class AlgaePivotConstants{
     public static class Gains {
-      public static final double kPUp = 10.0;
+      public static final double kPUp = 2.0;
       public static final double kIUp = 0;
       public static final double kDUp = 0;
       public static final double kFFUp = 0.0;
@@ -233,10 +233,11 @@ public class Constants {
     public static class Setpoints {
       public static final float topLimit = (float)90.0; // In the robot
       
-      public static final float bottomLimit = (float)-90.0;  // outside the robot
-      public static final float readyToClimb = (float)(bottomLimit/2.0);
+      public static final float bottomLimit = (float)-66.0;  // outside the robot
+      public static final float ready = (float)-10;
+      public static final float readyToClimb = (float)(-66);
       
-      public static final float climb = (float)(topLimit);
+      public static final float climb = (float)(45);
 
 
     }

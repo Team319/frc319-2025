@@ -92,7 +92,9 @@ public class SafelyMoveToScoringPosition extends Command {
       isCoralPivotAtPosition = true;
     }
     else {
-      m_superstructure.coralPivot.runPosition(desiredCoralPivotPosition);
+      if(m_superstructure.elevator.getPosition() >= 10)
+        m_superstructure.coralPivot.runPosition(desiredCoralPivotPosition);
+
     }
   }
 
