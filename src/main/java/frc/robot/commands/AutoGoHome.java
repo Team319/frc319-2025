@@ -35,7 +35,6 @@ public class AutoGoHome extends Command {
   @Override
   public void initialize() {
       m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
-      m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
       passedCycles = 0;
 
 
@@ -44,10 +43,12 @@ public class AutoGoHome extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_superstructure.algaePivot.getPosition() > AlgaePivotConstants.Setpoints.home-pivotThreshold && m_superstructure.algaePivot.getPosition() < AlgaePivotConstants.Setpoints.home+pivotThreshold){
-      if (m_superstructure.coralPivot.getPosition() > CoralPivotConstants.Setpoints.collect-pivotThreshold && m_superstructure.coralPivot.getPosition() < CoralPivotConstants.Setpoints.collect+pivotThreshold){
+      if (m_superstructure.coralPivot.getPosition() > CoralPivotConstants.Setpoints.collect-pivotThreshold && m_superstructure.coralPivot.getPosition() < CoralPivotConstants.Setpoints.collect+pivotThreshold)
+    {
+        System.out.println("[AutoGoHome]: Coral Pivot in Threshold");
+
         m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_flush);
-      }
+      
     }
     passedCycles++;
 
@@ -58,7 +59,7 @@ public class AutoGoHome extends Command {
   public void end(boolean interrupted) {
     
     //stop the rollers!
-
+    System.out.println("[AutoGoHome]: Hit end logic");
     // Hold whatever position I'm at now...
     m_superstructure.coralPivot.runPosition(m_superstructure.coralPivot.getPosition());
     m_superstructure.elevator.runPosition(m_superstructure.elevator.getPosition());
@@ -68,6 +69,6 @@ public class AutoGoHome extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return passedCycles >= 50; 
+    return passedCycles >= 75; // was 50
   }
 }

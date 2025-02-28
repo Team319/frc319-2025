@@ -41,7 +41,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             coralPivotConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             coralPivotConfigs.CurrentLimits.StatorCurrentLimit = 40;
 
-            configurePID(CoralPivotConstants.PID.kPUp,CoralPivotConstants.PID.kIUp,CoralPivotConstants.PID.kDUp,CoralPivotConstants.PID.kFFUp);
+            configurePID(CoralPivotConstants.Gains.kPUp,CoralPivotConstants.Gains.kIUp,CoralPivotConstants.Gains.kDUp,CoralPivotConstants.Gains.kFFUp);
     
             coralPivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
             coralPivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = CoralPivotConstants.Setpoints.topLimit;
@@ -58,15 +58,15 @@ public class CoralPivotIOKraken implements CoralPivotIO {
     
         @Override
         public void updateInputs(CoralPivotIOInputs inputs) {
-            inputs.kPUp = CoralPivotConstants.PID.kPUp;
-            inputs.kIUp = CoralPivotConstants.PID.kIUp;
-            inputs.kDUp = CoralPivotConstants.PID.kDUp;
-            inputs.kFFUp = CoralPivotConstants.PID.kFFUp;
+            inputs.kPUp = CoralPivotConstants.Gains.kPUp;
+            inputs.kIUp = CoralPivotConstants.Gains.kIUp;
+            inputs.kDUp = CoralPivotConstants.Gains.kDUp;
+            inputs.kFFUp = CoralPivotConstants.Gains.kFFUp;
     
-            inputs.kPDown = CoralPivotConstants.PID.kPDown;
-            inputs.kIDown = CoralPivotConstants.PID.kIDown;
-            inputs.kDDown = CoralPivotConstants.PID.kDDown;
-            inputs.kFFDown = CoralPivotConstants.PID.kFFDown;
+            inputs.kPDown = CoralPivotConstants.Gains.kPDown;
+            inputs.kIDown = CoralPivotConstants.Gains.kIDown;
+            inputs.kDDown = CoralPivotConstants.Gains.kDDown;
+            inputs.kFFDown = CoralPivotConstants.Gains.kFFDown;
 
             BaseStatusSignal.refreshAll(motorStatorCurrent, motorPosition);
             // Updates all of the inputs/data points being monitored about the motor

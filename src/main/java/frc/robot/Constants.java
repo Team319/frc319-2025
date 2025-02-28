@@ -94,9 +94,9 @@ public class Constants {
   }
 
   public static class CoralPivotConstants{
-    public static class PID {
-      public static final double kPUp = 0.05;
-      public static final double kIUp = 0;
+    public static class Gains {
+      public static final double kPUp = 0.5;
+      public static final double kIUp = 0.01;
       public static final double kDUp = 0.0;
       public static final double kFFUp = 0.0;
       public static final int iZoneUp = 0;
@@ -117,12 +117,12 @@ public class Constants {
       public static final float level3 = (float)(16); // tune me
       public static final float level2 = (float)(17); // tune me
       public static final float level1 = (float)(topLimit/2.0); // tune me
-      public static final float collect = (float)(-14); // tune me
-      public static final float collect_obstructed = (float)(-16);
+      public static final float collect = (float)(-9.5); // tune me
+      public static final float collect_obstructed = (float)(-14.5);
 
 
       public static final float readyToClimb = (float)(20);
-      public static final float home = (float)(collect);
+      public static final float home = (float)(0);
       public static final float bottomLimit = (float)-15.0;
       
 
@@ -165,8 +165,8 @@ public class Constants {
       public static final float level2 = (float)(22); // tune me
       public static final float level1 = (float)(topLimit/2.0); // tune me
       
-      public static final float collect_flush = (float)10.0;
-      public static final float collect_obstructed = (float)(8);
+      public static final float collect_flush = (float)4.5;
+      public static final float collect_obstructed = (float)(9);
       public static final float bottomLimit = (float)0.0;
       public static final float home = bottomLimit;
       

@@ -149,13 +149,13 @@ public class RobotContainer {
         "ScoreL4",
         new SafelyMoveToScoringPosition(superstructure, 4));
 
-        NamedCommands.registerCommand(
-          "ScoreCoral",
-          new AutoScoreCoral(superstructure));
+      NamedCommands.registerCommand(
+        "ScoreCoral",
+        new AutoScoreCoral(superstructure));
 
-          NamedCommands.registerCommand(
-            "GoHome",
-            new AutoGoHome(superstructure));
+      NamedCommands.registerCommand(
+        "GoHome",
+        new AutoGoHome(superstructure));
 
       // Set up auto routines
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
@@ -230,7 +230,9 @@ public class RobotContainer {
 
           operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
 
-          operatorController.leftTrigger().onFalse(new GoHome(superstructure));
+          operatorController.rightTrigger().onTrue(new CollectCoralObstructed(superstructure));
+
+
 
           operatorController.start().onTrue(new ReadytoClimb(superstructure));
 
