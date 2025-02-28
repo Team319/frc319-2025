@@ -19,8 +19,8 @@ public class SafelyMoveToScoringPosition extends Command {
   double desiredElevatorPosition = 0;
   double desiredCoralPivotPosition = 0;
 
-  double elevatorTolerance = 0.1;
-  double coralPivotTolerance = 0.1;
+  double elevatorTolerance = 1;
+  double coralPivotTolerance = 1;
 
   boolean isElevatorAtPosition = false;
   boolean isCoralPivotAtPosition = false;
@@ -38,7 +38,8 @@ public class SafelyMoveToScoringPosition extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+     isElevatorAtPosition = false;
+     isCoralPivotAtPosition = false;
     m_superstructure.climber.runPosition(0); // just make sure i'm still trying to  hold my position straight up, and out of the way.
 
     //Check if the coral pivot is too far forward, and if so, move it back

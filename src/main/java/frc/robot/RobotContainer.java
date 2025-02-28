@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.CoralPivotConstants;
+import frc.robot.commands.AutoGoHome;
+import frc.robot.commands.AutoScoreCoral;
 import frc.robot.commands.CollectCoral;
 import frc.robot.commands.CollectCoralObstructed;
 import frc.robot.commands.DriveCommands;
@@ -146,6 +148,14 @@ public class RobotContainer {
       NamedCommands.registerCommand(
         "ScoreL4",
         new SafelyMoveToScoringPosition(superstructure, 4));
+
+        NamedCommands.registerCommand(
+          "ScoreCoral",
+          new AutoScoreCoral(superstructure));
+
+          NamedCommands.registerCommand(
+            "GoHome",
+            new AutoGoHome(superstructure));
 
       // Set up auto routines
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());

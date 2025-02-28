@@ -11,9 +11,33 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "GoHome"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "Friendly_J_Loading"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collect"
           }
         },
         {
@@ -23,9 +47,33 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "ScoreL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "GoHome"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "H_L4_Loading"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collect"
           }
         }
       ]

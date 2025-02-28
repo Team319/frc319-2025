@@ -95,7 +95,7 @@ public class Constants {
 
   public static class CoralPivotConstants{
     public static class PID {
-      public static final double kPUp = 0.2;
+      public static final double kPUp = 0.05;
       public static final double kIUp = 0;
       public static final double kDUp = 0.0;
       public static final double kFFUp = 0.0;
@@ -122,7 +122,7 @@ public class Constants {
 
 
       public static final float readyToClimb = (float)(20);
-      public static final float home = (float)0.0;
+      public static final float home = (float)(collect);
       public static final float bottomLimit = (float)-15.0;
       
 
