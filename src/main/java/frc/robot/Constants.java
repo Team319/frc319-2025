@@ -115,7 +115,9 @@ public class Constants {
 
       public static final float level4 = (float)(10); // tune me
       public static final float level3 = (float)(16); // tune me
+      public static final float level3Pick = (float)(16); // tune me
       public static final float level2 = (float)(17); // tune me
+      public static final float level2Pick = (float)(17); // tune me
       public static final float level1 = (float)(topLimit/2.0); // tune me
       public static final float collect = (float)(-9.5); // tune me
       public static final float collect_obstructed = (float)(-14.5);
@@ -162,7 +164,9 @@ public class Constants {
 
       public static final float level4 = (float)(73.0); // tune me
       public static final float level3 = (float)(41); // tune me
+      public static final float level3Pick = (float)(41); // tune me
       public static final float level2 = (float)(22); // tune me
+      public static final float level2Pick = (float)(41); // tune me
       public static final float level1 = (float)(topLimit/2.0); // tune me
       
       public static final float collect_flush = (float)4.5;
@@ -264,6 +268,8 @@ public class Constants {
       public static final double stop = 0.0;
       public static final double collect = 0.1;
       public static final double score = 0.5;
+      public static final double pick = -0.5;
+
     }
 
     

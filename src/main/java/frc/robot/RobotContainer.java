@@ -216,7 +216,7 @@ public class RobotContainer {
           //operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
           operatorController.back().onTrue(Commands.runOnce(
             ()-> {
-            superstructure.coralRoller.setPO(0.2);
+            superstructure.coralRoller.setPO(-0.5);
             }
             )
           );
@@ -241,22 +241,22 @@ public class RobotContainer {
 
         /*  ============================= Elevator ============================= */
 
-          operatorController.rightBumper().onTrue(Commands.run(
-            ()-> {
-              // elevator.setPO(.05);
-              superstructure.elevator.runPosition(superstructure.elevator.getPosition() + 2);  // Nudge the elevator up
-            }
-            )
-          );
+          // operatorController.rightBumper().whileTrue(Commands.run(
+          //   ()-> {
+          //     // elevator.setPO(.05);
+          //     superstructure.elevator.runPosition(superstructure.elevator.getPosition() + 2);  // Nudge the elevator up
+          //   }
+          //   )
+          // );
 
 
-          operatorController.leftBumper().onTrue(Commands.run(
-            ()-> {
-              // elevator.setPO(.05);
-              superstructure.elevator.runPosition(superstructure.elevator.getPosition() - 2);  // Nudge the elevator up
-            }
-            )
-          );
+          // operatorController.leftBumper().whileTrue(Commands.run(
+          //   ()-> {
+          //     // elevator.setPO(.05);
+          //     superstructure.elevator.runPosition(superstructure.elevator.getPosition() - 2);  // Nudge the elevator up
+          //   }
+          //   )
+          // );
   /*  ============================= Coral Pivot ============================= */
 
   // driverController.povUp().onTrue(Commands.runOnce(
@@ -323,7 +323,7 @@ public class RobotContainer {
 
       operatorController.x().whileTrue(Commands.run(
         ()-> {
-          superstructure.algaePivot.setPO(.1);
+          superstructure.algaePivot.setPO(.5);
 
           //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
         }
@@ -339,7 +339,7 @@ public class RobotContainer {
 
       operatorController.b().whileTrue(Commands.run(
         ()-> {
-          superstructure.algaePivot.setPO(-.1);
+          superstructure.algaePivot.setPO(-.2);
           //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
         }
         )

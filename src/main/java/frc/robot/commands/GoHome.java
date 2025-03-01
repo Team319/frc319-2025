@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AlgaePivotConstants;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.CoralRollerConstants;
 import frc.robot.Constants.ElevatorConstants;
@@ -36,6 +37,7 @@ public class GoHome extends Command {
   public void initialize() {
       m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
       m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
+      m_superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
 
   }
 
@@ -45,6 +47,7 @@ public class GoHome extends Command {
     if (m_superstructure.algaePivot.getPosition() > AlgaePivotConstants.Setpoints.home-pivotThreshold && m_superstructure.algaePivot.getPosition() < AlgaePivotConstants.Setpoints.home+pivotThreshold){
       if (m_superstructure.coralPivot.getPosition() > CoralPivotConstants.Setpoints.home-pivotThreshold && m_superstructure.coralPivot.getPosition() < CoralPivotConstants.Setpoints.home+pivotThreshold){
         m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.home);
+
       }
     }
   }  // do nothing new... just let the coral roller run
