@@ -147,7 +147,7 @@ public class RobotContainer {
 
       NamedCommands.registerCommand(
         "ScoreL4",
-        new SafelyMoveToScoringPosition(superstructure, 4));
+        new SafelyMoveToScoringPosition(superstructure, 3));
 
       NamedCommands.registerCommand(
         "ScoreCoral",
