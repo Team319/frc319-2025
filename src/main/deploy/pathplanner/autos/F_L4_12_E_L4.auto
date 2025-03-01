@@ -23,15 +23,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "GoHome"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Opposing_E_Loading"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "GoHome"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Opposing_E_Loading"
+                }
+              }
+            ]
           }
         },
         {
@@ -59,15 +66,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "GoHome"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Opposing_E_L4_Loading"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "GoHome"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Opposing_E_L4_Loading"
+                }
+              }
+            ]
           }
         },
         {
