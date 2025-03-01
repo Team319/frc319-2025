@@ -315,66 +315,66 @@ public class RobotContainer {
 
       /*  ============================= Algae Pivot ============================= */
 
-      operatorController.x().onTrue(Commands.runOnce(
+      operatorController.x().whileTrue(Commands.runOnce(
         ()-> {
-          //superstructure.algaePivot.setPO(.1);
+          superstructure.algaePivot.setPO(.1);
 
-          superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
+          //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
         }
         )
       );
 
-      operatorController.x().whileFalse(Commands.run(
+      operatorController.x().onFalse(Commands.run(
         ()-> {
-          //superstructure.algaePivot.setPO(0);
+          superstructure.algaePivot.setPO(0);
         }
         )
       );
 
-      operatorController.b().onTrue(Commands.runOnce(
+      operatorController.b().whileTrue(Commands.runOnce(
         ()-> {
-          //superstructure.algaePivot.setPO(-.1);
-          superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
+          superstructure.algaePivot.setPO(-.1);
+          //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
         }
         )
       );
 
-      operatorController.b().whileFalse(Commands.run(
+      operatorController.b().onFalse(Commands.run(
         ()-> {
-          //superstructure.algaePivot.setPO(0);
+          superstructure.algaePivot.setPO(0);
         }
         )
       );
 
     /*  ============================= Algae Rollers ============================= */
 
-    // operatorController.x().whileTrue(Commands.run(
-    //   ()-> {
-    //     superstructure.algaeRoller.setPO(.5);
-    //   }
-    //   )
-    // );
+    driverController.b().whileTrue(Commands.run(
+      ()-> {
+        superstructure.algaeRoller.setPO(.5);
+      }
+      )
+    );
   
-    // operatorController.x().whileFalse(Commands.run(
-    //   ()-> {
-    //     superstructure.algaeRoller.setPO(0);
-    //   }
-    //   )
-    // );
+    driverController.b().onFalse(Commands.run(
+      ()-> {
+        superstructure.algaeRoller.setPO(0);
+      }
+      )
+    );
   
-    // operatorController.b().whileTrue(Commands.run(
-    //   ()-> {
-    //     superstructure.algaeRoller.setPO(-.5);
-    //   }
-    //   )
-    // );
+    driverController.y().whileTrue(Commands.run(
+      ()-> {
+        superstructure.algaeRoller.setPO(-.5);
+      }
+      )
+    );
   
-    // operatorController.b().onFalse(Commands.run(
-    //   ()-> {
-    //     superstructure.algaeRoller.setPO(0);
-    //   }
-    //   )
-    // );
+    driverController.y().onFalse(Commands.run(
+      ()-> {
+        superstructure.algaeRoller.setPO(0);
+      }
+      )
+    );
 
     /*  ============================= Climber ============================= */
 
