@@ -159,7 +159,7 @@ public class Constants {
 
     //Elevator
     public static class Setpoints {
-      public static final float topLimit = (float)74.0;//Really 73
+      public static final float topLimit = (float)74.0;//Really 74
       public static final float readyToClimb = (float)(27);
 
       public static final float level4 = (float)(73.0); // tune me

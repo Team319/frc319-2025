@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.CoralRollerConstants;
 import frc.robot.subsystems.superstructure.Superstructure;
 
@@ -41,6 +42,7 @@ public class ScoreCoral extends Command {
   @Override
   public void end(boolean interrupted) {
     m_superstructure.coralRoller.setPO(0);
+    m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
   }
 
   // Returns true when the command should end.

@@ -19,8 +19,8 @@ public class SafelyMoveToScoringPosition extends Command {
   double desiredElevatorPosition = 0;
   double desiredCoralPivotPosition = 0;
 
-  double elevatorTolerance = 1;
-  double coralPivotTolerance = 1;
+  double elevatorTolerance = 1; //This should be lower TODO: TUNE ME
+  double coralPivotTolerance = 1; //This should be lower TODO: TUNE ME
 
   boolean isElevatorAtPosition = false;
   boolean isCoralPivotAtPosition = false;
