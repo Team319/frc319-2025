@@ -24,7 +24,7 @@ public class GoHome extends Command {
   /** Creates a new CollectCoral. */
   public GoHome(Superstructure superstructure) {
     // Use addRequirements() here to declare subsystem dependencies.
-    pivotThreshold = 1;
+    pivotThreshold = 1; //TODO: TUNE ME
     
 
     addRequirements(superstructure);
@@ -36,7 +36,6 @@ public class GoHome extends Command {
   @Override
   public void initialize() {
       m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
-      m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
       m_superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
 
   }
@@ -44,19 +43,19 @@ public class GoHome extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_superstructure.algaePivot.getPosition() > AlgaePivotConstants.Setpoints.home-pivotThreshold && m_superstructure.algaePivot.getPosition() < AlgaePivotConstants.Setpoints.home+pivotThreshold){
       if (m_superstructure.coralPivot.getPosition() > CoralPivotConstants.Setpoints.home-pivotThreshold && m_superstructure.coralPivot.getPosition() < CoralPivotConstants.Setpoints.home+pivotThreshold){
         m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.home);
 
       }
     }
-  }  // do nothing new... just let the coral roller run
+    // do nothing new... just let the coral roller run
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     
     //stop the rollers!
+
 
     // Hold whatever position I'm at now...
     m_superstructure.coralPivot.runPosition(m_superstructure.coralPivot.getPosition());

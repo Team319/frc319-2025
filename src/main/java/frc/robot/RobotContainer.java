@@ -291,39 +291,39 @@ public class RobotContainer {
 
   /*  ============================= Coral Rollers ============================= */
 
- driverController.x().whileTrue(Commands.run(
-    ()-> {
-      superstructure.coralRoller.setPO(.5);
-    }
-    )
-  );
+//  driverController.x().whileTrue(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(.5);
+//     }
+//     )
+//   );
 
-  driverController.x().whileFalse(Commands.run(
-    ()-> {
-      superstructure.coralRoller.setPO(0);
-    }
-    )
-  );
+//   driverController.x().whileFalse(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(0);
+//     }
+//     )
+//   );
 
-  driverController.b().whileTrue(Commands.run(
-    ()-> {
-      superstructure.coralRoller.setPO(-.5);
-    }
-    )
-  );
+//   driverController.b().whileTrue(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(-.5);
+//     }
+//     )
+//   );
 
-  driverController.b().onFalse(Commands.run(
-    ()-> {
-      superstructure.coralRoller.setPO(0);
-    }
-    )
-  );
+//   driverController.b().onFalse(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(0);
+//     }
+//     )
+//   );
 
       /*  ============================= Algae Pivot ============================= */
 
       operatorController.x().whileTrue(Commands.run(
         ()-> {
-          superstructure.algaePivot.setPO(.5);
+          superstructure.algaePivot.setPO(.7);
 
           //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
         }
@@ -339,7 +339,7 @@ public class RobotContainer {
 
       operatorController.b().whileTrue(Commands.run(
         ()-> {
-          superstructure.algaePivot.setPO(-.2);
+          superstructure.algaePivot.setPO(-.3);
           //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
         }
         )

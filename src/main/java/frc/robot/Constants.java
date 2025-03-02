@@ -171,7 +171,7 @@ public class Constants {
       
       public static final float collect_flush = (float)4.5;
       public static final float collect_obstructed = (float)(9);
-      public static final float bottomLimit = (float)0.0;
+      public static final float bottomLimit = (float)4.0;
       public static final float home = bottomLimit;
       
       
@@ -267,7 +267,7 @@ public class Constants {
     public static class Speeds {
       public static final double stop = 0.0;
       public static final double collect = 0.1;
-      public static final double score = 0.5;
+      public static final double score = 1.0;
       public static final double pick = -0.5;
 
     }

@@ -17,9 +17,21 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "Neutral_Score"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "Score"
+            "name": "ScoreCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Neutral_Score_Backwards"
           }
         },
         {
