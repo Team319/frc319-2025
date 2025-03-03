@@ -13,12 +13,6 @@
         {
           "type": "named",
           "data": {
-            "name": "ScoreL4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "ScoreCoral"
           }
         },
@@ -51,12 +45,6 @@
           "type": "path",
           "data": {
             "pathName": "Friendly_Loading_H_L4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreL4"
           }
         },
         {
