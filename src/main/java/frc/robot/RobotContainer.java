@@ -384,20 +384,15 @@ public class RobotContainer {
       )
     );
 
-    operatorController.leftStick().onTrue(Commands.runOnce(
+    
+    operatorController.a().onTrue(Commands.runOnce(
       ()-> {
         //climber.setPO(-.5);
         superstructure.climber.runPosition( Constants.ClimberConstants.Setpoints.readyToClimb);
       }
       )
     );
-
-    operatorController.a().onFalse(Commands.run(
-      ()-> {
-        //climber.setPO(0);
-      }
-      )
-    );
+  
 
 
     /*  ============================= REAL BUTTONS ============================= */
@@ -412,9 +407,6 @@ public class RobotContainer {
 
     /*  ============================= OPERATOR CLIMB ============================= */
 
-    /*  ============================= Climbing ============================= */
-      superstructure.climber.setDefaultCommand(
-        (new JoystickClimb(superstructure.climber, () -> -operatorController.getRightY()) ));
         
     /*  ============================= Climbing Prep ============================= */
     //operatorController.start().whileTrue(new ClimbingPrep(this.coralPivot, this.elevator, this.algaePivot));
@@ -500,29 +492,6 @@ public class RobotContainer {
     operatorController.x().onFalse(Commands.run(
       ()-> {
         superstructure.algaePivot.setPO(0);
-      }
-      )
-    );
-    
-  /*  ============================= Coral Pivot ============================= */
-
-    operatorController.y().onTrue(Commands.run(
-      ()-> {
-        //coralPivot.setPO(0.5);
-      }
-      )
-    );
-
-    operatorController.y().onFalse(Commands.run(
-      ()-> {
-        //coralPivot.setPO(0);
-      }
-      )
-    );
-
-    operatorController.a().onFalse(Commands.run(
-      ()-> {
-        superstructure.coralPivot.setPO(0);
       }
       )
     );
