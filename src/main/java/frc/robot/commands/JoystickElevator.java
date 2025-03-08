@@ -4,7 +4,6 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.elevator.Elevator;
 
 public class JoystickElevator extends Command{

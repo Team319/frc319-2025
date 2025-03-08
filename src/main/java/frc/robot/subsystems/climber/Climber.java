@@ -70,8 +70,8 @@ public class Climber extends SubsystemBase {
         return io.getVelocity();
       }
 
-      public void runPosition(double positionRad) {
-        io.runPosition(positionRad);
+      public void runPosition(double position) {
+        io.runPosition(position);
       }
     }
     

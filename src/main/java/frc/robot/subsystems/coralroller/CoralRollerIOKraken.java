@@ -20,12 +20,12 @@ public class CoralRollerIOKraken implements CoralRollerIO {
         }
     
         public void setup(){
-            coralRollerMotor = new TalonFX(16);
+            coralRollerMotor = new TalonFX(36);
     
             TalonFXConfiguration coralRollerConfigs = new TalonFXConfiguration();
             coralRollerMotor.getConfigurator().apply(coralRollerConfigs);
     
-            coralRollerConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+            coralRollerConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
             coralRollerConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     
             coralRollerConfigs.CurrentLimits.StatorCurrentLimitEnable = true;

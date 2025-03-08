@@ -7,49 +7,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Friendly_J_L4"
+            "pathName": "Neutral_G_L4"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 1.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Friendly_J_Loading"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "name": "ScoreL4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Friendly_Loading_H_L4"
+            "pathName": "Neutral_Score"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 1.0
+            "name": "ScoreCoral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "H_L4_Loading"
+            "pathName": "Neutral_Score_Backwards"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "GoHome"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Friendly_Side_2PCS",
+  "folder": null,
   "choreoAuto": false
 }

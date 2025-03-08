@@ -5,17 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.CoralRollerConstants;
 import frc.robot.subsystems.superstructure.Superstructure;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ScoreCoral extends Command {
+public class AutoScoreCoral extends Command {
 
   Superstructure m_superstructure;
+  int passedCycles = 0;
 
   /** Creates a new ScoreCoral. */
-  public ScoreCoral(Superstructure superstructure) {
+  public AutoScoreCoral(Superstructure superstructure) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(superstructure);
 
@@ -27,6 +27,9 @@ public class ScoreCoral extends Command {
   public void initialize() {
 
     m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.score);
+    passedCycles = 0;
+
+
     
     // If elevator and coral pivot drop when called. try uncommenting these lines below
 
@@ -36,18 +39,21 @@ public class ScoreCoral extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    passedCycles++;
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println("[AutoSCORECORAL]: Hit end logic");
+
     m_superstructure.coralRoller.setPO(0);
-    m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return passedCycles >= 50;
   }
 }

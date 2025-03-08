@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.6985,
-  "robotLength": 0.699,
+  "robotWidth": 0.781,
+  "robotLength": 0.781,
   "holonomicMode": true,
   "pathFolders": [
     "Friendly_Side",
@@ -19,8 +19,8 @@
     "Opposing_Side_4PCS",
     "Test_Autos"
   ],
-  "defaultMaxVel": 5.0,
-  "defaultMaxAccel": 4.0,
+  "defaultMaxVel": 2.0,
+  "defaultMaxAccel": 2.0,
   "defaultMaxAngVel": 720.0,
   "defaultMaxAngAccel": 180.0,
   "defaultNominalVoltage": 12.0,
@@ -43,5 +43,7 @@
   "brModuleY": -0.273,
   "bumperOffsetX": 0.0,
   "bumperOffsetY": 0.0,
-  "robotFeatures": []
+  "robotFeatures": [
+    "{\"name\":\"Line\",\"type\":\"line\",\"data\":{\"start\":{\"x\":0.4,\"y\":0.051},\"end\":{\"x\":0.0,\"y\":0.051},\"strokeWidth\":0.02}}"
+  ]
 }

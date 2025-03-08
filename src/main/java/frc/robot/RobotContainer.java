@@ -7,40 +7,29 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.AlgaePivotConstants;
-import frc.robot.Constants.CoralPivotConstants;
+
+import frc.robot.commands.AutoGoHome;
+import frc.robot.commands.AutoScoreCoral;
 import frc.robot.commands.CollectCoral;
 import frc.robot.commands.CollectCoralObstructed;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.GoHome;
 import frc.robot.commands.JoystickClimb;
-import frc.robot.commands.JoystickElevator;
-import frc.robot.subsystems.algaePivot.AlgaePivot;
-import frc.robot.subsystems.algaePivot.AlgaePivotIO;
-import frc.robot.subsystems.algaePivot.AlgaePivotIOKraken;
-import frc.robot.subsystems.algaeRoller.AlgaeRoller;
-import frc.robot.subsystems.algaeRoller.AlgaeRollerIO;
-import frc.robot.subsystems.algaeRoller.AlgaeRollerIOKraken;
-import frc.robot.subsystems.climber.Climber;
-import frc.robot.subsystems.climber.ClimberIO;
-import frc.robot.subsystems.climber.ClimberIOKraken;
-import frc.robot.subsystems.coralPivot.CoralPivot;
-import frc.robot.subsystems.coralPivot.CoralPivotIO;
-import frc.robot.subsystems.coralPivot.CoralPivotIOKraken;
-import frc.robot.subsystems.coralRoller.CoralRoller;
-import frc.robot.subsystems.coralRoller.CoralRollerIO;
-import frc.robot.subsystems.coralRoller.CoralRollerIOKraken;
+import frc.robot.commands.ReadytoClimb;
+import frc.robot.commands.SafelyMoveToScoringPosition;
+import frc.robot.commands.ScoreCoral;
+
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.elevator.Elevator;
-import frc.robot.subsystems.elevator.ElevatorIO;
-import frc.robot.subsystems.elevator.ElevatorIOKraken;
+
 import frc.robot.subsystems.superstructure.Superstructure;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 
 public class RobotContainer {
@@ -48,14 +37,6 @@ public class RobotContainer {
   // Subsystems
   public final Drive drive;
   public final Superstructure superstructure;
-
-  
-  public final Elevator elevator;  
-  public final CoralPivot coralPivot;
-  public final CoralRoller coralRoller;
-  public final AlgaePivot algaePivot;
-  public final AlgaeRoller algaeRoller;
-  public final Climber climber;
   
 
   // Controller
@@ -81,6 +62,7 @@ public class RobotContainer {
           superstructure = new Superstructure();
 
           
+          /*
           elevator =
                 new Elevator(
                 new ElevatorIOKraken() {});
@@ -106,6 +88,7 @@ public class RobotContainer {
                 new CoralRollerIOKraken() {}
                 );
 
+          */
 
           break;
 
@@ -120,33 +103,8 @@ public class RobotContainer {
                new ModuleIOTalonFX(3)
                ); 
 
-               elevator =
-               new Elevator(
-               new ElevatorIO() {});
+          superstructure = new Superstructure();
 
-         algaePivot =
-               new AlgaePivot(
-               new AlgaePivotIO() {});
-
-         algaeRoller = 
-               new AlgaeRoller(
-               new AlgaeRollerIO() {} );
-         
-         climber =
-               new Climber(
-               new ClimberIO() {});
-         
-         coralPivot =
-               new CoralPivot(
-               new CoralPivotIO() {});    // When this is connected set it to CoralPivotIO() 
-
-         coralRoller = 
-               new CoralRoller(
-               new CoralRollerIO() {}
-               );
-
-               superstructure = new Superstructure();
-               
           break;
 
           case SIMBOT:
@@ -160,37 +118,30 @@ public class RobotContainer {
                   new ModuleIOSim(),
                   new ModuleIOSim() );
 
-                  elevator =
-                  new Elevator(
-                  new ElevatorIO() {});
-  
-            algaePivot =
-                  new AlgaePivot(
-                  new AlgaePivotIO() {});
-  
-            algaeRoller = 
-                  new AlgaeRoller(
-                  new AlgaeRollerIO() {} );
+            superstructure = new Superstructure();
             
-            climber =
-                  new Climber(
-                  new ClimberIO() {});
-            
-            coralPivot =
-                  new CoralPivot(
-                  new CoralPivotIO() {});    // When this is connected set it to CoralPivotIOKraken() 
-  
-            coralRoller = 
-                  new CoralRoller(
-                  new CoralRollerIO() {}
-                  );
-
-                  superstructure = new Superstructure();
 
                   
             break;
       }
-  
+      //Set up Named Commands in Pathplanner
+
+      NamedCommands.registerCommand(
+        "Collect",
+        new CollectCoral(superstructure));
+
+      NamedCommands.registerCommand(
+        "ScoreL4",
+        new SafelyMoveToScoringPosition(superstructure, 3));
+
+      NamedCommands.registerCommand(
+        "ScoreCoral",
+        new AutoScoreCoral(superstructure));
+
+      NamedCommands.registerCommand(
+        "GoHome",
+        new AutoGoHome(superstructure));
+
       // Set up auto routines
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
       
@@ -229,169 +180,189 @@ public class RobotContainer {
             )
           );
 
+        //  ============================= Competition =============================
 
-        /*  ============================= TEST BUTTONS ============================= */
+          // Initial Scoring commands. Requires tuned setpoints !!! - EKM 2/26
+
+          operatorController.povUp().onTrue(new SafelyMoveToScoringPosition(superstructure, 4));
+
+          operatorController.povRight().onTrue(new SafelyMoveToScoringPosition(superstructure, 3));
+
+          operatorController.povDown().onTrue(new SafelyMoveToScoringPosition(superstructure, 2));
+
+
+          operatorController.povLeft().onTrue(new SafelyMoveToScoringPosition(superstructure, 1)); // WARNING: This is just a start. Elevator may drop when the command finishes. Be cautious.
+                                                                                                  // if it does drop, you may need to add code to the superstructure periodic to simply keep 
+                                                                                                  //calling to hold some set desired 'targetPosition' in the subsystem. 
+                                                                                                  // and these commands should update that 'targetPosition' variable then 
+          driverController.rightBumper().whileTrue(new ScoreCoral(superstructure));
+          
+
+          //operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
+          operatorController.back().onTrue(Commands.runOnce(
+            ()-> {
+            superstructure.coralRoller.setPO(-0.5);
+            }
+            )
+          );
+
+          operatorController.back().onFalse(Commands.runOnce(
+            ()-> {
+            superstructure.coralRoller.setPO(0);
+            }
+            )
+          );
+
+          operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
+
+          operatorController.rightTrigger().onTrue(new CollectCoralObstructed(superstructure));
+
+
+
+          operatorController.start().onTrue(new ReadytoClimb(superstructure));
+
+          operatorController.rightStick().onTrue(new GoHome(superstructure));
+
 
         /*  ============================= Elevator ============================= */
 
-          driverController.rightBumper().onTrue(Commands.runOnce(
-            ()-> {
-              // elevator.setPO(.05);
-              elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit);
-            }
-            )
-          );
+          // operatorController.rightBumper().whileTrue(Commands.run(
+          //   ()-> {
+          //     // elevator.setPO(.05);
+          //     superstructure.elevator.runPosition(superstructure.elevator.getPosition() + 2);  // Nudge the elevator up
+          //   }
+          //   )
+          // );
 
-          driverController.y().onTrue(Commands.runOnce(
-            ()-> {
-              // elevator.setPO(.05);
-               elevator.runPosition(Constants.ElevatorConstants.Setpoints.topLimit/2);
-            }
-            )
-          );
 
-          driverController.y().whileFalse(Commands.run(
-            ()-> {
-             // superstructure.elevator.setPO(0);
-            }
-            )
-          );
-
-          driverController.a().onTrue(Commands.runOnce(
-            ()-> {
-              //elevator.setPO(-.05);
-              elevator.runPosition(Constants.ElevatorConstants.Setpoints.bottomLimit);
-            }
-            )
-          );
-
-          driverController.a().onFalse(Commands.run(
-            ()-> {
-             //superstructure.elevator.setPO(0);
-            }
-            )
-          );
-
+          // operatorController.leftBumper().whileTrue(Commands.run(
+          //   ()-> {
+          //     // elevator.setPO(.05);
+          //     superstructure.elevator.runPosition(superstructure.elevator.getPosition() - 2);  // Nudge the elevator up
+          //   }
+          //   )
+          // );
   /*  ============================= Coral Pivot ============================= */
 
-  driverController.povUp().onTrue(Commands.runOnce(
-    ()-> {
-      //superstructure.coralPivot.setPO(.1);
-      coralPivot.runPosition(CoralPivotConstants.Setpoints.topLimit);
-    }
-    )
-  );
+  // driverController.povUp().onTrue(Commands.runOnce(
+  //   ()-> {
+  //     //superstructure.coralPivot.setPO(.1);
+  //     superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.topLimit);
+  //   }
+  //   )
+  // );
 
-  driverController.povUp().whileFalse(Commands.run(
-    ()-> {
-     //superstructure.coralPivot.setPO(0);
-    }
-    )
-  );
+  // driverController.povUp().whileFalse(Commands.run(
+  //   ()-> {
+  //    //superstructure.coralPivot.setPO(0);
+  //   }
+  //   )
+  // );
 
-  driverController.povDown().onTrue(Commands.runOnce(
-    ()-> {
-     //superstructure.coralPivot.setPO(-.1);
-     coralPivot.runPosition(CoralPivotConstants.Setpoints.bottomLimit/2.0);
-    }
-    )
-  );
+  // driverController.povDown().onTrue(Commands.runOnce(
+  //   ()-> {
+  //    //superstructure.coralPivot.setPO(-.1);
+  //    superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.bottomLimit/2.0);
+  //   }
+  //   )
+  // );
 
-  driverController.povDown().onFalse(Commands.run(
-    ()-> {
-      //coralPivot.setPO(0);
-    }
-    )
-  );
+  // driverController.povDown().onFalse(Commands.run(
+  //   ()-> {
+  //     //superstructure.coralPivot.setPO(0);
+  //   }
+  //   )
+  // );
 
   /*  ============================= Coral Rollers ============================= */
 
- driverController.x().whileTrue(Commands.run(
-    ()-> {
-      coralRoller.setPO(.5);
-    }
-    )
-  );
+//  driverController.x().whileTrue(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(.5);
+//     }
+//     )
+//   );
 
-  driverController.x().whileFalse(Commands.run(
-    ()-> {
-      coralRoller.setPO(0);
-    }
-    )
-  );
+//   driverController.x().whileFalse(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(0);
+//     }
+//     )
+//   );
 
-  driverController.b().whileTrue(Commands.run(
-    ()-> {
-      coralRoller.setPO(-.5);
-    }
-    )
-  );
+//   driverController.b().whileTrue(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(-.5);
+//     }
+//     )
+//   );
 
-  driverController.b().onFalse(Commands.run(
-    ()-> {
-      coralRoller.setPO(0);
-    }
-    )
-  );
+//   driverController.b().onFalse(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(0);
+//     }
+//     )
+//   );
 
       /*  ============================= Algae Pivot ============================= */
 
-      operatorController.povUp().onTrue(Commands.runOnce(
+      operatorController.x().whileTrue(Commands.run(
         ()-> {
-          //algaePivot.setPO(.1);
-          algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
+          superstructure.algaePivot.setPO(.7);
+
+          //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
         }
         )
       );
 
-      operatorController.povUp().whileFalse(Commands.run(
+      operatorController.x().onFalse(Commands.run(
         ()-> {
-          //algaePivot.setPO(0);
+          superstructure.algaePivot.setPO(0);
         }
         )
       );
 
-      operatorController.povDown().onTrue(Commands.runOnce(
+      operatorController.b().whileTrue(Commands.run(
         ()-> {
-          //algaePivot.setPO(-.1);
-          algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
+          superstructure.algaePivot.setPO(-.3);
+          //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
         }
         )
       );
 
-      operatorController.povDown().onFalse(Commands.run(
+      operatorController.b().onFalse(Commands.run(
         ()-> {
-         // algaePivot.setPO(0);
+          superstructure.algaePivot.setPO(0);
         }
         )
       );
 
     /*  ============================= Algae Rollers ============================= */
 
-    operatorController.x().whileTrue(Commands.run(
+    driverController.b().whileTrue(Commands.run(
       ()-> {
-        algaeRoller.setPO(.5);
+        superstructure.algaeRoller.setPO(.5);
       }
       )
     );
   
-    operatorController.x().whileFalse(Commands.run(
+    driverController.b().onFalse(Commands.run(
       ()-> {
-        algaeRoller.setPO(0);
+        superstructure.algaeRoller.setPO(0);
       }
       )
     );
   
-    operatorController.b().whileTrue(Commands.run(
+    driverController.y().whileTrue(Commands.run(
       ()-> {
-        algaeRoller.setPO(-.5);
+        superstructure.algaeRoller.setPO(-.5);
       }
       )
     );
   
-    operatorController.b().onFalse(Commands.run(
+    driverController.y().onFalse(Commands.run(
       ()-> {
-        algaeRoller.setPO(0);
+        superstructure.algaeRoller.setPO(0);
       }
       )
     );
@@ -401,7 +372,7 @@ public class RobotContainer {
     operatorController.y().onTrue(Commands.runOnce(
       ()-> {
         //climber.setPO(.5);
-        climber.runPosition(Constants.ClimberConstants.Setpoints.climb);
+        superstructure.climber.runPosition(Constants.ClimberConstants.Setpoints.climb);
       }
       )
     );
@@ -416,7 +387,7 @@ public class RobotContainer {
     operatorController.leftStick().onTrue(Commands.runOnce(
       ()-> {
         //climber.setPO(-.5);
-        climber.runPosition( Constants.ClimberConstants.Setpoints.readyToClimb);
+        superstructure.climber.runPosition( Constants.ClimberConstants.Setpoints.readyToClimb);
       }
       )
     );
@@ -442,8 +413,8 @@ public class RobotContainer {
     /*  ============================= OPERATOR CLIMB ============================= */
 
     /*  ============================= Climbing ============================= */
-      climber.setDefaultCommand(
-        (new JoystickClimb(climber, () -> -operatorController.getRightY()) ));
+      superstructure.climber.setDefaultCommand(
+        (new JoystickClimb(superstructure.climber, () -> -operatorController.getRightY()) ));
         
     /*  ============================= Climbing Prep ============================= */
     //operatorController.start().whileTrue(new ClimbingPrep(this.coralPivot, this.elevator, this.algaePivot));
@@ -451,10 +422,10 @@ public class RobotContainer {
     /*  ============================= OPERATOR COLLECT ============================= */
 
     /*  ============================= Collect Coral ============================= */
-    operatorController.leftTrigger().onTrue(new CollectCoral(this.coralPivot, this.coralRoller, this.elevator));
+    operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
 
     /*  ============================= Collect Coral Obstructed ============================= */
-    operatorController.rightTrigger().onTrue(new CollectCoralObstructed(this.coralPivot, this.coralRoller, this.elevator));
+    operatorController.rightTrigger().onTrue(new CollectCoralObstructed(superstructure));
 
     /*  ============================= Collect Algae ============================= */
     //operatorController.leftBumper().whileTrue(new CollectAlgae(this.algaePivot, this.algaeRoller));
@@ -478,28 +449,28 @@ public class RobotContainer {
     /*  ============================= Elevator ============================= */
     operatorController.rightBumper().onTrue(Commands.run(
       ()-> {
-        elevator.setPO(0.1);
+        superstructure.elevator.setPO(0.1);
       }
       )
     );
 
     operatorController.rightBumper().onFalse(Commands.run(
       ()-> {
-        elevator.setPO(0);
+        superstructure.elevator.setPO(0);
       }
       )
     );
 
     operatorController.rightTrigger().onTrue(Commands.run(
       ()-> {
-        elevator.setPO(-0.1);
+        superstructure.elevator.setPO(-0.1);
       }
       )
     );
 
     operatorController.rightTrigger().onFalse(Commands.run(
       ()-> {
-        elevator.setPO(0);
+        superstructure.elevator.setPO(0);
       }
       )
     );
@@ -507,28 +478,28 @@ public class RobotContainer {
     /*  ============================= Algae Pivot ============================= */
     operatorController.b().onTrue(Commands.run(
       ()-> {
-        algaePivot.setPO(0.5);
+        superstructure.algaePivot.setPO(0.5);
       }
       )
     );
     
     operatorController.b().onFalse(Commands.run(
       ()-> {
-        algaePivot.setPO(0);
+        superstructure.algaePivot.setPO(0);
       }
       )
     );
 
     operatorController.x().onTrue(Commands.run(
       ()-> {
-        algaePivot.setPO(-0.5);
+        superstructure.algaePivot.setPO(-0.5);
       }
       )
     );
 
     operatorController.x().onFalse(Commands.run(
       ()-> {
-        algaePivot.setPO(0);
+        superstructure.algaePivot.setPO(0);
       }
       )
     );
@@ -551,7 +522,7 @@ public class RobotContainer {
 
     operatorController.a().onFalse(Commands.run(
       ()-> {
-        coralPivot.setPO(0);
+        superstructure.coralPivot.setPO(0);
       }
       )
     );

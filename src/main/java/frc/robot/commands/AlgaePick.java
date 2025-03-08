@@ -5,17 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.CoralRollerConstants;
 import frc.robot.subsystems.superstructure.Superstructure;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ScoreCoral extends Command {
+public class AlgaePick extends Command {
 
   Superstructure m_superstructure;
 
   /** Creates a new ScoreCoral. */
-  public ScoreCoral(Superstructure superstructure) {
+  public AlgaePick(Superstructure superstructure) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(superstructure);
 
@@ -26,7 +25,7 @@ public class ScoreCoral extends Command {
   @Override
   public void initialize() {
 
-    m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.score);
+    m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.pick);
     
     // If elevator and coral pivot drop when called. try uncommenting these lines below
 
@@ -42,7 +41,6 @@ public class ScoreCoral extends Command {
   @Override
   public void end(boolean interrupted) {
     m_superstructure.coralRoller.setPO(0);
-    m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
   }
 
   // Returns true when the command should end.

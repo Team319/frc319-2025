@@ -54,6 +54,7 @@ import frc.robot.Constants.DriveConstants;
 
 import frc.robot.subsystems.limelight.Limelight;
 import frc.robot.util.LimelightHelpers;
+import frc.robot.util.LimelightHelpers.PoseEstimate;
 import frc.robot.util.LocalADStarAK;
 import frc.robot.util.PolarCoordinate;
 
@@ -254,6 +255,12 @@ public class Drive extends SubsystemBase {
 
           LimelightHelpers.SetRobotOrientation("limelight-reef", poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
           LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-reef");
+          
+          if(mt2.pose == null){
+            mt2.pose = new Pose2d();
+            doRejectVisionUpdate = true;
+          }
+          
           Logger.recordOutput("Odometry/mt2PoseReef", mt2.pose);
 
           
@@ -262,6 +269,10 @@ public class Drive extends SubsystemBase {
             doRejectVisionUpdate = true;
           }
           if(mt2.tagCount == 0)
+          {
+            doRejectVisionUpdate = true;
+          }
+          if(mt2.pose == new Pose2d())
           {
             doRejectVisionUpdate = true;
           }

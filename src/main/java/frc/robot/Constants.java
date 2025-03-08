@@ -57,7 +57,7 @@ public class Constants {
   }
 
   public static class DriveConstants{
-    public static final double MAX_LINEAR_SPEED = Units.feetToMeters(17.1); //y
+    public static final double MAX_LINEAR_SPEED = Units.feetToMeters(14.3); //y
     public static final double TRACK_WIDTH_X = Units.inchesToMeters(22.75); //y
     public static final double TRACK_WIDTH_Y = Units.inchesToMeters(22.75); //y
     public static final double DRIVE_BASE_RADIUS =
@@ -65,12 +65,12 @@ public class Constants {
     public static final double MAX_ANGULAR_SPEED = MAX_LINEAR_SPEED / DRIVE_BASE_RADIUS;
     public static final int currentLimit = 40; // TODO consider setting this to 60
     public static final double wheelRadiusMeters = Units.inchesToMeters(3.875); // Black nitrile : 3 7/8 with full tread = 3.875 inches
-    public static final double robotMassKg = 50; // TODO check if this is correct
+    public static final double robotMassKg = 52.16312; // TODO
     public static final double robotMOI = 6.883; // TODO
     public static final double wheelCOF = 1.2; // TODO
     public static final double DRIVE_GEAR_RATIO = 6.122; //(50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0); // L3
     public static final double TURN_GEAR_RATIO = 150.0 / 7.0;
-    public static final boolean isTurnMotorInverted = true;
+    public static final boolean isTurnMotorInverted = true; 
   }
   public static enum HeadingTargets{
     NO_TARGET,
@@ -94,10 +94,10 @@ public class Constants {
   }
 
   public static class CoralPivotConstants{
-    public static class PID {
-      public static final double kPUp = 0.2;
-      public static final double kIUp = 0;
-      public static final double kDUp = 0;
+    public static class Gains {
+      public static final double kPUp = 0.5;
+      public static final double kIUp = 0.01;
+      public static final double kDUp = 0.0;
       public static final double kFFUp = 0.0;
       public static final int iZoneUp = 0;
 
@@ -109,19 +109,25 @@ public class Constants {
       
     }
 
+    //Coral Pivot
     public static class Setpoints {
-      public static final float topLimit = (float)100.0;
-      public static final float readyToClimb = (float)(topLimit/2);
-      public static final float home = (float)0.0;
-      public static final float collect = (float)-14.0; //TODO: Find this value
-      public static final float collect_obstructed = (float)(-16);
-      public static final float scoreL4 = (float)0.0; //TODO: Find this value
-      public static final float scoreL3 = (float)0.0; //TODO: Find this value
-      public static final float scoreL2 = (float)0.0; //TODO: Find this value
+      public static final float topLimit = (float)25.0;
+
+      public static final float level4 = (float)(10); // tune me
+      public static final float level3 = (float)(16); // tune me
+      public static final float level3Pick = (float)(16); // tune me
+      public static final float level2 = (float)(17); // tune me
+      public static final float level2Pick = (float)(17); // tune me
+      public static final float level1 = (float)(topLimit/2.0); // tune me
+      public static final float collect = (float)(-9.5); // tune me
+      public static final float collect_obstructed = (float)(-14.5);
 
 
-      public static final float bottomLimit = (float)-100.0;
-    
+      public static final float readyToClimb = (float)(20);
+      public static final float home = (float)(0);
+      public static final float bottomLimit = (float)-15.0;
+      
+
     }
 
     public static class SoftLimits {
@@ -130,7 +136,6 @@ public class Constants {
     }
 
   }
-
   public static class ElevatorConstants{
     public static class Gains {
       public static final double kS = 0.0; // Volts : Voltage needed to overcome static friction
@@ -152,17 +157,23 @@ public class Constants {
       
     }
 
+    //Elevator
     public static class Setpoints {
-      public static final float topLimit = (float)75.0;
-      public static final float readyToClimb = (float)(topLimit/2.0);
-      public static final float collect = (float)11.0; //TODO: Check if this is correct
+      public static final float topLimit = (float)75.0;//Really 74
+      public static final float readyToClimb = (float)(27);
+
+      public static final float level4 = (float)(75.0); // tune me
+      public static final float level3 = (float)(41); // tune me
+      public static final float level3Pick = (float)(41); // tune me
+      public static final float level2 = (float)(22); // tune me
+      public static final float level2Pick = (float)(41); // tune me
+      public static final float level1 = (float)(topLimit/2.0); // tune me
+      
+      public static final float collect_flush = (float)4.5;
       public static final float collect_obstructed = (float)(9);
-      public static final float bottomLimit = (float)5.0;
-      public static final float scoreL1 = (float)0.0; //TODO: Find this value
-      public static final float scoreL2 = (float)0.0; //TODO: Find this value
-      public static final float scoreL3 = (float)0.0; //TODO: Find this value
-      public static final float scoreL4 = (float)0.0; //TODO: Find this value
+      public static final float bottomLimit = (float)4.0;
       public static final float home = bottomLimit;
+      
       
     }
 
@@ -174,7 +185,7 @@ public class Constants {
   }
   public static class AlgaePivotConstants{
     public static class Gains {
-      public static final double kPUp = 0.2;
+      public static final double kPUp = 2.0;
       public static final double kIUp = 0;
       public static final double kDUp = 0;
       public static final double kFFUp = 0.0;
@@ -189,8 +200,8 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)100.0;
-      public static final float collect = (float)(topLimit/2.0);
+      public static final float topLimit = (float)45.0;
+      public static final float collect = (float)30.0;
       public static final float bottomLimit = (float)0.0;
       public static final float home = bottomLimit;
 
@@ -222,12 +233,16 @@ public class Constants {
       
     }
 
+    // Climber
     public static class Setpoints {
-      public static final float topLimit = (float)90.0; //set to actual found limits
-      public static final float readyToClimb = (float)(45.0);
+      public static final float topLimit = (float)90.0; // In the robot
       
-      public static final float bottomLimit = (float)-90.0;
-      public static final float climb = (float)(-45.0);
+      public static final float bottomLimit = (float)-66.0;  // outside the robot
+      public static final float ready = (float)-10;
+      public static final float readyToClimb = (float)(-66);
+      
+      public static final float climb = (float)(45);
+
 
     }
 
@@ -252,6 +267,9 @@ public class Constants {
     public static class Speeds {
       public static final double stop = 0.0;
       public static final double collect = 0.1;
+      public static final double score = 1.0;
+      public static final double pick = -0.5;
+
     }
 
     

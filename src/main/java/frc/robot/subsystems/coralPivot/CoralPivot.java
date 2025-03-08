@@ -22,9 +22,9 @@ public class CoralPivot extends SubsystemBase {
         switch (Constants.getRobot()) {
             case COMPBOT:
             case DEVBOT:
-                kP.initDefault(Constants.ElevatorConstants.Gains.kPUp);
-                kI.initDefault(Constants.ElevatorConstants.Gains.kIUp);
-                kD.initDefault(Constants.ElevatorConstants.Gains.kDUp);
+                kP.initDefault(Constants.CoralPivotConstants.Gains.kPUp);
+                kI.initDefault(Constants.CoralPivotConstants.Gains.kIUp);
+                kD.initDefault(Constants.CoralPivotConstants.Gains.kDUp);
                 break;
 
             case SIMBOT:

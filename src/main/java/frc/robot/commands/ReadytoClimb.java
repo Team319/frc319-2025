@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.superstructure.Superstructure;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class GoHome extends Command {
+public class ReadytoClimb extends Command {
 
   Superstructure m_superstructure;
   double pivotThreshold;
@@ -19,9 +20,9 @@ public class GoHome extends Command {
   boolean isCoralPivotAtPosition = false;
 
   /** Creates a new CollectCoral. */
-  public GoHome(Superstructure superstructure) {
+  public ReadytoClimb(Superstructure superstructure) {
     // Use addRequirements() here to declare subsystem dependencies.
-    pivotThreshold = 1; //TODO: TUNE ME
+    pivotThreshold = 5;
     
 
     addRequirements(superstructure);
@@ -32,27 +33,27 @@ public class GoHome extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
-      m_superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
+    m_superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
+    m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      if (m_superstructure.coralPivot.getPosition() > CoralPivotConstants.Setpoints.home-pivotThreshold && m_superstructure.coralPivot.getPosition() < CoralPivotConstants.Setpoints.home+pivotThreshold){
-        m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.home);
+    if (m_superstructure.algaePivot.getPosition() > AlgaePivotConstants.Setpoints.home-pivotThreshold && m_superstructure.algaePivot.getPosition() < AlgaePivotConstants.Setpoints.home+pivotThreshold){
+        m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.readyToClimb);
+      if (m_superstructure.elevator.getPosition() > ElevatorConstants.Setpoints.readyToClimb-pivotThreshold && m_superstructure.elevator.getPosition() < ElevatorConstants.Setpoints.readyToClimb+pivotThreshold){
+        m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.readyToClimb);
 
-      }
     }
-    // do nothing new... just let the coral roller run
+    }
+  }  // do nothing new... just let the coral roller run
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     
-    //stop the rollers!
-
 
     // Hold whatever position I'm at now...
     m_superstructure.coralPivot.runPosition(m_superstructure.coralPivot.getPosition());

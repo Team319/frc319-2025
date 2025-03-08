@@ -1,7 +1,9 @@
 package frc.robot.subsystems.algaeRoller;
 
-public interface AlgaeRollerIO {
+import org.littletonrobotics.junction.AutoLog;
 
+public interface AlgaeRollerIO {
+    @AutoLog
     public static class AlgaeRollerIOInputs {
         public double kPUp = 0.0;  // Power applied to motor
         public double kIUp = 0.0;  // margin of error in motor

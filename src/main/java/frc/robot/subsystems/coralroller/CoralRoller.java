@@ -1,5 +1,8 @@
 package frc.robot.subsystems.coralRoller;
 
+
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -7,7 +10,7 @@ import frc.robot.Constants;
 
 public class CoralRoller extends SubsystemBase {
     private final CoralRollerIO io;
-    //private final CoralRollerIOInputsAutoLogged inputs = new CoralRollerIOInputsAutoLogged();
+    private final CoralRollerIOInputsAutoLogged inputs = new CoralRollerIOInputsAutoLogged();
 
 
     public CoralRoller(CoralRollerIO io) {
@@ -26,8 +29,8 @@ public class CoralRoller extends SubsystemBase {
 
     @Override
     public void periodic() {
-        //io.updateInputs(inputs);
-        //Logger.processInputs("/RealOutputs/Elevator", inputs);
+        io.updateInputs(inputs);
+        Logger.processInputs("/RealOutputs/CoralRoller", inputs);
     }
 
     public void stop() {
