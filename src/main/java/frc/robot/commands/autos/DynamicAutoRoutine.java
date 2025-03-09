@@ -8,17 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.math.Pair;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.Drive;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
 
 
 /** Add your docs here. */
@@ -27,19 +22,27 @@ public class DynamicAutoRoutine extends SequentialCommandGroup {
     String m_instruction = "";
     Drive m_drive;
 
-
+/* 
 public DynamicAutoRoutine(Drive a_drive){
     // Constructor
     m_drive = a_drive;
     //Populate some string from Dashboard with format <ReefPosition><ReefLevel>..." ( ie - A1B2C3D4 ; A4B4C4D4 ; etc )
     m_instruction = "";
 }
+*/
 
-public DynamicAutoRoutine(Drive a_drive, String request){
+public DynamicAutoRoutine(Drive a_drive){
     // Constructor
     m_drive = a_drive;
     //Populate some string from Dashboard with format <ReefPosition><ReefLevel>..." ( ie - A1B2C3D4 ; A4B4C4D4 ; etc )
-    m_instruction = request;
+    m_instruction = SmartDashboard.getString("DynamicAutoInput", "");
+
+    if (m_instruction == null || m_instruction.isEmpty()) {
+
+        System.out.println("request is empty or unexpected... instruction = " + m_instruction);
+        m_instruction = "";
+    }
+
     List<Pair<String, Integer>> parsedInstructions = parseInstruction(m_instruction);
     // TODO : Break down instruction
 

@@ -26,6 +26,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -53,8 +55,7 @@ import frc.robot.Constants.HeadingTargets;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.TargetLocations;
 import frc.robot.Constants.DriveConstants;
-
-
+import frc.robot.Constants.FieldType;
 import frc.robot.subsystems.limelight.Limelight;
 import frc.robot.util.LimelightHelpers;
 import frc.robot.util.LimelightHelpers.PoseEstimate;
@@ -68,6 +69,8 @@ public class Drive extends SubsystemBase {
 
   // PathPlanner configuration
   public RobotConfig ppConfig;
+
+  AprilTagFieldLayout aprilTagFieldLayout = null ;
 
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
@@ -167,7 +170,30 @@ public class Drive extends SubsystemBase {
                 },
                 null,
                 this));
+
+      // ================= Gather Apriltag info =================
+
+
+
+      switch (Constants.getFieldType()) {
+        case ANDYMARK:
+          // Load the field layout
+          aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeAndyMark);
+          break;
+        
+        case WELDED:
+        default:
+          // Load the field layout
+          aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+          break;
+      };
+
   }
+
+
+
+
+      
 
   // ================= Periodic Behavior starts here =================
 
@@ -645,8 +671,89 @@ public class Drive extends SubsystemBase {
     return AutoBuilder.pathfindThenFollowPath(path, constraints);
 
     } catch (Exception e) {
-        DriverStation.reportError("Something went wrong while following a path (2): " + e.getMessage(), e.getStackTrace());
+        DriverStation.reportError("Something went wrong while following a path (3): " + e.getMessage(), e.getStackTrace());
         return Commands.none();
+    }
+
+  }
+
+  public int getClosestTagFromField() {
+    int closestTagID = -1;
+    double minDistance = Double.MAX_VALUE;
+
+    for (var tag : aprilTagFieldLayout.getTags()) {
+        double distance = poseEstimator.getEstimatedPosition().getTranslation().getDistance(tag.pose.toPose2d().getTranslation());
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestTagID = tag.ID;
+        }
+    }
+
+    return closestTagID;
+  }
+
+  public String getClosestReefIdPairing() {
+    int closestTagID = getClosestTagFromField();
+    String rv = "xx"; // returned value
+
+    switch (closestTagID) {
+
+      case 7 , 18:
+        rv = "ab";
+        break;
+
+      case 8 , 17:
+        rv = "cd";
+        break;
+
+      case 9 , 22:
+        rv = "ef";
+        break;
+
+      case 10 , 21:
+        rv = "gh";
+        break;
+
+      case 11 , 20:
+        rv = "ij";
+        break;
+
+      case 6 , 19:
+        rv = "kl";
+        break;
+    
+      default:
+        rv = "xx";
+        break;
+    }
+
+    return rv;
+
+  }
+
+  public Command pathfindToClosestLeftReef(){
+
+    String closestReefPair = getClosestReefIdPairing();
+    if(closestReefPair.length() != 2 || closestReefPair.equals("xx")){
+      System.out.println("[pathfindToClosestLeftReef] No reef pair found");
+      return Commands.none();
+    }
+    else{
+      System.out.println("[pathfindToClosestLeftReef]: "+ "goto_" + closestReefPair.charAt(0));
+      return pathfindThenFollowPath(DriveConstants.pathingConstraints, "goto_" + closestReefPair.charAt(0));
+    }
+  }
+
+  public Command pathfindToClosestRightReef(){
+    String closestReefPair = getClosestReefIdPairing();
+    if(closestReefPair.length() != 2 || closestReefPair.equals("xx")){
+      System.out.println("[pathfindToClosestRightReef] No reef pair found");
+      return Commands.none();
+    }
+    else{
+      System.out.println("[pathfindToClosestRightReef]: "+ "goto_" + closestReefPair.charAt(1));
+      return pathfindThenFollowPath(DriveConstants.pathingConstraints, "goto_" + closestReefPair.charAt(1));
+
     }
 
   }

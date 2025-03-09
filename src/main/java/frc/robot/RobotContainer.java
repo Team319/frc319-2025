@@ -4,9 +4,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.commands.AutoGoHome;
@@ -43,6 +46,9 @@ public class RobotContainer {
   // Controller
   public final CommandXboxController driverController = new CommandXboxController(0);
   public final CommandXboxController operatorController = new CommandXboxController(1);
+
+  //Dynamic Auto Routine Input String
+  public String dynamicAutoInput = "";
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser; // AdvantageKit Dependency
@@ -146,7 +152,7 @@ public class RobotContainer {
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
 
 
-      autoChooser.addOption("DynamicAutoRoutine", new DynamicAutoRoutine(drive, "h1l1k1j1"));
+      autoChooser.addOption("DynamicAutoRoutine", null);
       
       // Add Commands to the dashboard chooser
       //autoChooser.addOption(
@@ -162,6 +168,10 @@ public class RobotContainer {
         case DEVBOT:
         case COMPBOT:
         default:
+
+        //  ===========================================================================
+        //  ============================= Driver Controls =============================
+        //  ===========================================================================
 
         /*  ============================= Drive ============================= */
   
@@ -184,10 +194,52 @@ public class RobotContainer {
             )
           );
 
-        //  ============================= Competition =============================
+        driverController.rightBumper().whileTrue(  Commands.runOnce(() -> drive.pathfindToClosestRightReef().addRequirements(drive) ) );
+        driverController.leftBumper().whileTrue(  Commands.runOnce(() -> drive.pathfindToClosestLeftReef().addRequirements(drive) ));
 
-          // Initial Scoring commands. Requires tuned setpoints !!! - EKM 2/26
 
+        driverController.back().whileTrue( drive.pathFindToPose(DriveConstants.pathingConstraints, new Pose2d() ) );
+
+          /*  ============================= Score Coral  ============================= */
+
+          driverController.rightBumper().whileTrue(new ScoreCoral(superstructure));
+
+          /*  ============================= Collect / Score Algea  ============================= */
+
+          driverController.b().whileTrue(Commands.run(
+            ()-> {
+              superstructure.algaeRoller.setPO(.5);
+            }
+            )
+          );
+        
+          driverController.b().onFalse(Commands.run(
+            ()-> {
+              superstructure.algaeRoller.setPO(0);
+            }
+            )
+          );
+        
+          driverController.y().whileTrue(Commands.run(
+            ()-> {
+              superstructure.algaeRoller.setPO(-.5);
+            }
+            )
+          );
+        
+          driverController.y().onFalse(Commands.run(
+            ()-> {
+              superstructure.algaeRoller.setPO(0);
+            }
+            )
+          );
+
+        //  ===========================================================================
+        //  ============================= Operator Controls ===========================
+        //  ===========================================================================
+
+        /*  ============================= Go To coral scoring positions  ============================= */
+          
           operatorController.povUp().onTrue(new SafelyMoveToScoringPosition(superstructure, 4));
 
           operatorController.povRight().onTrue(new SafelyMoveToScoringPosition(superstructure, 3));
@@ -199,114 +251,20 @@ public class RobotContainer {
                                                                                                   // if it does drop, you may need to add code to the superstructure periodic to simply keep 
                                                                                                   //calling to hold some set desired 'targetPosition' in the subsystem. 
                                                                                                   // and these commands should update that 'targetPosition' variable then 
-          driverController.rightBumper().whileTrue(new ScoreCoral(superstructure));
-          
 
-          //operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
-          operatorController.back().onTrue(Commands.runOnce(
-            ()-> {
-            superstructure.coralRoller.setPO(-0.5);
-            }
-            )
-          );
 
-          operatorController.back().onFalse(Commands.runOnce(
-            ()-> {
-            superstructure.coralRoller.setPO(0);
-            }
-            )
-          );
+          /*  ============================= Collect Coral ============================= */
 
           operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
 
           operatorController.rightTrigger().onTrue(new CollectCoralObstructed(superstructure));
 
-
+        /*  ============================= Climbing ============================= */
 
           operatorController.start().onTrue(new ReadytoClimb(superstructure));
 
           operatorController.rightStick().onTrue(new GoHome(superstructure));
 
-
-        /*  ============================= Elevator ============================= */
-
-          // operatorController.rightBumper().whileTrue(Commands.run(
-          //   ()-> {
-          //     // elevator.setPO(.05);
-          //     superstructure.elevator.runPosition(superstructure.elevator.getPosition() + 2);  // Nudge the elevator up
-          //   }
-          //   )
-          // );
-
-
-          // operatorController.leftBumper().whileTrue(Commands.run(
-          //   ()-> {
-          //     // elevator.setPO(.05);
-          //     superstructure.elevator.runPosition(superstructure.elevator.getPosition() - 2);  // Nudge the elevator up
-          //   }
-          //   )
-          // );
-  /*  ============================= Coral Pivot ============================= */
-
-  // driverController.povUp().onTrue(Commands.runOnce(
-  //   ()-> {
-  //     //superstructure.coralPivot.setPO(.1);
-  //     superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.topLimit);
-  //   }
-  //   )
-  // );
-
-  // driverController.povUp().whileFalse(Commands.run(
-  //   ()-> {
-  //    //superstructure.coralPivot.setPO(0);
-  //   }
-  //   )
-  // );
-
-  // driverController.povDown().onTrue(Commands.runOnce(
-  //   ()-> {
-  //    //superstructure.coralPivot.setPO(-.1);
-  //    superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.bottomLimit/2.0);
-  //   }
-  //   )
-  // );
-
-  // driverController.povDown().onFalse(Commands.run(
-  //   ()-> {
-  //     //superstructure.coralPivot.setPO(0);
-  //   }
-  //   )
-  // );
-
-  /*  ============================= Coral Rollers ============================= */
-
-//  driverController.x().whileTrue(Commands.run(
-//     ()-> {
-//       superstructure.coralRoller.setPO(.5);
-//     }
-//     )
-//   );
-
-//   driverController.x().whileFalse(Commands.run(
-//     ()-> {
-//       superstructure.coralRoller.setPO(0);
-//     }
-//     )
-//   );
-
-//   driverController.b().whileTrue(Commands.run(
-//     ()-> {
-//       superstructure.coralRoller.setPO(-.5);
-//     }
-//     )
-//   );
-
-//   driverController.b().onFalse(Commands.run(
-//     ()-> {
-//       superstructure.coralRoller.setPO(0);
-//     }
-//     )
-//   );
 
       /*  ============================= Algae Pivot ============================= */
 
@@ -341,168 +299,19 @@ public class RobotContainer {
         )
       );
 
-    /*  ============================= Algae Rollers ============================= */
-
-    driverController.b().whileTrue(Commands.run(
-      ()-> {
-        superstructure.algaeRoller.setPO(.5);
-      }
-      )
-    );
-  
-    driverController.b().onFalse(Commands.run(
-      ()-> {
-        superstructure.algaeRoller.setPO(0);
-      }
-      )
-    );
-  
-    driverController.y().whileTrue(Commands.run(
-      ()-> {
-        superstructure.algaeRoller.setPO(-.5);
-      }
-      )
-    );
-  
-    driverController.y().onFalse(Commands.run(
-      ()-> {
-        superstructure.algaeRoller.setPO(0);
-      }
-      )
-    );
-
-    /*  ============================= Climber ============================= */
-
-    operatorController.y().onTrue(Commands.runOnce(
-      ()-> {
-        //climber.setPO(.5);
-        superstructure.climber.runPosition(Constants.ClimberConstants.Setpoints.climb);
-      }
-      )
-    );
-
-    operatorController.y().whileFalse(Commands.run(
-      ()-> {
-        //climber.setPO(0);
-      }
-      )
-    );
-
-    
-    operatorController.a().onTrue(Commands.runOnce(
-      ()-> {
-        //climber.setPO(-.5);
-        superstructure.climber.runPosition( Constants.ClimberConstants.Setpoints.readyToClimb);
-      }
-      )
-    );
-  
-
-
-    /*  ============================= REAL BUTTONS ============================= */
-
-    /*  ============================= DRIVER SCORING ============================= */
-
-    /*  ============================= Score Coral ============================= */
-    //driverController.rightTrigger().whileTrue(new ScoreCoral(coralRoller));
-
-    /*  ============================= Score Algae ============================= */
-   // driverController.rightBumper().whileTrue(new ScoreProcessor(algaePivot, algaeRoller));
-
-    /*  ============================= OPERATOR CLIMB ============================= */
-
-        
-    /*  ============================= Climbing Prep ============================= */
-    //operatorController.start().whileTrue(new ClimbingPrep(this.coralPivot, this.elevator, this.algaePivot));
-
-    /*  ============================= OPERATOR COLLECT ============================= */
-
-    /*  ============================= Collect Coral ============================= */
-    operatorController.leftTrigger().onTrue(new CollectCoral(superstructure));
-
-    /*  ============================= Collect Coral Obstructed ============================= */
-    operatorController.rightTrigger().onTrue(new CollectCoralObstructed(superstructure));
-
-    /*  ============================= Collect Algae ============================= */
-    //operatorController.leftBumper().whileTrue(new CollectAlgae(this.algaePivot, this.algaeRoller));
-
-    /*  ============================= Go Home ============================= */
-    //operatorController.rightStick().whileTrue(new GoHome(this.coralPivot, this.elevator, this.algaePivot));
-
-    /*  ============================= OPERATOR SCORING ============================= */
-
-    /*  ============================= Score L4 ============================= */
-    //operatorController.povDown().whileTrue(new ScoreL4(this.coralPivot, this.elevator));
-
-    /*  ============================= Score L3 ============================= */
-    //operatorController.povRight().whileTrue(new ScoreL3(this.coralPivot, this.elevator));
-
-    /*  ============================= Score L2 ============================= */
-    //operatorController.povUp().whileTrue(new ScoreL4(this.coralPivot, this.elevator));
-
-    /*  ============================= OPERATOR MANUALS ============================= */
-
-    /*  ============================= Elevator ============================= */
-    operatorController.rightBumper().onTrue(Commands.run(
-      ()-> {
-        superstructure.elevator.setPO(0.1);
-      }
-      )
-    );
-
-    operatorController.rightBumper().onFalse(Commands.run(
-      ()-> {
-        superstructure.elevator.setPO(0);
-      }
-      )
-    );
-
-    operatorController.rightTrigger().onTrue(Commands.run(
-      ()-> {
-        superstructure.elevator.setPO(-0.1);
-      }
-      )
-    );
-
-    operatorController.rightTrigger().onFalse(Commands.run(
-      ()-> {
-        superstructure.elevator.setPO(0);
-      }
-      )
-    );
-
-    /*  ============================= Algae Pivot ============================= */
-    operatorController.b().onTrue(Commands.run(
-      ()-> {
-        superstructure.algaePivot.setPO(0.5);
-      }
-      )
-    );
-    
-    operatorController.b().onFalse(Commands.run(
-      ()-> {
-        superstructure.algaePivot.setPO(0);
-      }
-      )
-    );
-
-    operatorController.x().onTrue(Commands.run(
-      ()-> {
-        superstructure.algaePivot.setPO(-0.5);
-      }
-      )
-    );
-
-    operatorController.x().onFalse(Commands.run(
-      ()-> {
-        superstructure.algaePivot.setPO(0);
-      }
-      )
-    );
-
 
     }
   public Command getAutonomousCommand() {
-    return autoChooser.get();
+    
+    if(autoChooser.get() == null){
+      return new DynamicAutoRoutine(drive); // The command needs to be created at runtime so that the instruction string is populated from the dashboard
+    }
+    else{
+      return autoChooser.get();
+    }
+    
+    
+
+
   }
   }

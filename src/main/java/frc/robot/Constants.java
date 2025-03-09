@@ -22,6 +22,7 @@ public class Constants {
 
   public static final double loopPeriodSecs = 0.02;
   private static RobotType robotType = RobotType.COMPBOT;
+  private static FieldType fieldType = FieldType.ANDYMARK;
   
 
   public static RobotType getRobot() {
@@ -43,6 +44,10 @@ public class Constants {
     };
   }
 
+  public static FieldType getFieldType() {
+    return fieldType;
+  }
+
   public enum Mode {
     /** Running on a real robot. */
     REAL,
@@ -58,6 +63,11 @@ public class Constants {
     SIMBOT,
     DEVBOT,
     COMPBOT
+  }
+
+  public enum FieldType {
+    ANDYMARK,
+    WELDED
   }
 
   public static class DriveConstants{
