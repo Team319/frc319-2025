@@ -36,7 +36,12 @@
       "name": "ScoreL4",
       "waypointRelativePos": 0.76,
       "endWaypointRelativePos": null,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ScoreL4"
+        }
+      }
     }
   ],
   "globalConstraints": {

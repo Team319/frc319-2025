@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.commands.AutoGoHome;
@@ -132,15 +133,15 @@ public class RobotContainer {
 
       NamedCommands.registerCommand(
         "ScoreL4",
-        new SafelyMoveToScoringPosition(superstructure, 3));
+        new WaitCommand(1)); //SafelyMoveToScoringPosition(superstructure, 3));
 
       NamedCommands.registerCommand(
         "ScoreCoral",
-        new AutoScoreCoral(superstructure));
+        new WaitCommand(1));//AutoScoreCoral(superstructure));
 
       NamedCommands.registerCommand(
         "GoHome",
-        new AutoGoHome(superstructure));
+        new WaitCommand(1));//AutoGoHome(superstructure));
 
       // Set up auto routines
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());

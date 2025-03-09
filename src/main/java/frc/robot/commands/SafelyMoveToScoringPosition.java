@@ -83,20 +83,21 @@ public class SafelyMoveToScoringPosition extends Command {
     //check if the elevator is at the correct position
     if (EqualsUtil.epsilonEquals(m_superstructure.elevator.getPosition(), desiredElevatorPosition, elevatorTolerance) ) {
       isElevatorAtPosition = true;
+          //check if the coral pivot is at the correct position
+      if (EqualsUtil.epsilonEquals(m_superstructure.coralPivot.getPosition(), desiredCoralPivotPosition, coralPivotTolerance) ) {
+        isCoralPivotAtPosition = true;
+      }
+      else {
+        if(m_superstructure.elevator.getPosition() >= 10)
+          m_superstructure.coralPivot.runPosition(desiredCoralPivotPosition);
+
+      }
     }
     else {
       m_superstructure.elevator.runPosition(desiredElevatorPosition);
     }
 
-    //check if the coral pivot is at the correct position
-    if (EqualsUtil.epsilonEquals(m_superstructure.coralPivot.getPosition(), desiredCoralPivotPosition, coralPivotTolerance) ) {
-      isCoralPivotAtPosition = true;
-    }
-    else {
-      if(m_superstructure.elevator.getPosition() >= 10)
-        m_superstructure.coralPivot.runPosition(desiredCoralPivotPosition);
 
-    }
   }
 
   // Called once the command ends or is interrupted.

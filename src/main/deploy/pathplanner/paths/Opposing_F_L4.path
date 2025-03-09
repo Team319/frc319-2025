@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.556710650805622,
-        "y": 2.201789378244969
+        "x": 6.711592971364851,
+        "y": 2.0197274945162143
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.55030737704918,
-        "y": 2.6464139344262296
+        "x": 5.286577868852459,
+        "y": 2.8262295081967217
       },
       "prevControl": {
-        "x": 6.500709671810687,
-        "y": 2.143694983419076
+        "x": 6.381130273001163,
+        "y": 2.2851707331193474
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,7 +31,19 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "ScoreL4",
+      "waypointRelativePos": 0.8395399780941915,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ScoreL4"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 2.0,
     "maxAcceleration": 2.0,
@@ -42,7 +54,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 122.00538320808344
+    "rotation": 116.56505117707799
   },
   "reversed": false,
   "folder": "Opposing_Side",
