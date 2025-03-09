@@ -13,6 +13,9 @@ import org.littletonrobotics.junction.networktables.NT4Publisher;
 import org.littletonrobotics.junction.wpilog.WPILOGReader;
 import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
+import com.pathplanner.lib.commands.FollowPathCommand;
+import com.pathplanner.lib.pathfinding.Pathfinding;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -56,6 +59,8 @@ public class Robot extends LoggedRobot {
     //=============================================
     // END : Required setup for AdvantageKit Logging
     //=============================================
+
+    FollowPathCommand.warmupCommand().schedule();
 
     m_robotContainer = new RobotContainer();
   }

@@ -6,7 +6,9 @@
     "Friendly_Side",
     "Neutral_Side",
     "Opposing_Side",
-    "Test_Paths"
+    "Test_Paths",
+    "goto_coral",
+    "goto_reef"
   ],
   "autoFolders": [
     "Friendly_Side_2PCS",

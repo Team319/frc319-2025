@@ -21,6 +21,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.PathPlannerLogging;
 
@@ -42,6 +44,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
@@ -63,25 +66,8 @@ import org.littletonrobotics.junction.Logger;
 
 public class Drive extends SubsystemBase {
 
-
-  // Motor configuration
-
   // PathPlanner configuration
   public RobotConfig ppConfig;
-  
-  // public RobotConfig ppConfig =
-  //     new RobotConfig(
-  //         DriveConstants.robotMassKg,
-  //         DriveConstants.robotMOI,
-  //         new ModuleConfig(
-  //           DriveConstants.wheelRadiusMeters,
-  //           DriveConstants.MAX_LINEAR_SPEED,
-  //           DriveConstants.wheelCOF,
-  //             DCMotor.getKrakenX60(1)
-  //                 .withReduction(DriveConstants.DRIVE_GEAR_RATIO),
-  //                 DriveConstants.currentLimit,
-  //             1),
-  //             DriveConstants.TRACK_WIDTH_X);
 
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
@@ -131,6 +117,8 @@ public class Drive extends SubsystemBase {
     modules[2] = new Module(blModuleIO, 2);
     modules[3] = new Module(brModuleIO, 3);
 
+    // ================= Configure PathPlanner =================
+
     try{
       ppConfig = RobotConfig.fromGUISettings();
     } catch (Exception e) {
@@ -151,6 +139,7 @@ public class Drive extends SubsystemBase {
         this);
 
     Pathfinding.setPathfinder(new LocalADStarAK());
+
     PathPlannerLogging.setLogActivePathCallback(
         (activePath) -> {
           Logger.recordOutput(
@@ -162,7 +151,7 @@ public class Drive extends SubsystemBase {
           Logger.recordOutput("Odometry/TrajectorySetpoint", targetPose);
         });
 		
-    // Configure SysId
+    // ================= Configure SysId =================
     sysId =
         new SysIdRoutine(
             new SysIdRoutine.Config(
@@ -180,16 +169,22 @@ public class Drive extends SubsystemBase {
                 this));
   }
 
+  // ================= Periodic Behavior starts here =================
+
   public void periodic() {
+
+    // Log key / useful values for Debugging with AdvantageKit/AdvantageScope
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("/RealOutputs/Drive/Gyro", gyroInputs);
+    // Example : Logger.recordOutput("/RealOutputs/Drive/somethingUseful", somethingUseful);
 
-    Logger.recordOutput("/RealOutputs/Drive/DistanceToAllianceSpeaker", getDistanceToAllianceSpeaker());
 
+    // This switch case lets us run different code based on the robot we are using
     switch (Constants.getRobot()) {
       case SIMBOT:
       case DEVBOT:
       case COMPBOT:
+
         // if Swerve, use and update the modules
         for (var module : modules) {
           module.periodic();
@@ -202,7 +197,7 @@ public class Drive extends SubsystemBase {
           }
         }
 
-        // Log measured states
+        // Log measured Module states
         Logger.recordOutput("SwerveStates/Measured", getModuleStates());
 
         // Log empty setpoint states when disabled
@@ -222,6 +217,7 @@ public class Drive extends SubsystemBase {
                   modulePositions[moduleIndex].angle);
           lastModulePositions[moduleIndex] = modulePositions[moduleIndex];
         }
+
         // The twist represents the motion of the robot since the last
         // loop cycle in x, y, and theta based only on the modules,
         // without the gyro. The gyro is always disconnected in simulation.
@@ -237,10 +233,14 @@ public class Drive extends SubsystemBase {
           rawGyroVelocityRadPerSec = 0.0;
         }
 
+
+        // The Robot knows where it is... because it knows where it isn't - EKM :)
+
+        // Update the pose estimator with the new data, and Log the pose
         poseEstimator.update(rawGyroRotation, modulePositions);
         Logger.recordOutput("Odometry/Robot", getPose());
  
-         
+        // Update / Correct the pose using Localization from Vision (using the 'Reef' Limelight) 
         if(Limelight.isValidTargetSeen(LimelightConstants.Device.REEF) /*&& DriverStation.isTeleop()*/ )
         {
           double [] poseBuf = Limelight.getBotPose(LimelightConstants.Device.REEF);
@@ -263,7 +263,7 @@ public class Drive extends SubsystemBase {
           
           Logger.recordOutput("Odometry/mt2PoseReef", mt2.pose);
 
-          
+          // If the robot is spinning too fast, ignore vision updates
           if(Math.abs(rawGyroVelocityRadPerSec) > Units.degreesToRadians(720) ) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
           {
             doRejectVisionUpdate = true;
@@ -287,6 +287,7 @@ public class Drive extends SubsystemBase {
           
         }
 
+        // Update / Correct the pose using Localization from Vision (using the 'coral station' Limelight) 
         if(Limelight.isValidTargetSeen(LimelightConstants.Device.CORAL_STATION) /*&& DriverStation.isTeleop()*/ )
         {
           double [] poseBuf = Limelight.getBotPose(LimelightConstants.Device.CORAL_STATION);
@@ -303,7 +304,7 @@ public class Drive extends SubsystemBase {
           LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-coral");
           Logger.recordOutput("Odometry/mt2PoseCoral", mt2.pose);
 
-          
+          // If the robot is spinning too fast, ignore vision updates
           if(Math.abs(rawGyroVelocityRadPerSec) > Units.degreesToRadians(720) ) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
           {
             doRejectVisionUpdate = true;
@@ -330,6 +331,8 @@ public class Drive extends SubsystemBase {
     }
     
   }
+
+  // ========================= Drive Control =========================
 
   /**
    * Runs the drive at the desired velocity.
@@ -372,34 +375,6 @@ public class Drive extends SubsystemBase {
     stop();
   }
 
-  /** Runs forwards at the commanded voltage. */
-  public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-    return sysId.quasistatic(direction);
-  }
-
-  /** Returns the average drive velocity in radians/sec. */
-  public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-    return sysId.dynamic(direction);
-  }
-
-  /** Returns the module states (turn angles and drive velocitoes) for all of the modules. */
-  @AutoLogOutput(key = "SwerveStates/Measured")
-  private SwerveModuleState[] getModuleStates() {
-    SwerveModuleState[] states = new SwerveModuleState[4];
-    for (int i = 0; i < 4; i++) {
-      states[i] = modules[i].getState();
-    }
-    return states;
-  }
-
-  private SwerveModulePosition[] getModulePositions() {
-    SwerveModulePosition[] states = new SwerveModulePosition[4];
-    for (int i = 0; i < 4; i++) {
-      states[i] = modules[i].getPosition();
-    }
-    return states;
-  }
-
   /** Returns the current odometry pose. */
   public Pose2d getPose() {
     return poseEstimator.getEstimatedPosition();
@@ -415,10 +390,54 @@ public class Drive extends SubsystemBase {
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
   }
 
-    /** Resets the current odometry pose. */
+  /** Resets the current odometry pose. */
   public void setPose(Pose2d pose, Rotation2d newGyroRotation) {
     poseEstimator.resetPosition(newGyroRotation, getModulePositions(), pose);
   }
+
+  /** Resets the current gyro heading to 0.0 */
+  public void resetHeading(){
+    gyroIO.reset();
+  }
+
+  /** Sets the current gyro heading to a desired value */
+  public void setHeading(double heading){
+    gyroIO.setHeading(heading);
+  }
+
+  // ========================= SysId Helpers =========================
+
+    /** Runs forwards at the commanded voltage. */
+    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
+      return sysId.quasistatic(direction);
+    }
+  
+    /** Returns the average drive velocity in radians/sec. */
+    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
+      return sysId.dynamic(direction);
+    }
+  
+  // ========================= Module Helpers =========================
+
+    /** Returns the module states (turn angles and drive velocitoes) for all of the modules. */
+    @AutoLogOutput(key = "SwerveStates/Measured")
+    private SwerveModuleState[] getModuleStates() {
+      SwerveModuleState[] states = new SwerveModuleState[4];
+      for (int i = 0; i < 4; i++) {
+        states[i] = modules[i].getState();
+      }
+      return states;
+    }
+  
+    private SwerveModulePosition[] getModulePositions() {
+      SwerveModulePosition[] states = new SwerveModulePosition[4];
+      for (int i = 0; i < 4; i++) {
+        states[i] = modules[i].getPosition();
+      }
+      return states;
+    }
+
+  // ========================= Heading Control =========================
 
   public double snapToHeading(DoubleSupplier x, DoubleSupplier y) {
     
@@ -456,36 +475,36 @@ public class Drive extends SubsystemBase {
   }
 
   public Translation2d getCurrentTargetLocation(){
-    Translation2d retVal = TargetLocations.ORIGIN;
+    Translation2d retVal = TargetLocations.ORIGIN.getTranslation();
 
     if ( DriverStation.getAlliance().isPresent()){
       switch (this.headingTarget) {
-        case SPEAKER:
+        case REEF_CENTER:
           switch (DriverStation.getAlliance().get()) {
             case Red:
-              retVal = TargetLocations.RED_SPEAKER;
+              retVal = TargetLocations.RED_REEF_CENTER.getTranslation();
               break;
           
             default: // Blue
-              retVal = TargetLocations.BLUE_SPEAKER;
+              retVal = TargetLocations.BLUE_REEF_CENTER.getTranslation();
               break;
           }
           break;// Escape Speaker Case
 
-        case SOURCE:
+        case PROCESSOR:
           switch (DriverStation.getAlliance().get()) {
             case Red:
-              retVal = TargetLocations.RED_SOURCE;
+              retVal = TargetLocations.RED_SIDE_PROCESSOR.getTranslation();
               break;
           
             default: // Blue
-              retVal = TargetLocations.BLUE_SOURCE;
+              retVal = TargetLocations.BLUE_SIDE_PROCESSOR.getTranslation();
               break;
           }
           break; // Escape Source Case
       
         default:
-          retVal = TargetLocations.ORIGIN;
+          retVal = TargetLocations.ORIGIN.getTranslation();
           break; // Escape Default Case
       }
   }
@@ -504,9 +523,7 @@ public class Drive extends SubsystemBase {
   public double snapToTarget() {
     // ===================  Thank you 4481 for the help ! =======================
     double theta = 0.0;
-    // Target - Robot 
-
-   boolean isTargetVisible = Limelight.isValidTargetSeen(LimelightConstants.Device.REEF);
+    boolean isTargetVisible = Limelight.isValidTargetSeen(LimelightConstants.Device.REEF);
 
    /*  if(false/*isTargetVisible){
       //System.out.println("Target Visible, use limelight data to automatically control heading");
@@ -525,37 +542,19 @@ public class Drive extends SubsystemBase {
     return headingPID.calculate(getRotation().getRadians(), theta);
   }
 
-  //public Optional<Rotation2d> getRotationTargetOverride(){ //was private
-    
-    //NOTE : Returned value must be a field relative angle
+  public boolean isHeadingLocked() {
+    return headingLocked;
+  }
 
-   /*  if (this.updatePoseUsingVision){
-      // this expects the limelight pipeline is only filtering for speaker tags (be sure to filter both april tags for both alliances on the same speaker pipeline)
-      if(Limelight.getNumTargets(LimelightConstants.Device.REEF) >= 2){ 
+  public void lockHeading() {
+    this.headingLocked = true;
+  }
 
-        System.out.println("Override Heading!!");
+  public void unlockHeading() {
+    this.headingLocked = false;
+  }
 
-        //Method 1 : Use Limelight
-        //double theta = Limelight.getHorizontalOffset(LimelightConstants.Device.REEF);
-        //return Optional.of(Rotation2d.fromDegrees(theta));
-
-        //Method 2 : Use Pose
-        Translation2d difference = getCurrentTargetLocation().minus(getPose().getTranslation());
-        double theta = difference.rotateBy(Rotation2d.fromRadians(Math.PI)).getAngle().getRadians();
-        return Optional.of(Rotation2d.fromRadians(theta));
-      }
-      else{ // i don't see both tags...
-        return Optional.empty();
-      }
-    }
-    else // heading is unlocked
-    {
-      return Optional.empty();
-    }
-    
-
-   */ 
-  //}
+  // ========================= Pose Helpers =========================
 
   public double getAngleToCurrentTarget(){
     return getCurrentTargetLocation().minus(getPose().getTranslation()).getAngle().getRadians();
@@ -573,34 +572,20 @@ public class Drive extends SubsystemBase {
     return target.getDistance(getPose().getTranslation());
   }
 
-  public double getDistanceToAllianceSpeaker(){
-    Translation2d allianceSpeaker = TargetLocations.BLUE_SPEAKER;
+  public double getDistanceToAllianceReef(){
+    Translation2d targetPose = TargetLocations.BLUE_REEF_CENTER.getTranslation();
     if ( DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red){
-      allianceSpeaker = TargetLocations.RED_SPEAKER;
+      targetPose = TargetLocations.RED_REEF_CENTER.getTranslation();
     }
-    return getDistanceToTarget(allianceSpeaker);
+    return getDistanceToTarget(targetPose);
   }
 
-  public boolean isHeadingLocked() {
-    return headingLocked;
-  }
-
-  public void lockHeading() {
-    this.headingLocked = true;
-  }
-
-  public void unlockHeading() {
-    this.headingLocked = false;
-  }
-
-  /**
-   * Adds a vision measurement to the pose estimator.
-   *
-   * @param visionPose The pose of the robot as measured by the vision camera.
-   * @param timestamp The timestamp of the vision measurement in seconds.
-   */
-  public void addVisionMeasurement(Pose2d visionPose, double timestamp) {
-    poseEstimator.addVisionMeasurement(visionPose, timestamp);
+  public double getDistanceToAllianceProcessor(){
+    Translation2d targetPose = TargetLocations.BLUE_SIDE_PROCESSOR.getTranslation();
+    if ( DriverStation.getAlliance().isPresent() && DriverStation.getAlliance().get() == Alliance.Red){
+      targetPose = TargetLocations.RED_SIDE_PROCESSOR.getTranslation();
+    }
+    return getDistanceToTarget(targetPose);
   }
 
   /** Returns the maximum linear speed in meters per sec. */
@@ -623,16 +608,47 @@ public class Drive extends SubsystemBase {
     };
   }
 
-  public void resetHeading(){
-    gyroIO.reset();
+  // ========================= PathPlanner =========================
+
+  public Command followPathCommand(String pathName) {
+    try{
+        PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+      return AutoBuilder.followPath(path);
+
+    } catch (Exception e) {
+        DriverStation.reportError("Something went wrong while following a path (1): " + e.getMessage(), e.getStackTrace());
+        return Commands.none();
+    }
   }
 
-  public void setHeading(double heading){
-    gyroIO.setHeading(heading);
+  public Command pathFindToPose(PathConstraints constraints, Pose2d targetPose) {
+    return AutoBuilder.pathfindToPose(targetPose, constraints);
   }
-  
-  public void setUpdatePoseWithVision(boolean input){
-    this.updatePoseUsingVision = input;
+
+  public Command pathfindThenFollowPath(PathConstraints constraints,String pathName ) {
+    try{
+      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+
+    return AutoBuilder.pathfindThenFollowPath(path, constraints);
+
+    } catch (Exception e) {
+        DriverStation.reportError("Something went wrong while following a path (2): " + e.getMessage(), e.getStackTrace());
+        return Commands.none();
+    }
+
+  }
+
+  public Command pathfindThenFollowPath(PathConstraints constraints,String pathName, double speed ) {
+    try{
+      PathPlannerPath path = PathPlannerPath.fromPathFile(pathName);
+
+    return AutoBuilder.pathfindThenFollowPath(path, constraints);
+
+    } catch (Exception e) {
+        DriverStation.reportError("Something went wrong while following a path (2): " + e.getMessage(), e.getStackTrace());
+        return Commands.none();
+    }
+
   }
 
 // ========================= Empty case / No Drivetrain =========================

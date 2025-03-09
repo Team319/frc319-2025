@@ -28,6 +28,10 @@ import frc.robot.Constants.HeadingTargets;
 import frc.robot.subsystems.drive.Drive;
 import java.util.function.DoubleSupplier;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 public class DriveCommands {
   private static final double DEADBAND = 0.2;
   private static final double HEADING_DEADBAND = DEADBAND;
@@ -36,22 +40,7 @@ public class DriveCommands {
 
   private static final boolean isSnapHeadingWithJoystickEnabled = false;
 
-  private DriveCommands() {
-
-  }
-
-  public static Command lockHeadingToSpeaker(Drive drive){
-    return Commands.run(
-      ()-> { drive.setHeadingTarget(HeadingTargets.SPEAKER);
-        drive.setUpdatePoseWithVision(true); }
-    ) ;
-  }
-
-  public static Command unlockHeading(Drive drive){
-    return Commands.run(
-      ()-> { drive.setUpdatePoseWithVision(false); }
-    ) ;
-  }
+  private DriveCommands() {}
 
   /**
    * Field relative drive command using two joysticks (controlling linear and angular velocities).
@@ -180,4 +169,19 @@ public class DriveCommands {
               drive);
         }
       }
+
+  // ========================= Lock Heading =========================
+
+  // public static Command lockHeadingToReef(Drive drive){
+  //   return Commands.run(
+  //     ()-> { drive.setHeadingTarget(HeadingTargets.REEF_CENTER);
+  //       drive.setUpdatePoseWithVision(true); }
+  //   ) ;
+  // }
+
+  // public static Command unlockHeading(Drive drive){
+  //   return Commands.run(
+  //     ()-> { drive.setUpdatePoseWithVision(false); }
+  //   ) ;
+  // }
 }
