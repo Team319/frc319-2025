@@ -9,6 +9,9 @@
     "Test_Paths"
   ],
   "autoFolders": [
+    "Friendly",
+    "Neutral",
+    "Opposing",
     "Test_Autos"
   ],
   "defaultMaxVel": 2.0,
