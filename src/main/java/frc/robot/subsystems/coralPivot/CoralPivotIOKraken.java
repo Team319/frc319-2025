@@ -8,7 +8,7 @@ import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Current;
 import frc.robot.Constants.CoralPivotConstants;
@@ -18,6 +18,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
         private StatusSignal<Current> motorStatorCurrent;
         private StatusSignal<Angle> motorPosition;
 
+        private DutyCycleEncoder revThroughBoreEncoder = new DutyCycleEncoder(0);
 
         Slot0Configs slot0Configs = new Slot0Configs();
         private final PositionVoltage positionVoltage = new PositionVoltage(0.0);
@@ -69,6 +70,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             // Updates all of the inputs/data points being monitored about the motor
             inputs.coralPivotMotorStatorCurrent = motorStatorCurrent.getValueAsDouble();
             inputs.coralPivotMotorPosition = motorPosition.getValueAsDouble();
+            inputs.coralPivotEncoderPosition = revThroughBoreEncoder.get();
     }
 
     @Override
@@ -101,7 +103,8 @@ public class CoralPivotIOKraken implements CoralPivotIO {
 
     @Override
     public double getPosition() {
-      return motorPosition.getValueAsDouble();
+      return revThroughBoreEncoder.get();
+      //motorPosition.getValueAsDouble();
     }
 
     @Override
