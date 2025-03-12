@@ -159,19 +159,19 @@ public class Constants {
 
     //Elevator
     public static class Setpoints {
-      public static final float topLimit = (float)75.0;//Really 74
-      public static final float readyToClimb = (float)(27);
+      public static final float topLimit = (float)142.0;//Really 74
+      public static final float readyToClimb = (float)(54);
 
-      public static final float level4 = (float)(75.0); // tune me
-      public static final float level3 = (float)(41); // tune me
-      public static final float level3Pick = (float)(41); // tune me
-      public static final float level2 = (float)(22); // tune me
-      public static final float level2Pick = (float)(41); // tune me
-      public static final float level1 = (float)(topLimit/2.0); // tune me
+      public static final float level4 = (float)(135.0); // tune me
+      public static final float level3 = (float)(72); // tune me
+      public static final float level3Pick = (float)(82); // tune me
+      public static final float level2 = (float)(33); // tune me
+      public static final float level2Pick = (float)(44); // tune me
+      public static final float level1 = (float)(22); // tune me
       
-      public static final float collect_flush = (float)4.5;
-      public static final float collect_obstructed = (float)(9);
-      public static final float bottomLimit = (float)4.0;
+      public static final float collect_flush = (float)16;
+      public static final float collect_obstructed = (float)(23);
+      public static final float bottomLimit = (float)5.0;
       public static final float home = bottomLimit;
       
       

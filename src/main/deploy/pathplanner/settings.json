@@ -3,20 +3,15 @@
   "robotLength": 0.781,
   "holonomicMode": true,
   "pathFolders": [
-    "Friendly_Side",
-    "Neutral_Side",
-    "Opposing_Side",
+    "Friendly",
+    "Neutral",
+    "Opposing",
     "Test_Paths"
   ],
   "autoFolders": [
-    "Friendly_Side_2PCS",
-    "Friendly_Side_3PCS",
-    "Friendly_Side_4PCS",
-    "Neutral_Side_2PCS",
-    "Neutral_Side_4PCS",
-    "Opposing_Side_2PCS",
-    "Opposing_Side_3PCS",
-    "Opposing_Side_4PCS",
+    "Friendly",
+    "Neutral",
+    "Opposing",
     "Test_Autos"
   ],
   "defaultMaxVel": 2.0,
