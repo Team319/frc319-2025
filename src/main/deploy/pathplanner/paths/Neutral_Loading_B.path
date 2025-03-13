@@ -45,10 +45,10 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Neutral",
+  "folder": "Neutral_Start_G",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.54
+    "rotation": 52.571
   },
   "useDefaultConstraints": true
 }

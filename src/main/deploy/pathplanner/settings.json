@@ -4,7 +4,8 @@
   "holonomicMode": true,
   "pathFolders": [
     "Friendly",
-    "Neutral",
+    "Neutral_Start_G",
+    "Neutral_Starting_H",
     "Opposing",
     "Test_Paths"
   ],
