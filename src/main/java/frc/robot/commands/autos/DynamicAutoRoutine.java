@@ -11,7 +11,6 @@ import edu.wpi.first.math.Pair;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.drive.Drive;
 
@@ -47,7 +46,7 @@ public DynamicAutoRoutine(Drive a_drive){
     // TODO : Break down instruction
 
     for (Pair<String, Integer> pair : parsedInstructions) {
-        String position = pair.getFirst();
+        String position = pair.getFirst().toLowerCase();
         int level = pair.getSecond();
         // Add commands based on position and level
         addCommands(
@@ -86,5 +85,3 @@ private List<Pair<String, Integer>> parseInstruction(String instruction) {
 
 
 }
-
-

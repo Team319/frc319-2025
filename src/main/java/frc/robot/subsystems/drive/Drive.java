@@ -70,6 +70,8 @@ public class Drive extends SubsystemBase {
   // PathPlanner configuration
   public RobotConfig ppConfig;
 
+  public boolean nearTheReef = false;
+
   AprilTagFieldLayout aprilTagFieldLayout = null ;
 
   private final GyroIO gyroIO;
@@ -347,8 +349,23 @@ public class Drive extends SubsystemBase {
                 mt2.timestampSeconds);
           }
           doRejectVisionUpdate = false;
+
+
           
         }
+
+        // ============ Get Closest Tag / reef pairing... Is it a reef? (Used for driver assistance) ============
+
+        String closestTagID = getClosestReefIdPairing();
+        if( closestTagID != "xx" )
+        {
+          nearTheReef = true;
+        }
+        else
+        {
+          nearTheReef = false;
+        }
+        
         break; // End of Swerve logic
     
       default:
@@ -753,9 +770,12 @@ public class Drive extends SubsystemBase {
     else{
       System.out.println("[pathfindToClosestRightReef]: "+ "goto_" + closestReefPair.charAt(1));
       return pathfindThenFollowPath(DriveConstants.pathingConstraints, "goto_" + closestReefPair.charAt(1));
-
     }
 
+  }
+
+  public Command stopPathing(){
+    return Commands.none();
   }
 
 // ========================= Empty case / No Drivetrain =========================

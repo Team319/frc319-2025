@@ -17,6 +17,7 @@ import com.pathplanner.lib.commands.FollowPathCommand;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -75,7 +76,9 @@ public class Robot extends LoggedRobot {
   }
 
   @Override
-  public void disabledInit() { }
+  public void disabledInit() {
+    m_robotContainer.driverController.setRumble(RumbleType.kBothRumble, 0.0);
+   }
   
 
   @Override
@@ -138,7 +141,14 @@ public class Robot extends LoggedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if(m_robotContainer.drive.nearTheReef){
+      m_robotContainer.driverController.setRumble(RumbleType.kBothRumble, 0.95);
+    } else {
+      m_robotContainer.driverController.setRumble(RumbleType.kBothRumble, 0.0);
+    }
+
+  }
 
   @Override
   public void teleopExit() {}
