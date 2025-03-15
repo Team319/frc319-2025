@@ -10,6 +10,7 @@ import frc.robot.util.Alert.*;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -125,7 +126,11 @@ public class Constants {
 
     public static Pose2d BLUE_CORAL_STATION_LEFT = new Pose2d();
     public static Pose2d BLUE_CORAL_STATION_RIGHT = new Pose2d();
-    public static Pose2d BLUE_SIDE_PROCESSOR = new Pose2d();
+    public static Pose2d BLUE_SIDE_PROCESSOR = new Pose2d(6.0,0.5,new Rotation2d(Units.degreesToRadians(0))); // Technically this is red... but it's on the blue side!
+
+    public static Pose2d BLUE_START_LEFT = new Pose2d(7.5,6.5,new Rotation2d(Units.degreesToRadians(180)));
+    public static Pose2d BLUE_START_CENTER = new Pose2d(7.5,4.0,new Rotation2d(Units.degreesToRadians(180)));
+    public static Pose2d BLUE_START_RIGHT = new Pose2d(7.5,1.5,new Rotation2d(Units.degreesToRadians(180)));
 
     // =============== RED SIDE TARGET POSES ===============
     public static Pose2d RED_REEF_CENTER = new Pose2d();
@@ -144,7 +149,11 @@ public class Constants {
 
     public static Pose2d RED_CORAL_STATION_LEFT = new Pose2d(); 
     public static Pose2d RED_CORAL_STATION_RIGHT = new Pose2d();
-    public static Pose2d RED_SIDE_PROCESSOR = new Pose2d();
+    public static Pose2d RED_SIDE_PROCESSOR = new Pose2d(11.5,7.5,new Rotation2d(Units.degreesToRadians(180))); // Technically this is blue... but it's on the red side!
+
+    public static Pose2d RED_START_LEFT = new Pose2d(10.0,1.5,new Rotation2d(Units.degreesToRadians(0)));
+    public static Pose2d RED_START_CENTER = new Pose2d(10.0,4.0,new Rotation2d(Units.degreesToRadians(0)));
+    public static Pose2d RED_START_RIGHT = new Pose2d(10.0,6.5,new Rotation2d(Units.degreesToRadians(0)));
     
   }
 

@@ -15,6 +15,7 @@ package frc.robot.subsystems.drive;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.Optional;
 import java.util.function.DoubleSupplier;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -365,7 +366,7 @@ public class Drive extends SubsystemBase {
         {
           nearTheReef = false;
         }
-        
+
         break; // End of Swerve logic
     
       default:
@@ -772,6 +773,25 @@ public class Drive extends SubsystemBase {
       return pathfindThenFollowPath(DriveConstants.pathingConstraints, "goto_" + closestReefPair.charAt(1));
     }
 
+  }
+
+  public Command pathfindToProcessor(){
+
+    Pose2d targetPose = new Pose2d();
+
+    Optional<Alliance> allianceColor = DriverStation.getAlliance();
+
+    switch (allianceColor.get()) {
+      case Red:
+        targetPose = TargetLocations.RED_SIDE_PROCESSOR;
+        break;
+    
+      default:
+        targetPose = TargetLocations.BLUE_SIDE_PROCESSOR;
+        break;
+    }
+
+    return pathFindToPose(DriveConstants.pathingConstraints, targetPose);
   }
 
   public Command stopPathing(){

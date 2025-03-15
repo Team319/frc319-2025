@@ -198,7 +198,9 @@ public class RobotContainer {
 
         driverController.leftBumper().whileTrue( new InstantCommand(()-> drive.pathfindToClosestLeftReef().schedule() ));
 
-        driverController.back().whileTrue( drive.pathFindToPose(DriveConstants.pathingConstraints, new Pose2d() ) );
+        driverController.back().whileTrue( new InstantCommand(()-> drive.pathfindToProcessor().schedule()  ) );
+
+        //driverController.back().whileTrue( drive.pathFindToPose(DriveConstants.pathingConstraints, new Pose2d() ) );
 
           /*  ============================= Score Coral  ============================= */
 
