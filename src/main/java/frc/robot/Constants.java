@@ -239,9 +239,9 @@ public class Constants {
       
       public static final float bottomLimit = (float)-66.0;  // outside the robot
       public static final float ready = (float)-10;
-      public static final float readyToClimb = (float)(-66);
+      public static final float readyToClimb = (float)(-56);
       
-      public static final float climb = (float)(45);
+      public static final float climb = (float)(44.5);
 
 
     }
