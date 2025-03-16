@@ -204,7 +204,7 @@ public class RobotContainer {
 
           /*  ============================= Score Coral  ============================= */
 
-          driverController.rightBumper().whileTrue(new ScoreCoral(superstructure));
+          driverController.rightTrigger().whileTrue(new ScoreCoral(superstructure));
 
           /*  ============================= Collect / Score Algea  ============================= */
 

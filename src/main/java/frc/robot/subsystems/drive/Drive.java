@@ -442,6 +442,8 @@ public class Drive extends SubsystemBase {
   /** Resets the current gyro heading to 0.0 */
   public void resetHeading(){
     gyroIO.reset();
+    rawGyroRotation = new Rotation2d();
+
   }
 
   /** Sets the current gyro heading to a desired value */
