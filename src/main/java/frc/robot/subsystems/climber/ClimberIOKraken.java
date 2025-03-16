@@ -44,11 +44,13 @@ public class ClimberIOKraken implements ClimberIO {
             climberConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             climberConfigs.CurrentLimits.StatorCurrentLimit = 40;
     
+            
             climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
             climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ClimberConstants.Setpoints.topLimit;
             climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
             climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ClimberConstants.Setpoints.bottomLimit;
-    
+          
+
             climberLead.getConfigurator().apply(climberConfigs);
             climberFollow.getConfigurator().apply(climberConfigs);
 

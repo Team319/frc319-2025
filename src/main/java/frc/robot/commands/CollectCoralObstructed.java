@@ -20,7 +20,7 @@ public class CollectCoralObstructed extends Command {
   int passedCycles = 0;
 
   double currentDebounceCounter = 0;
-  double detectCurrent = 10; // Tune this current limit number with Advantagescope looking at RealOutputs/CoralRoller/MotorStatorCurrent
+  double detectCurrent = 8; // Tune this current limit number with Advantagescope looking at RealOutputs/CoralRoller/MotorStatorCurrent
   double currentTolerance = 0.1;
 
   /** Creates a new CollectCoral. */
@@ -34,7 +34,7 @@ public class CollectCoralObstructed extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
+   // m_superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
     m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.collect_obstructed);
     m_superstructure.coralRoller.setPO(0.1);
 
@@ -45,12 +45,12 @@ public class CollectCoralObstructed extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_superstructure.climber.getPosition() > ClimberConstants.Setpoints.ready-pivotThreshold && m_superstructure.climber.getPosition() < ClimberConstants.Setpoints.ready+pivotThreshold){      
+   // if (m_superstructure.climber.getPosition() > ClimberConstants.Setpoints.ready-pivotThreshold && m_superstructure.climber.getPosition() < ClimberConstants.Setpoints.ready+pivotThreshold){      
       
       if(passedCycles >= 10){
         m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_obstructed);
       }
-    }
+   // }
 
     if(m_superstructure.coralRoller.getStatorCurrent() >= detectCurrent){
       currentDebounceCounter++;
@@ -77,6 +77,6 @@ public class CollectCoralObstructed extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return passedCycles >= 50 && currentDebounceCounter >= 10;
+    return passedCycles >= 50 && currentDebounceCounter >= 5;
   }
 }

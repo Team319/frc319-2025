@@ -223,7 +223,7 @@ public class RobotContainer {
             )
           );
         
-          driverController.b().onFalse(Commands.run(
+          driverController.b().onFalse(Commands.runOnce(
             ()-> {
               superstructure.algaeRoller.setPO(0);
             }
@@ -236,12 +236,26 @@ public class RobotContainer {
             }
             )
           );
-        
-          driverController.y().onFalse(Commands.run(
+
+          driverController.y().onFalse(Commands.runOnce(
             ()-> {
               superstructure.algaeRoller.setPO(0);
             }
             )
+          );
+        
+          driverController.a().whileTrue(Commands.run(
+            ()-> {
+              superstructure.coralRoller.setPO(0.35);
+            }
+            )
+          );
+
+          driverController.a().onFalse( Commands.runOnce(
+            ()->{
+                superstructure.coralRoller.setPO(0.0);
+            }
+          )
           );
 
         //  ===========================================================================
@@ -273,15 +287,17 @@ public class RobotContainer {
 
           operatorController.start().onTrue(new ReadytoClimb(superstructure));
 
+          operatorController.a().onTrue(Commands.runOnce(()-> {superstructure.climber.runPosition(ClimberConstants.Setpoints.readyToClimb);} ));
+        //  operatorController.a().onTrue(Commands.runOnce(()-> {superstructure.climber.setPO(-.1);} ));
+        //  operatorController.a().onFalse(Commands.runOnce(()-> {superstructure.climber.setPO(0);} ));
+
+          operatorController.y().onTrue(Commands.runOnce(()-> {superstructure.climber.runPosition(ClimberConstants.Setpoints.climb);} ));
+         // operatorController.y().onTrue(Commands.runOnce(()-> {superstructure.climber.setPO(0.1);} ));
+         // operatorController.y().onFalse(Commands.runOnce(()-> {superstructure.climber.setPO(0.0);} ));
+
           operatorController.rightStick().onTrue(new GoHome(superstructure));
 
-          operatorController.leftStick().onTrue(Commands.runOnce(
-          ()-> {
-            //superstructure.coralPivot.setPO(.1);
-            superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
-          }
-          )
-        );
+        
 
 
         /*  ============================= Elevator ============================= */
@@ -402,7 +418,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     
     if(autoChooser.get() == null){
-      return new DynamicAutoRoutine(drive); // The command needs to be created at runtime so that the instruction string is populated from the dashboard
+      return new DynamicAutoRoutine(drive,superstructure); // The command needs to be created at runtime so that the instruction string is populated from the dashboard
     }
     else{
       return autoChooser.get();

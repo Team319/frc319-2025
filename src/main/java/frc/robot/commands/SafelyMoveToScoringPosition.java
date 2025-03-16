@@ -19,8 +19,8 @@ public class SafelyMoveToScoringPosition extends Command {
   double desiredElevatorPosition = 0;
   double desiredCoralPivotPosition = 0;
 
-  double elevatorTolerance = 1; //This should be lower TODO: TUNE ME
-  double coralPivotTolerance = 1; //This should be lower TODO: TUNE ME
+  double elevatorTolerance = 2; //This should be lower TODO: TUNE ME
+  double coralPivotTolerance = 2; //This should be lower TODO: TUNE ME
 
   boolean isElevatorAtPosition = false;
   boolean isCoralPivotAtPosition = false;
@@ -83,13 +83,16 @@ public class SafelyMoveToScoringPosition extends Command {
     //check if the elevator is at the correct position
     if (EqualsUtil.epsilonEquals(m_superstructure.elevator.getPosition(), desiredElevatorPosition, elevatorTolerance) ) {
       isElevatorAtPosition = true;
+      //System.out.println("Ele at pos");
           //check if the coral pivot is at the correct position
       if (EqualsUtil.epsilonEquals(m_superstructure.coralPivot.getPosition(), desiredCoralPivotPosition, coralPivotTolerance) ) {
         isCoralPivotAtPosition = true;
+        System.out.println("pivot at pos");
       }
       else {
         if(m_superstructure.elevator.getPosition() >= 10)
           m_superstructure.coralPivot.runPosition(desiredCoralPivotPosition);
+          System.out.println("pivot error = " + (desiredCoralPivotPosition - m_superstructure.coralPivot.getPosition() ));
 
       }
     }

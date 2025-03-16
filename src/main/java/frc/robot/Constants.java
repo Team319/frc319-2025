@@ -92,6 +92,11 @@ public class Constants {
         //3.0, 4.0,
         Units.degreesToRadians(540), Units.degreesToRadians(720));
 
+        public static final PathConstraints fastPathingConstraints = new PathConstraints(
+          3.0,3.0,
+          //3.0, 4.0,
+          Units.degreesToRadians(540), Units.degreesToRadians(720));
+
   }
   public static enum HeadingTargets{
     NO_TARGET,
@@ -306,13 +311,14 @@ public class Constants {
 
     // Climber
     public static class Setpoints {
-      public static final float topLimit = (float)90.0; // In the robot
+      public static final float topLimit = (float)5.0; // In the robot
       
-      public static final float bottomLimit = (float)-66.0;  // outside the robot
-      public static final float ready = (float)-10;
-      public static final float readyToClimb = (float)(-56);
+      public static final float bottomLimit = (float)-127.0;  // outside the robot
       
-      public static final float climb = (float)(44.5);
+      //public static final float ready = (float)-10;
+      public static final float readyToClimb = (float)(-123.0);
+      
+      public static final float climb = (float)(-10.0);
 
 
     }

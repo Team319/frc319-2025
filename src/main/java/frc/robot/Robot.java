@@ -143,7 +143,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopPeriodic() {
     if(m_robotContainer.drive.nearTheReef){
-      m_robotContainer.driverController.setRumble(RumbleType.kBothRumble, 0.95);
+      m_robotContainer.driverController.setRumble(RumbleType.kBothRumble, 0.5);
     } else {
       m_robotContainer.driverController.setRumble(RumbleType.kBothRumble, 0.0);
     }

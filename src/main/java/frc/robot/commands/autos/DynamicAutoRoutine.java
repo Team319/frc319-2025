@@ -14,11 +14,18 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.AutoScoreCoral;
+import frc.robot.commands.CollectCoral;
+import frc.robot.commands.GoHome;
+import frc.robot.commands.SafelyMoveToScoringPosition;
+import frc.robot.commands.ScoreCoral;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.superstructure.Superstructure;
 
 
 /** Add your docs here. */
@@ -26,10 +33,12 @@ public class DynamicAutoRoutine extends SequentialCommandGroup {
 
     String m_instruction = "";
     Drive m_drive;
+    Superstructure m_superstructure;
 
-public DynamicAutoRoutine(Drive a_drive){
+public DynamicAutoRoutine(Drive a_drive, Superstructure a_superstructure){
     // Constructor
     m_drive = a_drive;
+    m_superstructure = a_superstructure;
     //Populate some string from Dashboard with format <ReefPosition><ReefLevel>..." ( ie - A1B2C3D4 ; A4B4C4D4 ; etc )
     m_instruction = SmartDashboard.getString("DynamicAutoInput", "");
 
@@ -89,8 +98,10 @@ public DynamicAutoRoutine(Drive a_drive){
                 // This is a reef position.
                 // Add commands based on position and level
                 addCommands(
-                    m_drive.pathfindThenFollowPath(DriveConstants.pathingConstraints,"goto_" + command),
-                    new WaitCommand(1)// TODO : scoreAtLevel(level)
+                    m_drive.pathfindThenFollowPath(DriveConstants.fastPathingConstraints,"goto_" + command),
+                    new SafelyMoveToScoringPosition(m_superstructure, modifier),
+                    new AutoScoreCoral(m_superstructure)
+                    //new WaitCommand(1)// TODO : scoreAtLevel(level)
                     );
                 break;
 
@@ -98,8 +109,11 @@ public DynamicAutoRoutine(Drive a_drive){
                 // This is a left (PORT) coral station / collect position.
                 // Add commands based on position and level
                 addCommands(
-                    m_drive.pathfindThenFollowPath(DriveConstants.pathingConstraints,"goto_" + "left"+ "_" + modifier),
-                    new WaitCommand(1) // TODO : collectFromCoralStation()
+                    Commands.parallel(                    
+                        m_drive.pathfindThenFollowPath(DriveConstants.fastPathingConstraints,"goto_" + "left"+ "_" + modifier),
+                        Commands.sequence(new GoHome(m_superstructure),new CollectCoral(a_superstructure))
+                    )
+                    //new WaitCommand(1) // TODO : collectFromCoralStation()
                     );
                 break;
 
@@ -107,8 +121,11 @@ public DynamicAutoRoutine(Drive a_drive){
                 // This is a right (STARBORD) coral station / collect position.
                 // Add commands based on position and level
                 addCommands(
-                    m_drive.pathfindThenFollowPath(DriveConstants.pathingConstraints,"goto_" + "right"+ "_" + modifier),
-                    new WaitCommand(1) // TODO : collectFromCoralStation()
+                    Commands.parallel(                    
+                        m_drive.pathfindThenFollowPath(DriveConstants.fastPathingConstraints,"goto_" + "right"+ "_" + modifier),
+                        Commands.sequence(new GoHome(m_superstructure),new CollectCoral(a_superstructure))
+                    )
+                    //new WaitCommand(1) // TODO : collectFromCoralStation()
                 );
                 break;
         
