@@ -240,8 +240,8 @@ public class Constants {
       public static final float level2Pick = (float)(44); // tune me
       public static final float level1 = (float)(22); // tune me
       
-      public static final float collect_flush = (float)16;
-      public static final float collect_obstructed = (float)(23);
+      public static final float collect_flush = (float)13;
+      public static final float collect_obstructed = (float)(20);
       public static final float bottomLimit = (float)5.0;
       public static final float home = bottomLimit;
       
