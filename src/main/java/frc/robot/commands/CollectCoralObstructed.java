@@ -20,7 +20,7 @@ public class CollectCoralObstructed extends Command {
   int passedCycles = 0;
 
   double currentDebounceCounter = 0;
-  double detectCurrent = 6.5; // Tune this current limit number with Advantagescope looking at RealOutputs/CoralRoller/MotorStatorCurrent
+  double detectCurrent = 30; // Tune this current limit number with Advantagescope looking at RealOutputs/CoralRoller/MotorStatorCurrent
   double currentTolerance = 0.1;
 
   /** Creates a new CollectCoral. */
@@ -77,6 +77,6 @@ public class CollectCoralObstructed extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return passedCycles >= 50 && currentDebounceCounter >= 10;
+    return passedCycles >= 50 && currentDebounceCounter >= 5;
   }
 }
