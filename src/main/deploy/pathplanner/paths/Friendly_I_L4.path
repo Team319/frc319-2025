@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 4.9269467213114755,
-        "y": 5.307684426229509
+        "x": 5.226639344262295,
+        "y": 5.091905737704917
       },
       "prevControl": {
-        "x": 5.885963114754098,
-        "y": 5.871106557377049
+        "x": 6.185655737704917,
+        "y": 5.655327868852457
       },
       "nextControl": null,
       "isLocked": false,
@@ -36,7 +36,12 @@
       "name": "ScoreL4",
       "waypointRelativePos": 0.76,
       "endWaypointRelativePos": null,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "ScoreL4"
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -52,7 +57,7 @@
     "rotation": -118.73979529168805
   },
   "reversed": false,
-  "folder": "Friendly_Side",
+  "folder": "Friendly",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

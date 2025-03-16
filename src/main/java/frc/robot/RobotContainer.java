@@ -4,14 +4,19 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.commands.AutoGoHome;
 import frc.robot.commands.AutoScoreCoral;
 import frc.robot.commands.CollectCoral;
@@ -38,6 +43,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 public class RobotContainer {
 
+  private UsbCamera camera;
   // Subsystems
   public final Drive drive;
   public final Superstructure superstructure;
@@ -57,6 +63,8 @@ public class RobotContainer {
       switch(Constants.getRobot()){
   
         case COMPBOT:
+          camera = CameraServer.startAutomaticCapture();
+          camera.setResolution(640, 480);
           drive =
             new Drive(
                  new GyroIOPigeon2() {},
@@ -138,7 +146,7 @@ public class RobotContainer {
 
       NamedCommands.registerCommand(
         "ScoreL4",
-        new SafelyMoveToScoringPosition(superstructure, 3));
+        new SafelyMoveToScoringPosition(superstructure, 4));
 
       NamedCommands.registerCommand(
         "ScoreCoral",
@@ -267,6 +275,94 @@ public class RobotContainer {
 
           operatorController.rightStick().onTrue(new GoHome(superstructure));
 
+          operatorController.leftStick().onTrue(Commands.runOnce(
+          ()-> {
+            //superstructure.coralPivot.setPO(.1);
+            superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
+          }
+          )
+        );
+
+
+        /*  ============================= Elevator ============================= */
+
+          // operatorController.rightBumper().whileTrue(Commands.run(
+          //   ()-> {
+          //     // elevator.setPO(.05);
+          //     superstructure.elevator.runPosition(superstructure.elevator.getPosition() + 2);  // Nudge the elevator up
+          //   }
+          //   )
+          // );
+
+
+          // operatorController.leftBumper().whileTrue(Commands.run(
+          //   ()-> {
+          //     // elevator.setPO(.05);
+          //     superstructure.elevator.runPosition(superstructure.elevator.getPosition() - 2);  // Nudge the elevator up
+          //   }
+          //   )
+          // );
+  /*  ============================= Coral Pivot ============================= */
+
+  // driverController.povUp().onTrue(Commands.runOnce(
+  //   ()-> {
+  //     //superstructure.coralPivot.setPO(.1);
+  //     superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.topLimit);
+  //   }
+  //   )
+  // );
+
+  // driverController.povUp().whileFalse(Commands.run(
+  //   ()-> {
+  //    //superstructure.coralPivot.setPO(0);
+  //   }
+  //   )
+  // );
+
+  // driverController.povDown().onTrue(Commands.runOnce(
+  //   ()-> {
+  //    //superstructure.coralPivot.setPO(-.1);
+  //    superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.bottomLimit/2.0);
+  //   }
+  //   )
+  // );
+
+  // driverController.povDown().onFalse(Commands.run(
+  //   ()-> {
+  //     //superstructure.coralPivot.setPO(0);
+  //   }
+  //   )
+  // );
+
+  /*  ============================= Coral Rollers ============================= */
+
+//  driverController.x().whileTrue(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(.5);
+//     }
+//     )
+//   );
+
+//   driverController.x().whileFalse(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(0);
+//     }
+//     )
+//   );
+
+//   driverController.b().whileTrue(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(-.5);
+//     }
+//     )
+//   );
+
+//   driverController.b().onFalse(Commands.run(
+//     ()-> {
+//       superstructure.coralRoller.setPO(0);
+//     }
+//     )
+//   );
 
       /*  ============================= Algae Pivot ============================= */
 
