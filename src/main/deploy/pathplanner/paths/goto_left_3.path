@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 0.6011026558619172,
-        "y": 6.602951425167205
+        "x": 0.7192622950819672,
+        "y": 6.698258196721311
       },
       "prevControl": {
-        "x": 0.796436559971506,
-        "y": 6.362540466263094
+        "x": 0.9145961991915559,
+        "y": 6.457847237817201
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": -53.39488015906729
   },
   "reversed": false,
-  "folder": "goto_coral",
+  "folder": null,
   "idealStartingState": {
     "velocity": 2.0,
     "rotation": -51.797

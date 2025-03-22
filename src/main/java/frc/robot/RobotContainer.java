@@ -63,8 +63,11 @@ public class RobotContainer {
       switch(Constants.getRobot()){
   
         case COMPBOT:
+
           camera = CameraServer.startAutomaticCapture();
           camera.setResolution(640, 480);
+          camera.setFPS(30);
+
           drive =
             new Drive(
                  new GyroIOPigeon2() {},

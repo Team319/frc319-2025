@@ -171,7 +171,7 @@ public class Constants {
 
   public static class CoralPivotConstants{
     public static class Gains {
-      public static final double kPUp = 0.5;
+      public static final double kPUp = 0.25; // was 0.5
       public static final double kIUp = 0.01;
       public static final double kDUp = 0.0;
       public static final double kFFUp = 0.0;
@@ -195,7 +195,7 @@ public class Constants {
       public static final float level2 = (float)(17); // tune me
       public static final float level2Pick = (float)(17); // tune me
       public static final float level1 = (float)(topLimit/2.0); // tune me
-      public static final float collect = (float)(-9.5); // tune me
+      public static final float collect = (float)(-11); // tune me
       public static final float collect_obstructed = (float)(-14.5);
 
 
@@ -238,15 +238,15 @@ public class Constants {
       public static final float topLimit = (float)142.0;//Really 74
       public static final float readyToClimb = (float)(54);
 
-      public static final float level4 = (float)(135.0); // tune me
+      public static final float level4 = (float)(140.0); // lil bit too low
       public static final float level3 = (float)(72); // tune me
       public static final float level3Pick = (float)(82); // tune me
       public static final float level2 = (float)(33); // tune me
       public static final float level2Pick = (float)(44); // tune me
       public static final float level1 = (float)(22); // tune me
       
-      public static final float collect_flush = (float)13;
-      public static final float collect_obstructed = (float)(20);
+      public static final float collect_flush = (float)14; //13 too high
+      public static final float collect_obstructed = (float)(12);
       public static final float bottomLimit = (float)5.0;
       public static final float home = bottomLimit;
       
@@ -318,7 +318,7 @@ public class Constants {
       //public static final float ready = (float)-10;
       public static final float readyToClimb = (float)(-123.0);
       
-      public static final float climb = (float)(-10.0);
+      public static final float climb = (float)(-35.0); //-10.0
 
 
     }
@@ -344,7 +344,7 @@ public class Constants {
     public static class Speeds {
       public static final double stop = 0.0;
       public static final double collect = 0.1;
-      public static final double score = 1.0;
+      public static final double score = .75;
       public static final double pick = -0.5;
 
     }

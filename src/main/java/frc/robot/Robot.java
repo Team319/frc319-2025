@@ -73,6 +73,10 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+
+    if(!hasBeenEnabled){
+      SmartDashboard.putString("Dynamic Reading", m_robotContainer.dynamicAutoInput);
+    }
   }
 
   @Override
@@ -87,15 +91,17 @@ public class Robot extends LoggedRobot {
     // Read dynamic auto selection from SmartDashboard
     m_robotContainer.dynamicAutoInput = SmartDashboard.getString("DynamicAutoInput", "");
 
+    System.out.println("DynamicAuto Input :" +m_robotContainer.dynamicAutoInput);
+
    if (!hasBeenEnabled) {
     Optional<Alliance> allianceColor = DriverStation.getAlliance();
     allianceColor.ifPresent(alliance -> {
       if (alliance == Alliance.Red) {
         m_robotContainer.drive.setHeading(0.0);
-        System.out.println("Red Alliance: Setting heading to 0 degrees.");
+        //System.out.println("Red Alliance: Setting heading to 0 degrees.");
       } else if (alliance == Alliance.Blue) {
         m_robotContainer.drive.setHeading(180.0);
-        System.out.println("Blue Alliance: Setting heading to 180 degrees.");
+        //System.out.println("Blue Alliance: Setting heading to 180 degrees.");
       }
     });
 
