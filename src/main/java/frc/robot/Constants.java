@@ -235,19 +235,23 @@ public class Constants {
 
     //Elevator
     public static class Setpoints {
-      public static final float topLimit = (float)142.0;//Really 74
-      public static final float readyToClimb = (float)(54);
 
-      public static final float level4 = (float)(140.0); // lil bit too low
-      public static final float level3 = (float)(72); // tune me
-      public static final float level3Pick = (float)(82); // tune me
-      public static final float level2 = (float)(33); // tune me
-      public static final float level2Pick = (float)(44); // tune me
-      public static final float level1 = (float)(22); // tune me
+      private static final float ratio = (float)0.4;
+
+      public static final float topLimit = (float)142.0*ratio;//Really 74
+      public static final float readyToClimb = (float)(54)*ratio;
+
+      public static final float level4 = (float)(140.0)*ratio; // lil bit too low
+      public static final float level3 = (float)(72)*ratio; // tune me
+      public static final float level3Pick = (float)(82)*ratio; // tune me
+      public static final float level2 = (float)(33)*ratio; // tune me
+      public static final float level2Pick = (float)(44)*ratio; // tune me
+      public static final float level1 = (float)(22)*ratio; // tune me
       
-      public static final float collect_flush = (float)14; //13 too high
-      public static final float collect_obstructed = (float)(12);
-      public static final float bottomLimit = (float)5.0;
+      public static final float collect_flush = (float)14*ratio; //13 too high
+      public static final float collect_obstructed = (float)(12)*ratio;
+      public static final float bottomLimit = (float)5.0*ratio;
+      
       public static final float home = bottomLimit;
       
       
@@ -276,8 +280,8 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)45.0;
-      public static final float collect = (float)30.0;
+      public static final float topLimit = (float)60.0;
+      public static final float collect = (float)30.0; // tune me ! -ekm 04/25/25
       public static final float bottomLimit = (float)0.0;
       public static final float home = bottomLimit;
 

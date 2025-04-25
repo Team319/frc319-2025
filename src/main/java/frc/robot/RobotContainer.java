@@ -218,10 +218,10 @@ public class RobotContainer {
           driverController.rightTrigger().whileTrue(new ScoreCoral(superstructure));
 
           /*  ============================= Collect / Score Algea  ============================= */
-
+ 
           driverController.b().whileTrue(Commands.run(
             ()-> {
-              superstructure.algaeRoller.setPO(.5);
+              superstructure.coralRoller.setPO(0.35);
             }
             )
           );
@@ -232,7 +232,7 @@ public class RobotContainer {
             }
             )
           );
-        
+        /* 
           driverController.y().whileTrue(Commands.run(
             ()-> {
               superstructure.algaeRoller.setPO(-.5);
@@ -246,10 +246,10 @@ public class RobotContainer {
             }
             )
           );
-        
+        */
           driverController.a().whileTrue(Commands.run(
             ()-> {
-              superstructure.coralRoller.setPO(0.35);
+              superstructure.coralRoller.setPO(-0.35);
             }
             )
           );
@@ -387,7 +387,7 @@ public class RobotContainer {
 
       operatorController.x().whileTrue(Commands.run(
         ()-> {
-          superstructure.algaePivot.setPO(.7);
+          superstructure.algaePivot.setPO(.3);
 
           //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
         }
