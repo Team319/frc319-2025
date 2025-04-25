@@ -37,7 +37,7 @@ public class GoHome extends Command {
       
       //m_superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
       
-      m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.pick);
+     // m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.pick);
 
   }
 

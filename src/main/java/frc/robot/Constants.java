@@ -171,7 +171,7 @@ public class Constants {
 
   public static class CoralPivotConstants{
     public static class Gains {
-      public static final double kPUp = 0.25; // was 0.5
+      public static final double kPUp = 0.5; // was 0.5
       public static final double kIUp = 0.01;
       public static final double kDUp = 0.0;
       public static final double kFFUp = 0.0;
@@ -187,21 +187,21 @@ public class Constants {
 
     //Coral Pivot
     public static class Setpoints {
-      public static final float topLimit = (float)25.0;
+      public static final float topLimit = (float)(25.0*1.78);
 
-      public static final float level4 = (float)(10); // tune me
-      public static final float level3 = (float)(16); // tune me
-      public static final float level3Pick = (float)(16); // tune me
-      public static final float level2 = (float)(17); // tune me
-      public static final float level2Pick = (float)(17); // tune me
-      public static final float level1 = (float)(topLimit/2.0); // tune me
-      public static final float collect = (float)(-11); // tune me
-      public static final float collect_obstructed = (float)(-14.5);
+      public static final float level4 = (float)(10*1.78); // tune me
+      public static final float level3 = (float)(16*1.78); // tune me
+      public static final float level3Pick = (float)(16*1.78); // tune me
+      public static final float level2 = (float)(17*1.78); // tune me
+      public static final float level2Pick = (float)(17*1.78); // tune me
+      public static final float level1 = (float)((topLimit/2.0)*1.78); // tune me
+      public static final float collect = (float)(-25); // tune me
+      public static final float collect_obstructed = (float)(-30);
 
 
-      public static final float readyToClimb = (float)(20);
+      public static final float readyToClimb = (float)(20*1.78);
       public static final float home = (float)(0);
-      public static final float bottomLimit = (float)-15.0;
+      public static final float bottomLimit = (float)-30.0;
       
 
     }
