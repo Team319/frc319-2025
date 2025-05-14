@@ -34,6 +34,12 @@ public class AlgaePivot extends SubsystemBase {
     public void periodic() {
         io.updateInputs(inputs);
         Logger.processInputs("/RealOutputs/AlgaePivot", inputs);
+
+                // If Tunable Values are enabled, update them
+                if ( ( kP.hasChanged(hashCode()) || kI.hasChanged(hashCode()) || kD.hasChanged(hashCode()) ) ) {
+                  io.configurePID(kP.get(), kI.get(), kD.get() );
+                }
+
     }
 
     public void stop() {

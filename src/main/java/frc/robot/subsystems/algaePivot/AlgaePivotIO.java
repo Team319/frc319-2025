@@ -5,12 +5,12 @@ import org.littletonrobotics.junction.AutoLog;
 public interface AlgaePivotIO {
     @AutoLog
     public static class AlgaePivotIOInputs {
-        public double kPUp = 0.0;  // Power applied to motor
+        public double kPUp = 10.0;  // Power applied to motor
         public double kIUp = 0.0;  // margin of error in motor
         public double kDUp = 0.0;  // Makes the graph line smooth from point A to point B
         public double kFFUp = 0.0; // Feedforward value
 
-        public double kPDown = 0.0;  // Power applied to motor
+        public double kPDown = 10.0;  // Power applied to motor
         public double kIDown = 0.0;  // margin of error in motor
         public double kDDown = 0.0;  // Makes the graph line smooth from point A to point B
         public double kFFDown = 0.0; // Feedforward value
@@ -29,6 +29,8 @@ public interface AlgaePivotIO {
     public default void stop() {}
 
     public default void configurePID(double kP, double kI, double kD) {}
+    
+    public default void configurePID(double kP, double kI, double kD, double kFF) {}
 
     public default void setPosition(double targetPosition) {}
 

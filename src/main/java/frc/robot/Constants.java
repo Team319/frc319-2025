@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 public class Constants {
 
   // Enable this for Tunable Values
-  public static final boolean tuningMode = true;
+  public static final boolean tuningMode = false;
 
   public static final double loopPeriodSecs = 0.02;
   private static RobotType robotType = RobotType.COMPBOT;
@@ -190,10 +190,10 @@ public class Constants {
       public static final float topLimit = (float)(25.0*1.78);
 
       public static final float level4 = (float)(10*1.78); // tune me
-      public static final float level3 = (float)(16*1.78); // tune me
-      public static final float level3Pick = (float)(16*1.78); // tune me
-      public static final float level2 = (float)(17*1.78); // tune me
-      public static final float level2Pick = (float)(17*1.78); // tune me
+      public static final float level3 = (float)(8*1.78); // tune me
+      public static final float level3Pick = (float)(8*1.78); // tune me
+      public static final float level2 = (float)(8*1.78); // tune me
+      public static final float level2Pick = (float)(8*1.78); // tune me
       public static final float level1 = (float)((topLimit/2.0)*1.78); // tune me
       public static final float collect = (float)(-25); // tune me
       public static final float collect_obstructed = (float)(-30);
@@ -205,6 +205,7 @@ public class Constants {
       
 
     }
+
 
     public static class SoftLimits {
       public static final float forwardSoftLimit = Setpoints.topLimit;
@@ -236,21 +237,21 @@ public class Constants {
     //Elevator
     public static class Setpoints {
 
-      private static final float ratio = (float)0.4;
+      private static final float ratio = (float)0.5;
 
-      public static final float topLimit = (float)142.0*ratio;//Really 74
+      public static final float topLimit = (float)145.0*ratio;//Really 74
       public static final float readyToClimb = (float)(54)*ratio;
 
-      public static final float level4 = (float)(140.0)*ratio; // lil bit too low
-      public static final float level3 = (float)(72)*ratio; // tune me
+      public static final float level4 = (float)(145)*ratio; // lil bit too low
+      public static final float level3 = (float)(70)*ratio; // tune me
       public static final float level3Pick = (float)(82)*ratio; // tune me
-      public static final float level2 = (float)(33)*ratio; // tune me
+      public static final float level2 = (float)(30)*ratio; // tune me
       public static final float level2Pick = (float)(44)*ratio; // tune me
       public static final float level1 = (float)(22)*ratio; // tune me
       
-      public static final float collect_flush = (float)14*ratio; //13 too high
-      public static final float collect_obstructed = (float)(12)*ratio;
-      public static final float bottomLimit = (float)5.0*ratio;
+      public static final float collect_flush = (float)20*ratio; //13 too high
+      public static final float collect_obstructed = (float)(25)*ratio;
+      public static final float bottomLimit = (float)0.0*ratio;
       
       public static final float home = bottomLimit;
       
@@ -280,10 +281,15 @@ public class Constants {
     }
 
     public static class Setpoints {
-      public static final float topLimit = (float)60.0;
-      public static final float collect = (float)30.0; // tune me ! -ekm 04/25/25
+      public static final float topLimit = (float)90.0;
+      public static final float level4 = (float) 60.0;
+      public static final float level3 = (float) 55.0;
+      public static final float level2 = (float) 55.0;
+      public static final float level1 = (float) 30.0;
+
+      public static final float collect = (float)90.0; // tune me ! -ekm 04/25/25
       public static final float bottomLimit = (float)0.0;
-      public static final float home = bottomLimit;
+      public static final float home = 55;//bottomLimit;
 
     }
 

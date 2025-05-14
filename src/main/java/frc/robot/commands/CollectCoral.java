@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.ElevatorConstants;
@@ -36,6 +37,9 @@ public class CollectCoral extends Command {
   @Override
   public void initialize() {
     m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.collect);
+    m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
+    m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_flush);
+
     m_superstructure.coralRoller.setPO(0.1);
 
     passedCycles = 0;
@@ -48,9 +52,9 @@ public class CollectCoral extends Command {
   public void execute() {
    // if (m_superstructure.climber.getPosition() > ClimberConstants.Setpoints.ready-pivotThreshold && m_superstructure.climber.getPosition() < ClimberConstants.Setpoints.ready+pivotThreshold){      
       
-      if(passedCycles >= 10){
-        m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_flush);
-      }
+   //   if(passedCycles >= 10){
+   //     m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_flush);
+   //   }
   //  }
 
     if(m_superstructure.coralRoller.getStatorCurrent() >= detectCurrent){
@@ -72,8 +76,9 @@ public class CollectCoral extends Command {
     //stop the rollers!
     // Hold whatever position I'm at now...
     m_superstructure.coralRoller.stop();
+    m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
     m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
-    m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.home);
+    m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.bottomLimit);
     
 
   }

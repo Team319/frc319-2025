@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.commands.AutoGoHome;
 import frc.robot.commands.AutoScoreCoral;
@@ -205,11 +206,18 @@ public class RobotContainer {
             )
           );
 
-        driverController.rightBumper().whileTrue(   new InstantCommand(()-> drive.pathfindToClosestRightReef().schedule() ) );
 
-        driverController.leftBumper().whileTrue( new InstantCommand(()-> drive.pathfindToClosestLeftReef().schedule() ));
+        if (false){ // Turned off for safety at demos
 
-        driverController.back().whileTrue( new InstantCommand(()-> drive.pathfindToProcessor().schedule()  ) );
+          driverController.rightBumper().whileTrue(   new InstantCommand(()-> drive.pathfindToClosestRightReef().schedule() ) );
+
+          driverController.leftBumper().whileTrue( new InstantCommand(()-> drive.pathfindToClosestLeftReef().schedule() ));
+  
+          driverController.back().whileTrue( new InstantCommand(()-> drive.pathfindToProcessor().schedule()  ) );
+        
+        }
+        
+
 
         //driverController.back().whileTrue( drive.pathFindToPose(DriveConstants.pathingConstraints, new Pose2d() ) );
 
@@ -217,18 +225,22 @@ public class RobotContainer {
 
           driverController.rightTrigger().whileTrue(new ScoreCoral(superstructure));
 
+          driverController.rightTrigger().onFalse(new GoHome(superstructure));
+
           /*  ============================= Collect / Score Algea  ============================= */
  
           driverController.b().whileTrue(Commands.run(
             ()-> {
-              superstructure.coralRoller.setPO(0.35);
+              superstructure.coralRoller.setPO(1.0);
             }
             )
           );
         
           driverController.b().onFalse(Commands.runOnce(
             ()-> {
-              superstructure.algaeRoller.setPO(0);
+        //      superstructure.algaeRoller.setPO(0);
+        superstructure.coralRoller.setPO(0.0);
+
             }
             )
           );
@@ -249,7 +261,7 @@ public class RobotContainer {
         */
           driverController.a().whileTrue(Commands.run(
             ()-> {
-              superstructure.coralRoller.setPO(-0.35);
+              superstructure.coralRoller.setPO(-0.1);
             }
             )
           );
@@ -385,37 +397,37 @@ public class RobotContainer {
 
       /*  ============================= Algae Pivot ============================= */
 
-      operatorController.x().whileTrue(Commands.run(
+      operatorController.x().onTrue(Commands.runOnce(
         ()-> {
-          superstructure.algaePivot.setPO(.3);
+          //superstructure.algaePivot.setPO(.3);
 
-          //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
+          superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
         }
         )
       );
-
+/* 
       operatorController.x().onFalse(Commands.run(
         ()-> {
           superstructure.algaePivot.setPO(0);
         }
         )
       );
-
-      operatorController.b().whileTrue(Commands.run(
+*/
+      operatorController.b().onTrue(Commands.runOnce(
         ()-> {
-          superstructure.algaePivot.setPO(-.3);
-          //superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
+          //superstructure.algaePivot.setPO(-.3);
+          superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
         }
         )
       );
-
+/* 
       operatorController.b().onFalse(Commands.run(
         ()-> {
           superstructure.algaePivot.setPO(0);
         }
         )
       );
-
+*/
 
     }
   public Command getAutonomousCommand() {

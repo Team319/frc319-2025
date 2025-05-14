@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.ElevatorConstants;
@@ -36,6 +37,10 @@ public class CollectCoralObstructed extends Command {
   public void initialize() {
    // m_superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
     m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.collect_obstructed);
+    m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
+    m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_obstructed);
+
+
     m_superstructure.coralRoller.setPO(0.1);
 
     passedCycles = 0;
@@ -47,9 +52,9 @@ public class CollectCoralObstructed extends Command {
   public void execute() {
    // if (m_superstructure.climber.getPosition() > ClimberConstants.Setpoints.ready-pivotThreshold && m_superstructure.climber.getPosition() < ClimberConstants.Setpoints.ready+pivotThreshold){      
       
-      if(passedCycles >= 10){
-        m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_obstructed);
-      }
+    //  if(passedCycles >= 10){
+    //    m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.collect_obstructed);
+    //  }
    // }
 
     if(m_superstructure.coralRoller.getStatorCurrent() >= detectCurrent){
@@ -68,6 +73,7 @@ public class CollectCoralObstructed extends Command {
   @Override
   public void end(boolean interrupted) {
     m_superstructure.coralRoller.stop();
+    m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
     m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
     m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.home);
     

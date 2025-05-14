@@ -65,7 +65,7 @@ public class CoralPivot extends SubsystemBase {
       }
     
       public void configurePID(double kP, double kI, double kD, double kFF) {
-        io.configurePID(kP, kI, kD, kFF);
+        io.configurePID(kP, kI, kD);
       }
     
       public double getPosition() {

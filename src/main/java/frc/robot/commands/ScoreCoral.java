@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.CoralRollerConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.superstructure.Superstructure;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -42,7 +43,11 @@ public class ScoreCoral extends Command {
   @Override
   public void end(boolean interrupted) {
     m_superstructure.coralRoller.setPO(0);
-    m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
+    //m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
+    //m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.home);
+
+
+    System.out.println("Score ended");
   }
 
   // Returns true when the command should end.

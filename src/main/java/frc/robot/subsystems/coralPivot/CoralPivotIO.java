@@ -31,8 +31,6 @@ public interface CoralPivotIO {
 
     public default void stop() {}
 
-    public default void configurePID(double kP, double kI, double kD, double kFF) {}
-
     public default void setPosition(double targetPosition) {}
 
     public default double getPosition() {return 0.0;}

@@ -36,7 +36,7 @@ public class Superstructure extends SubsystemBase {
     public final CoralPivot coralPivot;
     public final CoralRoller coralRoller;
     public final AlgaePivot algaePivot;
-    public final AlgaeRoller algaeRoller;
+    //public final AlgaeRoller algaeRoller;
     public final Climber climber;
 
     public Superstructure(){
@@ -51,9 +51,9 @@ public class Superstructure extends SubsystemBase {
                         new AlgaePivot(
                         new AlgaePivotIOKraken() {});
 
-                algaeRoller = 
-                        new AlgaeRoller(
-                        new AlgaeRollerIOKraken() {} );
+                //algaeRoller = 
+                //        new AlgaeRoller(
+                //        new AlgaeRollerIOKraken() {} );
                 
                 climber =
                         new Climber(
@@ -83,9 +83,9 @@ public class Superstructure extends SubsystemBase {
                     new AlgaePivot(
                     new AlgaePivotIO() {} );
     
-                algaeRoller = 
+               /*  algaeRoller = 
                     new AlgaeRoller(
-                    new AlgaeRollerIO() {} );
+                    new AlgaeRollerIO() {} );*/
                 
                 climber =
                     new Climber(

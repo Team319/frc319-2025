@@ -31,7 +31,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             coralPivotMotor = new TalonFX(15);
     
             TalonFXConfiguration coralPivotConfigs = new TalonFXConfiguration();
-            coralPivotMotor.getConfigurator().apply(coralPivotConfigs);
+           // coralPivotMotor.getConfigurator().apply(coralPivotConfigs);
     
             coralPivotConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
             coralPivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
@@ -39,7 +39,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             coralPivotConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             coralPivotConfigs.CurrentLimits.StatorCurrentLimit = 40;
 
-            configurePID(CoralPivotConstants.Gains.kPUp,CoralPivotConstants.Gains.kIUp,CoralPivotConstants.Gains.kDUp,CoralPivotConstants.Gains.kFFUp);
+            configurePID(CoralPivotConstants.Gains.kPUp,CoralPivotConstants.Gains.kIUp,CoralPivotConstants.Gains.kDUp);
     
             coralPivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
             coralPivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = CoralPivotConstants.Setpoints.topLimit;
@@ -51,7 +51,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
             motorStatorCurrent = coralPivotMotor.getStatorCurrent();
             motorPosition = coralPivotMotor.getPosition();
             BaseStatusSignal.setUpdateFrequencyForAll(50, motorPosition, motorStatorCurrent);
-            coralPivotMotor.optimizeBusUtilization();
+            //coralPivotMotor.optimizeBusUtilization();
         }
     
         @Override

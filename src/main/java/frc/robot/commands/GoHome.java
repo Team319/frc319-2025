@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.CoralRollerConstants;
@@ -35,7 +36,7 @@ public class GoHome extends Command {
   public void initialize() {
       m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
       
-      //m_superstructure.climber.runPosition(ClimberConstants.Setpoints.ready);
+      m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
       
      // m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.pick);
 
@@ -44,12 +45,15 @@ public class GoHome extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+
+      // If the coral position is at home... start moving the elevator...
       if ( EqualsUtil.epsilonEquals(m_superstructure.coralPivot.getPosition(), CoralPivotConstants.Setpoints.home, pivotThreshold) ){
-        m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.home);
+        m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.bottomLimit);
         isCoralPivotAtPosition = true;
       }
 
-      if(EqualsUtil.epsilonEquals(m_superstructure.elevator.getPosition(),ElevatorConstants.Setpoints.home, elevatorThreshold)){
+      // record if the elevator is at home...
+      if(EqualsUtil.epsilonEquals(m_superstructure.elevator.getPosition(),ElevatorConstants.Setpoints.bottomLimit, elevatorThreshold)){
         isElevatorAtPosition = true;
       }
     }
@@ -61,17 +65,24 @@ public class GoHome extends Command {
     
     //stop the rollers!
 
-    // Hold whatever position I'm at now...
-    m_superstructure.coralPivot.runPosition(m_superstructure.coralPivot.getPosition());
-    m_superstructure.elevator.runPosition(m_superstructure.elevator.getPosition());
+    if(!interrupted){
+      m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
+      m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
+      m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.bottomLimit);
+    }
 
-    m_superstructure.coralRoller.setPO(0.0);
+
+    // Hold whatever position I'm at now...
+    //m_superstructure.coralPivot.runPosition(m_superstructure.coralPivot.getPosition());
+    //m_superstructure.elevator.runPosition(m_superstructure.elevator.getPosition());
+
+    //m_superstructure.coralRoller.setPO(0.0);
 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isElevatorAtPosition && isCoralPivotAtPosition; 
+    return isElevatorAtPosition ; 
   }
 }

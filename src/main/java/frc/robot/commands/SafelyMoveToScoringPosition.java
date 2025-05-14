@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.Constants.AlgaePivotConstants;
 import frc.robot.Constants.CoralPivotConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.superstructure.Superstructure;
@@ -18,12 +20,15 @@ public class SafelyMoveToScoringPosition extends Command {
 
   double desiredElevatorPosition = 0;
   double desiredCoralPivotPosition = 0;
+  double desiredAlgeaPivotPosition = 0;
 
   double elevatorTolerance = 2; //This should be lower TODO: TUNE ME
   double coralPivotTolerance = 2; //This should be lower TODO: TUNE ME
+  double algeaPivotTolerance = 2; //This should be lower TODO: TUNE ME
 
   boolean isElevatorAtPosition = false;
   boolean isCoralPivotAtPosition = false;
+  boolean isAlgeaPivotAtPosition = false;
 
   /** Creates a new SafelyMoveToScoringPosition. */
   public SafelyMoveToScoringPosition(Superstructure superstructure, int level) {
@@ -40,30 +45,34 @@ public class SafelyMoveToScoringPosition extends Command {
   public void initialize() {
      isElevatorAtPosition = false;
      isCoralPivotAtPosition = false;
+     isAlgeaPivotAtPosition = false;
+
     m_superstructure.climber.runPosition(0); // just make sure i'm still trying to  hold my position straight up, and out of the way.
 
-    //Check if the coral pivot is too far forward, and if so, move it back
-    if(m_superstructure.coralPivot.getPosition() > CoralPivotConstants.Setpoints.home) {  // Tune this to some safe position...
-      m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home-2);
-    }
-
-    // calculate the desired setpoints from the level
+   // calculate the desired setpoints from the level
     switch (m_level) {
       case 4:
         desiredElevatorPosition = ElevatorConstants.Setpoints.level4;
-        desiredCoralPivotPosition = CoralPivotConstants.Setpoints.level4;        
+        desiredCoralPivotPosition = CoralPivotConstants.Setpoints.level4;
+        desiredAlgeaPivotPosition = AlgaePivotConstants.Setpoints.level4;        
         break;
       case 3:
         desiredElevatorPosition = ElevatorConstants.Setpoints.level3;
-        desiredCoralPivotPosition = CoralPivotConstants.Setpoints.level3;        
+        desiredCoralPivotPosition = CoralPivotConstants.Setpoints.level3;
+        desiredAlgeaPivotPosition = AlgaePivotConstants.Setpoints.level3;        
+        
         break;
       case 2:
         desiredElevatorPosition = ElevatorConstants.Setpoints.level2;
-        desiredCoralPivotPosition = CoralPivotConstants.Setpoints.level2;        
+        desiredCoralPivotPosition = CoralPivotConstants.Setpoints.level2;
+        desiredAlgeaPivotPosition = AlgaePivotConstants.Setpoints.level2;        
+        
         break;
       case 1:
         desiredElevatorPosition = ElevatorConstants.Setpoints.level1;
         desiredCoralPivotPosition = CoralPivotConstants.Setpoints.level1;
+        desiredAlgeaPivotPosition = AlgaePivotConstants.Setpoints.level1;        
+
         break;
     
       default:
@@ -72,6 +81,10 @@ public class SafelyMoveToScoringPosition extends Command {
         break;
     }
 
+    if(desiredElevatorPosition < ElevatorConstants.Setpoints.level4 && m_superstructure.elevator.getPosition() > ElevatorConstants.Setpoints.level3) // if going down from 4...
+    {
+      m_superstructure.coralPivot.runPosition(Constants.CoralPivotConstants.Setpoints.home);
+    }
 
 
   }
@@ -87,12 +100,28 @@ public class SafelyMoveToScoringPosition extends Command {
           //check if the coral pivot is at the correct position
       if (EqualsUtil.epsilonEquals(m_superstructure.coralPivot.getPosition(), desiredCoralPivotPosition, coralPivotTolerance) ) {
         isCoralPivotAtPosition = true;
-        System.out.println("pivot at pos");
+        System.out.println("coral pivot (shoulder) at pos");
+
+        // check if the algea pivot is at the correct position
+        //if( EqualsUtil.epsilonEquals(m_superstructure.algaePivot.getPosition(), desiredAlgeaPivotPosition, algeaPivotTolerance ) ){
+          isAlgeaPivotAtPosition = true;
+          System.out.println("algea pivot (wrist) at pos");
+
+       // }
+
       }
       else {
-        if(m_superstructure.elevator.getPosition() >= 10)
+        if(m_superstructure.elevator.getPosition() >= 10){
           m_superstructure.coralPivot.runPosition(desiredCoralPivotPosition);
-          System.out.println("pivot error = " + (desiredCoralPivotPosition - m_superstructure.coralPivot.getPosition() ));
+            
+          if(m_superstructure.coralPivot.getPosition() >= 5){
+            m_superstructure.algaePivot.runPosition(desiredAlgeaPivotPosition);
+
+          }
+
+        }
+
+          //System.out.println("pivot error = " + (desiredCoralPivotPosition - m_superstructure.coralPivot.getPosition() ));
 
       }
     }
