@@ -19,7 +19,7 @@ public class AlgaeRollerIOKraken implements AlgaeRollerIO {
         }
     
         public void setup(){
-            algaeRollerMotor = new TalonFX(21);
+            algaeRollerMotor = new TalonFX(15);
     
             TalonFXConfiguration algaeRollerConfigs = new TalonFXConfiguration();
             algaeRollerMotor.getConfigurator().apply(algaeRollerConfigs);

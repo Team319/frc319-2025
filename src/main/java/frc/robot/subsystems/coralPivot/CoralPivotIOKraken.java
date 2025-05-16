@@ -28,7 +28,7 @@ public class CoralPivotIOKraken implements CoralPivotIO {
         }
     
         public void setup(){
-            coralPivotMotor = new TalonFX(15);
+            coralPivotMotor = new TalonFX(21);
     
             TalonFXConfiguration coralPivotConfigs = new TalonFXConfiguration();
            // coralPivotMotor.getConfigurator().apply(coralPivotConfigs);

@@ -397,14 +397,14 @@ public class RobotContainer {
 
       /*  ============================= Algae Pivot ============================= */
 
-      operatorController.x().onTrue(Commands.runOnce(
-        ()-> {
-          //superstructure.algaePivot.setPO(.3);
+      // operatorController.x().onTrue(Commands.runOnce(
+      //   ()-> {
+      //     //superstructure.algaePivot.setPO(.3);
 
-          superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
-        }
-        )
-      );
+      //     superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.collect);
+      //   }
+      //   )
+      // );
 /* 
       operatorController.x().onFalse(Commands.run(
         ()-> {
@@ -413,13 +413,13 @@ public class RobotContainer {
         )
       );
 */
-      operatorController.b().onTrue(Commands.runOnce(
-        ()-> {
-          //superstructure.algaePivot.setPO(-.3);
-          superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
-        }
-        )
-      );
+      // operatorController.b().onTrue(Commands.runOnce(
+      //   ()-> {
+      //     //superstructure.algaePivot.setPO(-.3);
+      //     superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
+      //   }
+      //   )
+      // );
 /* 
       operatorController.b().onFalse(Commands.run(
         ()-> {
