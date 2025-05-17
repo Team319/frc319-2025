@@ -98,7 +98,7 @@ public DynamicAutoRoutine(Drive a_drive, Superstructure a_superstructure){
                 // This is a reef position.
                 // Add commands based on position and level
                 addCommands(
-                    m_drive.pathfindThenFollowPath(DriveConstants.fastPathingConstraints,"goto_" + command),
+                    m_drive.pathfindThenFollowPath(DriveConstants.autoPathingConstraints,"goto_" + command),
                     new SafelyMoveToScoringPosition(m_superstructure, modifier),
                     new AutoScoreCoral(m_superstructure)
                     //new WaitCommand(1)// TODO : scoreAtLevel(level)
@@ -110,7 +110,7 @@ public DynamicAutoRoutine(Drive a_drive, Superstructure a_superstructure){
                 // Add commands based on position and level
                 addCommands(
                     Commands.parallel(                    
-                        m_drive.pathfindThenFollowPath(DriveConstants.fastPathingConstraints,"goto_" + "left"+ "_" + modifier),
+                        m_drive.pathfindThenFollowPath(DriveConstants.autoPathingConstraints,"goto_" + "left"+ "_" + modifier),
                         Commands.sequence(new GoHome(m_superstructure),new CollectCoral(a_superstructure))
                     )
                     //new WaitCommand(1) // TODO : collectFromCoralStation()
@@ -122,7 +122,7 @@ public DynamicAutoRoutine(Drive a_drive, Superstructure a_superstructure){
                 // Add commands based on position and level
                 addCommands(
                     Commands.parallel(                    
-                        m_drive.pathfindThenFollowPath(DriveConstants.fastPathingConstraints,"goto_" + "right"+ "_" + modifier),
+                        m_drive.pathfindThenFollowPath(DriveConstants.autoPathingConstraints,"goto_" + "right"+ "_" + modifier),
                         Commands.sequence(new GoHome(m_superstructure),new CollectCoral(a_superstructure))
                     )
                     //new WaitCommand(1) // TODO : collectFromCoralStation()

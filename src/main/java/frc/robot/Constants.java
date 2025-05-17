@@ -92,8 +92,8 @@ public class Constants {
         //3.0, 4.0,
         Units.degreesToRadians(540), Units.degreesToRadians(720));
 
-        public static final PathConstraints fastPathingConstraints = new PathConstraints(
-          3.0,3.0,
+        public static final PathConstraints autoPathingConstraints = new PathConstraints(
+          2.5,2.5,
           //3.0, 4.0,
           Units.degreesToRadians(540), Units.degreesToRadians(720));
 

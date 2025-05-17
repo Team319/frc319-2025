@@ -207,13 +207,13 @@ public class RobotContainer {
           );
 
 
-        if (false){ // Turned off for safety at demos
+        if (true){ // Turned off for safety at demos
 
           driverController.rightBumper().whileTrue(   new InstantCommand(()-> drive.pathfindToClosestRightReef().schedule() ) );
 
           driverController.leftBumper().whileTrue( new InstantCommand(()-> drive.pathfindToClosestLeftReef().schedule() ));
   
-          driverController.back().whileTrue( new InstantCommand(()-> drive.pathfindToProcessor().schedule()  ) );
+         // driverController.back().whileTrue( new InstantCommand(()-> drive.pathfindToProcessor().schedule()  ) );
         
         }
         
