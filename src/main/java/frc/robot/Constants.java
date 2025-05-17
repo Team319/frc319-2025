@@ -243,12 +243,12 @@ public class Constants {
       public static final float readyToClimb = (float)(54)*ratio;
 
       public static final float level4 = (float)(145)*ratio; // lil bit too low
-      public static final float level3 = (float)(70)*ratio; // tune me
+      public static final float level3 = (float)(72)*ratio; // tune me
       public static final float level3Pick = (float)(82)*ratio; // tune me
       public static final float level2 = (float)(30)*ratio; // tune me
       public static final float level2Pick = (float)(44)*ratio; // tune me
       public static final float level1 = (float)(22)*ratio; // tune me
-      public static final float collect_flush = (float)20*ratio; //13 too high
+      public static final float collect_flush = (float)19*ratio; //13 too high
       public static final float collect_obstructed = (float)(25)*ratio;
       public static final float bottomLimit = (float)0.0*ratio;
       

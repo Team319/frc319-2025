@@ -37,6 +37,8 @@ public class GoHome extends Command {
       m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home);
       
       m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.home);
+
+      m_superstructure.elevator.nudgeElevatorSetpoint(0.0);
       
      // m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.pick);
 

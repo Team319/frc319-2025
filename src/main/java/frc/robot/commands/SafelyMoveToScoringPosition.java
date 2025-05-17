@@ -94,7 +94,8 @@ public class SafelyMoveToScoringPosition extends Command {
   public void execute() {
 
     //check if the elevator is at the correct position
-    if (EqualsUtil.epsilonEquals(m_superstructure.elevator.getPosition(), desiredElevatorPosition, elevatorTolerance) ) {
+    if (EqualsUtil.epsilonEquals(m_superstructure.elevator.getPosition(), desiredElevatorPosition+m_superstructure.elevator.getElevatorNudge(), elevatorTolerance) ) {
+      
       isElevatorAtPosition = true;
       //System.out.println("Ele at pos");
           //check if the coral pivot is at the correct position
@@ -104,8 +105,12 @@ public class SafelyMoveToScoringPosition extends Command {
 
         // check if the algea pivot is at the correct position
         //if( EqualsUtil.epsilonEquals(m_superstructure.algaePivot.getPosition(), desiredAlgeaPivotPosition, algeaPivotTolerance ) ){
-          isAlgeaPivotAtPosition = true;
-          System.out.println("algea pivot (wrist) at pos");
+          
+
+          if (EqualsUtil.epsilonEquals(m_superstructure.algaePivot.getPosition(), desiredAlgeaPivotPosition, algeaPivotTolerance) ) {
+            isAlgeaPivotAtPosition = true;
+            System.out.println("algea pivot (wrist) at pos");
+          }
 
        // }
 
@@ -126,7 +131,7 @@ public class SafelyMoveToScoringPosition extends Command {
       }
     }
     else {
-      m_superstructure.elevator.runPosition(desiredElevatorPosition);
+      m_superstructure.elevator.runPosition(desiredElevatorPosition+m_superstructure.elevator.getElevatorNudge());
     }
 
 
@@ -137,11 +142,12 @@ public class SafelyMoveToScoringPosition extends Command {
   public void end(boolean interrupted) {
     System.out.println("SafelyMoveToScoringPosition ended");
 
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isElevatorAtPosition && isCoralPivotAtPosition;
+    return isElevatorAtPosition && isCoralPivotAtPosition && isAlgeaPivotAtPosition;
   }
 }

@@ -33,6 +33,8 @@ public class Robot extends LoggedRobot {
 
   public String dynamicAutoInput = "";
 
+  double manualClimbSetpoint = 0.0;
+
   @Override
   public void robotInit() {
     //=============================================
@@ -148,11 +150,33 @@ public class Robot extends LoggedRobot {
 
   @Override
   public void teleopPeriodic() {
+
     if(m_robotContainer.drive.nearTheReef){
       m_robotContainer.driverController.setRumble(RumbleType.kBothRumble, 0.1);
     } else {
       m_robotContainer.driverController.setRumble(RumbleType.kBothRumble, 0.0);
     }
+
+    // ===============  manual climbing ===============================================
+    if(m_robotContainer.superstructure.climber.getClimbMode()){
+      m_robotContainer.operatorController.setRumble(RumbleType.kBothRumble, 0.1);
+
+      if( Math.abs( m_robotContainer.operatorController.getLeftY()) >= 0.1 )
+      {
+        manualClimbSetpoint = m_robotContainer.superstructure.climber.getPosition() + m_robotContainer.operatorController.getLeftY()*3.0;
+        m_robotContainer.superstructure.climber.runPosition(manualClimbSetpoint);
+      }
+    }
+    else{
+      m_robotContainer.operatorController.setRumble(RumbleType.kBothRumble, 0.0);
+    }
+
+    // ===============  elevator nudge ===============================================
+
+    
+
+
+
 
   }
 

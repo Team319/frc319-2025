@@ -44,6 +44,10 @@ public interface ElevatorIO {
 
     public default void runPosition(double positionRad, double feedforward) {}
 
+    public default void nudgeElevatorSetpoint(double nudge) {}
+
+    public default double getElevatorNudge() {return 0.0;} 
+
     
 }
 

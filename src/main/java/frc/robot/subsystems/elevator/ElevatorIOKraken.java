@@ -25,6 +25,8 @@ public class ElevatorIOKraken implements ElevatorIO {
     private StatusSignal<Current> motorStatorCurrent;
     private StatusSignal<Angle> motorPosition;
 
+    private double nudgeModifier = 0.0;
+
     private final PositionVoltage positionVoltage = new PositionVoltage(0.0);
 
 
@@ -134,5 +136,21 @@ public class ElevatorIOKraken implements ElevatorIO {
         positionVoltage
               .withPosition((positionRad))
               .withFeedForward(feedforward));
+    }
+
+    @Override
+    public void nudgeElevatorSetpoint(double nudge){
+      if(nudge == 0.0){
+        nudgeModifier = nudge;
+      }
+      else{
+        nudgeModifier += nudge; // append unless told to go to zero. 
+      }
+      
+    }
+
+    @Override
+    public double getElevatorNudge(){
+      return nudgeModifier;
     }
 }

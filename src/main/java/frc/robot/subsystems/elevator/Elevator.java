@@ -126,6 +126,14 @@ public class Elevator extends SubsystemBase {
         io.runPosition(positionRad);
       }
 
+      public void nudgeElevatorSetpoint(double nudge){
+        io.nudgeElevatorSetpoint( nudge);
+      }
+
+      public double getElevatorNudge(){
+        return io.getElevatorNudge();
+      }
+
       // =============================================================
       // Trapezoid Profile helpers
       // =============================================================

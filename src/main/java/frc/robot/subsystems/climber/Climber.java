@@ -13,6 +13,7 @@ public class Climber extends SubsystemBase {
     private static final LoggedTunableNumber kI = new LoggedTunableNumber("Climber/kI");
     private static final LoggedTunableNumber kD = new LoggedTunableNumber("Climber/kD");
 
+    private static boolean isInClimbMode = false;
 
     public Climber(ClimberIO io) {
         this.io = io;
@@ -40,6 +41,7 @@ public class Climber extends SubsystemBase {
         if ( ( kP.hasChanged(hashCode()) || kI.hasChanged(hashCode()) || kD.hasChanged(hashCode()) ) ) {
           io.configurePID(kP.get(), kI.get(), kD.get() );
         }
+
     }
 
     public void stop() {
@@ -72,6 +74,14 @@ public class Climber extends SubsystemBase {
 
       public void runPosition(double position) {
         io.runPosition(position);
+      }
+
+      public void setClimbMode(boolean selection){
+        isInClimbMode = selection;
+      }
+
+      public boolean getClimbMode(){
+        return isInClimbMode;
       }
     }
     

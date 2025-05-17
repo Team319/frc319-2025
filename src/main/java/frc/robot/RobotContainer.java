@@ -291,6 +291,10 @@ public class RobotContainer {
                                                                                                   //calling to hold some set desired 'targetPosition' in the subsystem. 
                                                                                                   // and these commands should update that 'targetPosition' variable then 
 
+          operatorController.rightBumper().onTrue(Commands.runOnce(()-> {superstructure.elevator.nudgeElevatorSetpoint(1.0); superstructure.elevator.runPosition(superstructure.elevator.getPosition()+superstructure.elevator.getElevatorNudge());}));
+
+          operatorController.leftBumper().onTrue(Commands.runOnce(()-> {superstructure.elevator.nudgeElevatorSetpoint(-1.0); superstructure.elevator.runPosition(superstructure.elevator.getPosition()+superstructure.elevator.getElevatorNudge());  } ));
+
 
           /*  ============================= Collect Coral ============================= */
 
@@ -302,11 +306,11 @@ public class RobotContainer {
 
           operatorController.start().onTrue(new ReadytoClimb(superstructure));
 
-          operatorController.a().onTrue(Commands.runOnce(()-> {superstructure.climber.runPosition(ClimberConstants.Setpoints.readyToClimb);} ));
+          operatorController.a().onTrue(Commands.runOnce(()-> {superstructure.climber.runPosition(ClimberConstants.Setpoints.readyToClimb); superstructure.climber.setClimbMode(true);} ));
         //  operatorController.a().onTrue(Commands.runOnce(()-> {superstructure.climber.setPO(-.1);} ));
         //  operatorController.a().onFalse(Commands.runOnce(()-> {superstructure.climber.setPO(0);} ));
 
-          operatorController.y().onTrue(Commands.runOnce(()-> {superstructure.climber.runPosition(ClimberConstants.Setpoints.climb);} ));
+          operatorController.y().onTrue(Commands.runOnce(()-> {/*superstructure.climber.runPosition(ClimberConstants.Setpoints.climb);*/superstructure.climber.setClimbMode(false);} ));
          // operatorController.y().onTrue(Commands.runOnce(()-> {superstructure.climber.setPO(0.1);} ));
          // operatorController.y().onFalse(Commands.runOnce(()-> {superstructure.climber.setPO(0.0);} ));
 
