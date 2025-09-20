@@ -31,8 +31,8 @@ public class AlgaePivotIOKraken implements AlgaePivotIO {
             TalonFXConfiguration algaePivotConfigs = new TalonFXConfiguration();
            // algaePivotMotor.getConfigurator().apply(algaePivotConfigs);
     
-            algaePivotConfigs.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-            algaePivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+            algaePivotConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+            algaePivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
     
             algaePivotConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             algaePivotConfigs.CurrentLimits.StatorCurrentLimit = 40;

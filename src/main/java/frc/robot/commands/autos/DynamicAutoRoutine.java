@@ -100,6 +100,7 @@ public DynamicAutoRoutine(Drive a_drive, Superstructure a_superstructure){
                 addCommands(
                     m_drive.pathfindThenFollowPath(DriveConstants.autoPathingConstraints,"goto_" + command),
                     new SafelyMoveToScoringPosition(m_superstructure, modifier),
+                    //new WaitCommand(1.0),
                     new AutoScoreCoral(m_superstructure),
                     new GoHome(a_superstructure)
                     //new WaitCommand(1)// TODO : scoreAtLevel(level)

@@ -94,7 +94,7 @@ public class DriveCommands {
 
                   
 
-                  if (isSnapHeadingWithJoystickEnabled) // Maintain target heading from joystick
+                  if (isSnapHeadingWithJoystickEnabled) // Maintain target heading from joystickdx
                   {
                     omega = drive.snapToHeading(headingXSupplier, headingYSupplier);
                   

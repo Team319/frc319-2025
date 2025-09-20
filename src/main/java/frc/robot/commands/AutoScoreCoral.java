@@ -29,7 +29,7 @@ public class AutoScoreCoral extends Command {
     m_superstructure.coralRoller.setPO(CoralRollerConstants.Speeds.score);
     passedCycles = 0;
 
-
+    
     
     // If elevator and coral pivot drop when called. try uncommenting these lines below
 
