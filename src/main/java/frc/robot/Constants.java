@@ -245,7 +245,7 @@ public class Constants {
       private static final float ratio = (float)0.5;
 
       public static final float topLimit = (float)150.0*ratio;//Really 74
-      public static final float readyToClimb = (float)(54)*ratio;
+      public static final float readyToClimb = (float)(0.0)*ratio;//68
 
       public static final float level4 = (float)(150)*ratio; // lil bit too low
       public static final float level3 = (float)(72)*ratio; // tune me
@@ -253,7 +253,7 @@ public class Constants {
       public static final float level2 = (float)(30)*ratio; // tune me
       public static final float level2Pick = (float)(44)*ratio; // tune me
       public static final float level1 = (float)(22)*ratio; // tune me
-      public static final float collect_flush = (float)19*ratio; //13 too high
+      public static final float collect_flush = (float)22*ratio; //13 too high was 19
       public static final float collect_obstructed = (float)(25)*ratio;
       public static final float bottomLimit = (float)0.0*ratio;
       
@@ -290,6 +290,7 @@ public class Constants {
       public static final float level3 = (float) 30.0;//30
       public static final float level2 = (float) 30.0;//30
       public static final float level1 = (float) 30.0;
+      public static final float prepareToClimb = (float) 20;
 
       public static final float collect = (float)70.0; // tune me ! -ekm 04/25/25
       public static final float bottomLimit = (float)0.0;
@@ -325,7 +326,7 @@ public class Constants {
 
     // Climber
     public static class Setpoints {
-      public static final float topLimit = (float)5.0; // In the robot
+      public static final float topLimit = (float)12.0; // In the robot
       
       public static final float bottomLimit = (float)-127.0;  // outside the robot
       

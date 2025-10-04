@@ -311,10 +311,12 @@ public class RobotContainer {
         //  operatorController.a().onFalse(Commands.runOnce(()-> {superstructure.climber.setPO(0);} ));
 
           operatorController.y().onTrue(Commands.runOnce(()-> {/*superstructure.climber.runPosition(ClimberConstants.Setpoints.climb);*/superstructure.climber.setClimbMode(false);} ));
-         // operatorController.y().onTrue(Commands.runOnce(()-> {superstructure.climber.setPO(0.1);} ));
+          operatorController.x().onTrue(Commands.runOnce(()-> {superstructure.climber.setClimberIntakePO(-0.125);} ));
+          operatorController.x().onFalse(Commands.runOnce(()-> {superstructure.climber.setClimberIntakePO(0);} ));
          // operatorController.y().onFalse(Commands.runOnce(()-> {superstructure.climber.setPO(0.0);} ));
 
           operatorController.rightStick().onTrue(new GoHome(superstructure));
+ 
 
         
 
@@ -339,7 +341,7 @@ public class RobotContainer {
           // );
   /*  ============================= Coral Pivot ============================= */
 
-  // driverController.povUp().onTrue(Commands.runOnce(
+  // driverController.povUp().onTrue(Comleftmands.runOnce(
   //   ()-> {
   //     //superstructure.coralPivot.setPO(.1);
   //     superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.topLimit);

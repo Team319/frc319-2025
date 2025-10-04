@@ -51,6 +51,10 @@ public class Climber extends SubsystemBase {
       public void setPO(double PO) {
         io.setPO(PO);
       }
+
+      public void setClimberIntakePO(double PO){
+        io.setClimberIntakePO(PO);
+      }
     
       public void setPosition(double position) {
         io.setPosition(position);

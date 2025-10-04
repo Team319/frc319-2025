@@ -22,6 +22,8 @@ public interface ClimberIO {
         public double velocity = 0.0; // Velocity of the climber
         public double climberMotorStatorCurrent;
         public double climberMotorPosition;
+
+        public double newMotorVoltage, newMotorCurrent;
     }
 
     public default void updateInputs(ClimberIOInputs inputs) {}
@@ -39,6 +41,8 @@ public interface ClimberIO {
     public default void setVoltage(double voltage) {}
 
     public default void setPO(double PO) {}
+
+    public default void setClimberIntakePO(double PO) {}
 
     public default void runPosition(double positionRad ) {}
 

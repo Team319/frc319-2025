@@ -18,6 +18,7 @@ import frc.robot.Constants.ClimberConstants;
 public class ClimberIOKraken implements ClimberIO {
         private TalonFX climberLead;
         private TalonFX climberFollow;
+        private TalonFX climberIntake;
         private StatusSignal<Current> motorStatorCurrent;
         private StatusSignal<Angle> motorPosition;
 
@@ -25,6 +26,7 @@ public class ClimberIOKraken implements ClimberIO {
         private Slot0Configs slot0Configs = new Slot0Configs();
 
         TalonFXConfiguration climberConfigs = new TalonFXConfiguration();
+        TalonFXConfiguration climberConfigsLead = new TalonFXConfiguration();
         
         public ClimberIOKraken(){
             setup();
@@ -33,25 +35,41 @@ public class ClimberIOKraken implements ClimberIO {
         public void setup(){
             climberLead = new TalonFX(18);
             climberFollow = new TalonFX(19);  
+            climberIntake = new TalonFX(22);
+
+            TalonFXConfiguration climberIntakeConfigs = new TalonFXConfiguration();
+            climberIntake.getConfigurator().apply(climberIntakeConfigs);
   
             climberFollow.setControl(new Follower(climberLead.getDeviceID(), false));
     
             climberConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
             climberConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
+            climberConfigsLead.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+            climberConfigsLead.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
     
             configurePID(ClimberConstants.Gains.kPUp, ClimberConstants.Gains.kIUp, ClimberConstants.Gains.kDUp);
 
             climberConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
             climberConfigs.CurrentLimits.StatorCurrentLimit = 40;
+
+            climberConfigsLead.CurrentLimits.StatorCurrentLimitEnable = true;
+            climberConfigsLead.CurrentLimits.StatorCurrentLimit = 40;
     
             
-            climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+            climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = false;
             climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ClimberConstants.Setpoints.topLimit;
-            climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+            climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
             climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ClimberConstants.Setpoints.bottomLimit;
+
+            climberConfigsLead.SoftwareLimitSwitch.ForwardSoftLimitEnable = false;
+            climberConfigsLead.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ClimberConstants.Setpoints.topLimit;
+            climberConfigsLead.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
+            climberConfigsLead.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ClimberConstants.Setpoints.bottomLimit;
           
 
-            climberLead.getConfigurator().apply(climberConfigs);
+            climberLead.getConfigurator().apply(climberConfigsLead);
             climberFollow.getConfigurator().apply(climberConfigs);
 
             motorStatorCurrent = climberLead.getStatorCurrent();
@@ -79,6 +97,9 @@ public class ClimberIOKraken implements ClimberIO {
             // Updates all of the inputs/data points being monitored about the motor
             inputs.climberMotorStatorCurrent = motorStatorCurrent.getValueAsDouble();
             inputs.climberMotorPosition = motorPosition.getValueAsDouble();
+
+            inputs.newMotorCurrent = climberIntake.getStatorCurrent().getValueAsDouble();
+            inputs.newMotorVoltage = climberIntake.getMotorVoltage().getValueAsDouble();
     }
 
     @Override
@@ -105,6 +126,12 @@ public class ClimberIOKraken implements ClimberIO {
       DutyCycleOut m_request = new DutyCycleOut(PO);
       climberLead.setControl(m_request);
 
+    }
+
+    @Override
+    public void setClimberIntakePO(double PO){
+      DutyCycleOut m_request = new DutyCycleOut(PO);
+      climberIntake.setControl(m_request);
     }
 
     @Override

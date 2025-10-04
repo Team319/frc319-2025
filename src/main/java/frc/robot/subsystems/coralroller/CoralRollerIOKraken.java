@@ -29,7 +29,7 @@ public class CoralRollerIOKraken implements CoralRollerIO {
             coralRollerConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     
             coralRollerConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
-            coralRollerConfigs.CurrentLimits.StatorCurrentLimit = 40;
+            coralRollerConfigs.CurrentLimits.StatorCurrentLimit = 52;
     
             coralRollerMotor.getConfigurator().apply(coralRollerConfigs);
 

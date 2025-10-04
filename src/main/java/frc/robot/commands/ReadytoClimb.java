@@ -43,10 +43,12 @@ public class ReadytoClimb extends Command {
   public void execute() {
   //  if (EqualsUtil.epsilonEquals(m_superstructure.algaePivot.getPosition(),AlgaePivotConstants.Setpoints.home, pivotThreshold)){
         m_superstructure.elevator.runPosition(ElevatorConstants.Setpoints.readyToClimb);
+        
       
         if (EqualsUtil.epsilonEquals(m_superstructure.elevator.getPosition(),ElevatorConstants.Setpoints.readyToClimb, pivotThreshold)){
           isElevatorAtPosition = true;
           m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.readyToClimb);
+          m_superstructure.algaePivot.runPosition(AlgaePivotConstants.Setpoints.prepareToClimb);
 
         if(EqualsUtil.epsilonEquals(m_superstructure.coralPivot.getPosition(),CoralPivotConstants.Setpoints.readyToClimb, pivotThreshold)){
           isCoralPivotAtPosition = true;
