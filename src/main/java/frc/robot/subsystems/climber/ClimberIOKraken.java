@@ -40,12 +40,12 @@ public class ClimberIOKraken implements ClimberIO {
             TalonFXConfiguration climberIntakeConfigs = new TalonFXConfiguration();
             climberIntake.getConfigurator().apply(climberIntakeConfigs);
   
-            climberFollow.setControl(new Follower(climberLead.getDeviceID(), false));
+            climberFollow.setControl(new Follower(climberLead.getDeviceID(), true));
     
             climberConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
             climberConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-            climberConfigsLead.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+            climberConfigsLead.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
             climberConfigsLead.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
     
@@ -58,14 +58,14 @@ public class ClimberIOKraken implements ClimberIO {
             climberConfigsLead.CurrentLimits.StatorCurrentLimit = 40;
     
             
-            climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = false;
+            climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
             climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ClimberConstants.Setpoints.topLimit;
-            climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
+            climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
             climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ClimberConstants.Setpoints.bottomLimit;
 
-            climberConfigsLead.SoftwareLimitSwitch.ForwardSoftLimitEnable = false;
+            climberConfigsLead.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
             climberConfigsLead.SoftwareLimitSwitch.ForwardSoftLimitThreshold = ClimberConstants.Setpoints.topLimit;
-            climberConfigsLead.SoftwareLimitSwitch.ReverseSoftLimitEnable = false;
+            climberConfigsLead.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
             climberConfigsLead.SoftwareLimitSwitch.ReverseSoftLimitThreshold = ClimberConstants.Setpoints.bottomLimit;
           
 

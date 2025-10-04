@@ -306,7 +306,7 @@ public class RobotContainer {
 
           operatorController.start().onTrue(new ReadytoClimb(superstructure));
 
-          operatorController.a().onTrue(Commands.runOnce(()-> {superstructure.climber.runPosition(ClimberConstants.Setpoints.readyToClimb); superstructure.climber.setClimbMode(true);} ));
+          operatorController.a().onTrue(Commands.runOnce(()-> {superstructure.climber.setClimbMode(true);} ));
         //  operatorController.a().onTrue(Commands.runOnce(()-> {superstructure.climber.setPO(-.1);} ));
         //  operatorController.a().onFalse(Commands.runOnce(()-> {superstructure.climber.setPO(0);} ));
 
