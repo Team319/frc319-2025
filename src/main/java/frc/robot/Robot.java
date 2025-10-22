@@ -163,7 +163,7 @@ public class Robot extends LoggedRobot {
 
       if( Math.abs( m_robotContainer.operatorController.getLeftY()) >= 0.1 )
       {
-        manualClimbSetpoint = m_robotContainer.superstructure.climber.getPosition() + m_robotContainer.operatorController.getLeftY()*3.0;
+        manualClimbSetpoint = m_robotContainer.superstructure.climber.getPosition() + m_robotContainer.operatorController.getLeftY()*5.0;
         m_robotContainer.superstructure.climber.runPosition(manualClimbSetpoint);
       }
     }

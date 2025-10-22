@@ -326,14 +326,14 @@ public class Constants {
 
     // Climber
     public static class Setpoints {
-      public static final float topLimit = (float)12.0; // In the robot
+      public static final float topLimit = (float)-5; // In the robot
       
       public static final float bottomLimit = (float)-127.0;  // outside the robot
       
       //public static final float ready = (float)-10;
       public static final float readyToClimb = (float)(-123.0);
       
-      public static final float climb = (float)(-35.0); //-10.0
+      public static final float climb = (float)(-110.0); //-10.0
 
 
     }
