@@ -49,7 +49,17 @@ public class SafelyMoveToScoringPosition extends Command {
 
     m_superstructure.climber.runPosition(0); // just make sure i'm still trying to  hold my position straight up, and out of the way.
 
-   // calculate the desired setpoints from the level
+    //Check if the coral pivot is too far forward, and if so, move it back
+    if(m_superstructure.coralPivot.getPosition() > CoralPivotConstants.Setpoints.home) {  // Tune this to some safe position...
+      m_superstructure.coralPivot.runPosition(CoralPivotConstants.Setpoints.home-2);
+    }
+
+    if(m_level > 3 && Constants.getDemoMode() == Constants.DemoMode.ON) {
+      // Override level to 3 in demo mode
+      m_level = 3;
+    }
+
+    // calculate the desired setpoints from the level
     switch (m_level) {
       case 4:
         desiredElevatorPosition = ElevatorConstants.Setpoints.level4;

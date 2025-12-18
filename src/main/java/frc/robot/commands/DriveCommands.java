@@ -157,6 +157,12 @@ public class DriveCommands {
                           omega * drive.getMaxAngularSpeedRadPerSec(),
                           drive.getRotation());
 
+                  if(Constants.getDemoMode() == Constants.DemoMode.ON){
+                    // Limit speeds in demo mode
+                    fieldRelativeVelocities.vxMetersPerSecond = MathUtil.clamp(fieldRelativeVelocities.vxMetersPerSecond, -Constants.DriveConstants.DEMO_MODE_MAX_LINEAR_SPEED_METERS_PER_SEC, Constants.DriveConstants.DEMO_MODE_MAX_LINEAR_SPEED_METERS_PER_SEC);
+                    fieldRelativeVelocities.vyMetersPerSecond = MathUtil.clamp(fieldRelativeVelocities.vyMetersPerSecond, -Constants.DriveConstants.DEMO_MODE_MAX_LINEAR_SPEED_METERS_PER_SEC, Constants.DriveConstants.DEMO_MODE_MAX_LINEAR_SPEED_METERS_PER_SEC);
+                    fieldRelativeVelocities.omegaRadiansPerSecond = MathUtil.clamp(fieldRelativeVelocities.omegaRadiansPerSecond, -Constants.DriveConstants.DEMO_MODE_MAX_ANGULAR_SPEED_RAD_PER_SEC, Constants.DriveConstants.DEMO_MODE_MAX_ANGULAR_SPEED_RAD_PER_SEC);
+                  }
                   
                   // Discretize & send command
                   drive.runVelocity( ChassisSpeeds.discretize(fieldRelativeVelocities, 0.02));

@@ -24,6 +24,8 @@ public class Constants {
   public static final double loopPeriodSecs = 0.02;
   private static RobotType robotType = RobotType.COMPBOT;
   private static FieldType fieldType = FieldType.ANDYMARK;
+
+  private static DemoMode demoMode = DemoMode.OFF;
   
 
   public static RobotType getRobot() {
@@ -49,6 +51,10 @@ public class Constants {
     return fieldType;
   }
 
+  public static DemoMode getDemoMode() {
+    return demoMode;
+  }
+
   public enum Mode {
     /** Running on a real robot. */
     REAL,
@@ -69,6 +75,11 @@ public class Constants {
   public enum FieldType {
     ANDYMARK,
     WELDED
+  }
+
+  public enum DemoMode {
+    OFF,
+    ON
   }
 
   public static class DriveConstants{
@@ -101,6 +112,10 @@ public class Constants {
           2.0,2.0,
           //3.0, 4.0,
           Units.degreesToRadians(540), Units.degreesToRadians(720));
+
+    private static final double DEMO_MODE_SPEED_FACTOR = 0.5;
+    public static final double DEMO_MODE_MAX_LINEAR_SPEED_METERS_PER_SEC = MAX_LINEAR_SPEED * DEMO_MODE_SPEED_FACTOR;
+    public static final double DEMO_MODE_MAX_ANGULAR_SPEED_RAD_PER_SEC = MAX_ANGULAR_SPEED * DEMO_MODE_SPEED_FACTOR;
 
   }
   public static enum HeadingTargets{
