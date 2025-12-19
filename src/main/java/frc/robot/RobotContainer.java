@@ -207,7 +207,7 @@ public class RobotContainer {
           );
 
 
-        if (true){ // Turned off for safety at demos
+        if (Constants.getDemoMode() == Constants.DemoMode.OFF){ // Turned off for safety at demos
 
           driverController.rightBumper().whileTrue(   new InstantCommand(()-> drive.pathfindToClosestRightReef().schedule() ) );
 
