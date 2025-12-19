@@ -25,7 +25,7 @@ public class Constants {
   private static RobotType robotType = RobotType.COMPBOT;
   private static FieldType fieldType = FieldType.ANDYMARK;
 
-  private static DemoMode demoMode = DemoMode.OFF;
+  private static DemoMode demoMode = DemoMode.ON;
   
 
   public static RobotType getRobot() {
@@ -113,7 +113,7 @@ public class Constants {
           //3.0, 4.0,
           Units.degreesToRadians(540), Units.degreesToRadians(720));
 
-    private static final double DEMO_MODE_SPEED_FACTOR = 0.5;
+    private static final double DEMO_MODE_SPEED_FACTOR = 0.25;
     public static final double DEMO_MODE_MAX_LINEAR_SPEED_METERS_PER_SEC = MAX_LINEAR_SPEED * DEMO_MODE_SPEED_FACTOR;
     public static final double DEMO_MODE_MAX_ANGULAR_SPEED_RAD_PER_SEC = MAX_ANGULAR_SPEED * DEMO_MODE_SPEED_FACTOR;
 
